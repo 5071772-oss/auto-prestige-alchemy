@@ -638,12 +638,12 @@ function Footer() {
         <div>
           <div className="text-xs uppercase tracking-[0.3em] text-primary">Контакты</div>
           <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
-            <li><a href="tel:+79991234567" className="hover:text-foreground transition-smooth">+7 (999) 123-45-67</a></li>
+            <li><a href="tel:+79162253359" className="hover:text-foreground transition-smooth">+7 (916) 225-33-59</a></li>
             <li><a href="mailto:hello@nikolaev-auto.ru" className="hover:text-foreground transition-smooth">hello@nikolaev-auto.ru</a></li>
             <li className="flex gap-4 pt-2">
               <a href="https://t.me/" aria-label="Telegram" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Send className="w-4 h-4" /></a>
               <a href="https://wa.me/" aria-label="WhatsApp" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><MessageCircle className="w-4 h-4" /></a>
-              <a href="tel:+79991234567" aria-label="Phone" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Phone className="w-4 h-4" /></a>
+              <a href="tel:+79162253359" aria-label="Phone" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Phone className="w-4 h-4" /></a>
             </li>
           </ul>
         </div>
