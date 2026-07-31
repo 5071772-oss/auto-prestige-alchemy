@@ -329,7 +329,7 @@ function Achievements() {
     { icon: Crown, n: "Premium", t: "Сегмент", d: "Audi, BMW, Mercedes-Benz, Porsche, Bentley, Maybach." },
   ];
   return (
-    <section className="py-32 bg-graphite-deep relative overflow-hidden">
+    <section className="py-32 bg-background relative overflow-hidden">
       <div className="container">
         <Reveal>
           <SectionLabel>Цифры</SectionLabel>
