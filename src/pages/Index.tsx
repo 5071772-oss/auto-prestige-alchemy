@@ -253,6 +253,100 @@ function About() {
   );
 }
 
+function HonestApproach() {
+  const steps = [
+    {
+      n: "01",
+      t: "Квиз из 7 вопросов",
+      d: "Перед созвоном вы отвечаете на несколько ключевых вопросов. Это помогает мне понять вашу задачу ещё до разговора.",
+    },
+    {
+      n: "02",
+      t: "Персональная подборка",
+      d: "Я готовлю для вас PDF с реальными привезёнными автомобилями — под ваш запрос, а не «что есть в наличии».",
+    },
+    {
+      n: "03",
+      t: "Видеовстреча",
+      d: "Мы созваниваемся там, где вам удобно — Zoom, МТС Линк, Telegram, MAX. Разбираем: почему именно эта машина, для каких задач, где будете ездить, семья, стиль вождения.",
+    },
+  ];
+
+  const stories = [
+    {
+      t: "Хотел дизель — уехал на бензине",
+      d: "Клиент пришёл за дизельным X5. Но по разговору я понял: он любит резкий разгон и звук мотора. На дизеле он бы не получил кайфа. Мы прокатились на тестовой машине — и он сам выбрал бензин. Сегодня он ездит именно на той машине, что дарит ему эмоции.",
+    },
+    {
+      t: "Красивая машина — но не для этой дороги",
+      d: "Клиент мечтал о Passat CC — стремительный силуэт, низкий клиренс, 19-е колёса. Но он переехал за город, где километр разбитой дороги. Зимой он бы просто не доехал до дома. Я предложил другой автомобиль — и он остался благодарен. Красота должна работать в реальной жизни.",
+    },
+  ];
+
+  return (
+    <section className="py-32 bg-background">
+      <div className="container">
+        <div className="max-w-3xl mx-auto text-center">
+          <Reveal>
+            <SectionLabel>Честный подход</SectionLabel>
+          </Reveal>
+          <Reveal delay={100}>
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl mt-8 leading-[1.05] text-gradient-soft">
+              Иногда моя задача — отговорить вас от машины, которую вы хотите
+            </h2>
+          </Reveal>
+          <Reveal delay={200}>
+            <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-[700px] mx-auto">
+              Я не продаю автомобили. Я помогаю принять правильное решение. И если машина мечты не подходит под вашу реальную жизнь — я скажу об этом прямо. Даже если это невыгодно мне.
+            </p>
+          </Reveal>
+        </div>
+
+        <Reveal delay={250}>
+          <div className="mt-20 text-center">
+            <h3 className="font-display text-2xl sm:text-3xl text-gradient-soft">Как проходит консультация</h3>
+          </div>
+        </Reveal>
+
+        <div className="mt-12 grid md:grid-cols-3 gap-6">
+          {steps.map((s, i) => (
+            <Reveal key={s.n} delay={300 + i * 100}>
+              <div className="p-8 border border-border bg-gradient-card h-full">
+                <div className="font-display text-4xl text-gradient-gold">{s.n}</div>
+                <h4 className="font-display text-xl mt-6">{s.t}</h4>
+                <p className="mt-4 text-sm text-muted-foreground leading-relaxed">{s.d}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={500}>
+          <div className="mt-24 text-center">
+            <h3 className="font-display text-2xl sm:text-3xl text-gradient-soft">Реальные истории</h3>
+          </div>
+        </Reveal>
+
+        <div className="mt-12 grid md:grid-cols-2 gap-6">
+          {stories.map((s, i) => (
+            <Reveal key={s.t} delay={600 + i * 100}>
+              <div className="p-8 lg:p-10 border border-border bg-background shadow-elegant h-full">
+                <h4 className="font-display text-xl lg:text-2xl text-foreground">«{s.t}»</h4>
+                <p className="mt-5 text-muted-foreground leading-relaxed">{s.d}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={800}>
+          <p className="mt-20 text-center font-display italic text-xl sm:text-2xl text-foreground/90 max-w-3xl mx-auto leading-relaxed">
+            Машина должна подходить не только вашему вкусу — но и вашим дорогам, задачам и характеру. Моя репутация дороже одной сделки.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function Security() {
   const items = [
     {
