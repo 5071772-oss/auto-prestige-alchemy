@@ -253,6 +253,74 @@ function About() {
   );
 }
 
+function Security() {
+  const items = [
+    {
+      icon: Landmark,
+      t: "Аккредитив Сбербанка",
+      d: "Ваши средства хранятся в банке и раскрываются продавцу поэтапно — только после выполнения условий сделки. Никаких переводов «в никуда».",
+    },
+    {
+      icon: FileText,
+      t: "Официальный договор",
+      d: "Работаю только по договору, где зафиксировано всё: стоимость, сроки, ответственность сторон. Моя комиссия включена в договор и не меняется — никаких доплат «по ходу».",
+    },
+    {
+      icon: CreditCard,
+      t: "Поэтапная оплата",
+      d: "Предоплата по договору → подбор автомобиля → инвойс → покупка → доставка до границы → таможенное оформление → доставка вам. Вы платите по прозрачной схеме и видите движение сделки.",
+    },
+    {
+      icon: Search,
+      t: "Проверка перед покупкой",
+      d: "Мой человек на месте проверяет автомобиль вживую: детальные фото, видео, полный отчёт. Как инженер-механик я лично оцениваю состояние и честно говорю — стоит брать эту машину или нет.",
+    },
+  ];
+  return (
+    <section className="py-32 bg-graphite-deep relative overflow-hidden">
+      <div className="container relative z-10">
+        <div className="max-w-3xl">
+          <Reveal>
+            <SectionLabel>Безопасность сделки</SectionLabel>
+          </Reveal>
+          <Reveal delay={100}>
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl mt-8 leading-[1.05] text-gradient-soft">
+              Ваши деньги под защитой
+              <span className="italic text-gradient-gold"> на каждом этапе</span>
+            </h2>
+          </Reveal>
+          <Reveal delay={200}>
+            <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-2xl">
+              Покупка автомобиля за рубежом — это доверие на миллионы. Я выстроил процесс так,
+              чтобы вы контролировали каждый рубль и видели каждый шаг.
+            </p>
+          </Reveal>
+        </div>
+
+        <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {items.map((it, i) => (
+            <Reveal key={it.t} delay={i * 100}>
+              <div className="p-8 border border-border bg-background h-full hover:border-primary/40 transition-smooth group">
+                <div className="w-12 h-12 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
+                  <it.icon className="w-6 h-6 text-primary" strokeWidth={1.2} />
+                </div>
+                <h3 className="font-display text-xl mt-8">{it.t}</h3>
+                <p className="mt-4 text-sm text-muted-foreground leading-relaxed">{it.d}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+
+        <Reveal delay={500}>
+          <p className="mt-16 text-center font-display italic text-xl sm:text-2xl text-foreground/90 max-w-4xl mx-auto leading-relaxed">
+            Я зарабатываю на прозрачности, а не на скрытых наценках. Поэтому вы всегда знаете, за что платите.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 function Achievements() {
   const items = [
     { icon: Clock, n: "20+", t: "Лет опыта", d: "В премиальном автомобильном бизнесе с 2003 года." },
