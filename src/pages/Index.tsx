@@ -825,6 +825,7 @@ const Index = () => (
       <Hero />
       <Marquee />
       <About />
+      <HonestApproach />
       <Achievements />
       <Services />
       <Security />
