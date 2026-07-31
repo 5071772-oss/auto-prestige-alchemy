@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "rea
 import {
   Phone, MessageCircle, Send, ArrowRight, ArrowUpRight, Check, Star,
   Search, KeyRound, Globe2, ShieldCheck, Truck, Award, Users, Clock, Crown,
-  ChevronRight,
+  ChevronRight, Landmark, FileText, CreditCard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
