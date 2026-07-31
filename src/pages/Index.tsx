@@ -731,6 +731,7 @@ const Index = () => (
       <Hero />
       <Marquee />
       <About />
+      <Security />
       <Achievements />
       <Services />
       <Gallery />
