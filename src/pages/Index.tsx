@@ -292,13 +292,17 @@ function HonestApproach() {
           </Reveal>
           <Reveal delay={100}>
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl mt-8 leading-[1.05] text-gradient-soft">
-              Иногда моя задача — отговорить вас от машины, которую вы хотите
+              Иногда моя задача — отговорить вас от машины,
+              <br />
+              <span className="italic text-gradient-gold">которую вы хотите.</span>
             </h2>
           </Reveal>
           <Reveal delay={200}>
-            <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-[700px] mx-auto">
-              Я не продаю автомобили. Я помогаю принять правильное решение. И если машина мечты не подходит под вашу реальную жизнь — я скажу об этом прямо. Даже если это невыгодно мне.
-            </p>
+            <div className="mt-10 space-y-6 text-muted-foreground leading-relaxed text-lg max-w-2xl mx-auto">
+              <p>
+                Я не продаю автомобили. Я помогаю принять правильное решение. И если машина мечты не подходит под вашу реальную жизнь — я скажу об этом прямо. Даже если это невыгодно мне.
+              </p>
+            </div>
           </Reveal>
         </div>
 
@@ -313,7 +317,7 @@ function HonestApproach() {
             <Reveal key={s.n} delay={300 + i * 100}>
               <div className="p-8 border border-border bg-gradient-card h-full">
                 <div className="font-display text-4xl text-gradient-gold">{s.n}</div>
-                <h4 className="font-display text-xl mt-6">{s.t}</h4>
+                <h4 className="font-display text-xl mt-6 text-foreground">{s.t}</h4>
                 <p className="mt-4 text-sm text-muted-foreground leading-relaxed">{s.d}</p>
               </div>
             </Reveal>
@@ -329,8 +333,8 @@ function HonestApproach() {
         <div className="mt-12 grid md:grid-cols-2 gap-6">
           {stories.map((s, i) => (
             <Reveal key={s.t} delay={600 + i * 100}>
-              <div className="p-8 lg:p-10 border border-border bg-background shadow-elegant h-full">
-                <h4 className="font-display text-xl lg:text-2xl text-foreground">«{s.t}»</h4>
+              <div className="p-8 lg:p-10 border border-border bg-gradient-card h-full">
+                <h4 className="font-display text-xl lg:text-2xl text-gradient-gold">«{s.t}»</h4>
                 <p className="mt-5 text-muted-foreground leading-relaxed">{s.d}</p>
               </div>
             </Reveal>
@@ -338,7 +342,7 @@ function HonestApproach() {
         </div>
 
         <Reveal delay={800}>
-          <p className="mt-20 text-center font-display italic text-xl sm:text-2xl text-foreground/90 max-w-3xl mx-auto leading-relaxed">
+          <p className="mt-20 text-center font-display italic text-xl sm:text-2xl text-gradient-gold max-w-3xl mx-auto leading-relaxed">
             Машина должна подходить не только вашему вкусу — но и вашим дорогам, задачам и характеру. Моя репутация дороже одной сделки.
           </p>
         </Reveal>
