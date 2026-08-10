@@ -703,11 +703,11 @@ function CTA() {
           </Reveal>
           <Reveal delay={300}>
             <div className="mt-10 space-y-4 text-sm">
-              <a href="tel:+79991234567" className="flex items-center gap-4 group">
+              <a href="tel:+79162253359" className="flex items-center gap-4 group">
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
                   <Phone className="w-4 h-4 text-primary" />
                 </span>
-                <span className="text-foreground/90 group-hover:text-foreground">+7 (999) 123-45-67</span>
+                <span className="text-foreground/90 group-hover:text-foreground">+7 (916) 225-33-59</span>
               </a>
               <a href="https://t.me/" className="flex items-center gap-4 group">
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
