@@ -1,3 +1,4 @@
+import AmoForm from "@/components/AmoForm";
 import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
 import {
   Phone, MessageCircle, Send, ArrowRight, ArrowUpRight, Check, Star,
