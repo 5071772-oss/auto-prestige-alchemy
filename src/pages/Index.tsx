@@ -1,12 +1,11 @@
-import { useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import AmoForm from "@/components/AmoForm";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Phone, MessageCircle, Send, ArrowRight, ArrowUpRight, Check, Star,
   Search, KeyRound, Globe2, ShieldCheck, Truck, Award, Users, Clock, Crown,
   ChevronRight, Landmark, FileText, CreditCard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import heroCar from "@/assets/hero-car.jpg";
 import portrait from "@/assets/portrait.jpg";
@@ -678,16 +677,6 @@ function Process() {
 }
 
 function CTA() {
-  const [loading, setLoading] = useState(false);
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      (e.target as HTMLFormElement).reset();
-      toast.success("Заявка отправлена", { description: "Я свяжусь с вами в течение часа." });
-    }, 800);
-  };
   return (
     <section id="contact" className="py-32 relative overflow-hidden bg-graphite-deep">
       <div className="absolute inset-0 opacity-30">
@@ -737,44 +726,7 @@ function CTA() {
         </div>
 
         <Reveal delay={200}>
-          <form onSubmit={onSubmit} className="bg-background border border-border p-8 lg:p-12 shadow-elegant">
-            <div className="text-xs uppercase tracking-[0.3em] text-primary">Персональная заявка</div>
-            <h3 className="font-display text-3xl mt-4">Свяжусь лично</h3>
-
-            <div className="mt-10 space-y-6">
-              <div>
-                <label className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Имя</label>
-                <Input
-                  required name="name" placeholder="Как к вам обращаться"
-                  className="mt-2 h-12 bg-transparent border-0 border-b border-border rounded-none focus-visible:ring-0 focus-visible:border-primary px-0 text-base"
-                />
-              </div>
-              <div>
-                <label className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Телефон</label>
-                <Input
-                  required type="tel" name="phone" placeholder="+7 (___) ___-__-__"
-                  className="mt-2 h-12 bg-transparent border-0 border-b border-border rounded-none focus-visible:ring-0 focus-visible:border-primary px-0 text-base"
-                />
-              </div>
-              <div>
-                <label className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Комментарий</label>
-                <Textarea
-                  name="comment" rows={3} placeholder="Какой автомобиль интересует?"
-                  className="mt-2 bg-transparent border-0 border-b border-border rounded-none focus-visible:ring-0 focus-visible:border-primary px-0 text-base resize-none"
-                />
-              </div>
-            </div>
-
-            <Button
-              type="submit" disabled={loading}
-              className="mt-10 w-full h-14 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow text-sm uppercase tracking-wide"
-            >
-              {loading ? "Отправка..." : (<>Отправить заявку <ArrowRight className="ml-2 w-4 h-4" /></>)}
-            </Button>
-            <p className="mt-4 text-xs text-muted-foreground text-center">
-              Нажимая кнопку, вы соглашаетесь с обработкой персональных данных
-            </p>
-          </form>
+          <AmoForm />
         </Reveal>
       </div>
     </section>
