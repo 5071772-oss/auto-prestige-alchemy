@@ -1,43 +1,83 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 
+const FORM_ID = "1737146";
+const FORM_HASH = "69729c933f32f7605318fdab731e5827";
+const ACTION = "https://forms.amocrm.ru/queue/add";
+
+// Полевые имена берутся из настроек формы amoCRM
+const FIELD = {
+  name: "fields[name_1]",
+  phone: "fields[1072531_1][1339131]",
+  email: "fields[1072533_1][1339143]",
+  budget: "fields[1072589_2]",
+  note: "fields[note_2]",
+};
+
 export default function AmoForm() {
   const [sending, setSending] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const originRef = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = () => {
     setSending(true);
-    setTimeout(() => {
+    if (originRef.current) {
+      originRef.current.value = JSON.stringify({
+        datetime: new Date().toString(),
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        referer: document.referrer,
+        from: window.location.href,
+      });
+    }
+    // отправка уходит в скрытый iframe, страница не перезагружается
+    window.setTimeout(() => {
       setSending(false);
-      (e.target as HTMLFormElement).reset();
+      formRef.current?.reset();
       toast.success("Заявка отправлена — свяжусь с вами в течение часа");
-    }, 600);
+    }, 900);
   };
+
+  const inputClass = "h-12 rounded-none bg-card border-border";
+  const labelClass = "text-xs uppercase tracking-[0.2em] text-muted-foreground";
 
   return (
     <div className="bg-background border border-border p-6 lg:p-10 shadow-elegant">
       <div className="text-xs uppercase tracking-[0.3em] text-primary">Персональная заявка</div>
       <h3 className="font-display text-3xl mt-4 text-gradient-soft">Свяжусь лично</h3>
 
-      <form onSubmit={onSubmit} className="mt-8 space-y-5">
+      <iframe name="amo_target" title="amo" className="hidden" />
+
+      <form
+        ref={formRef}
+        action={ACTION}
+        method="POST"
+        encType="multipart/form-data"
+        target="amo_target"
+        onSubmit={onSubmit}
+        className="mt-8 space-y-5"
+      >
+        <input type="hidden" name="form_id" value={FORM_ID} />
+        <input type="hidden" name="hash" value={FORM_HASH} />
+        <input type="hidden" name="user_origin" ref={originRef} />
+
         <div className="space-y-2">
-          <label htmlFor="name" className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Имя</label>
-          <Input id="name" name="name" required placeholder="Как к вам обращаться" className="h-12 rounded-none bg-card border-border" />
+          <label htmlFor="amo-name" className={labelClass}>Имя</label>
+          <Input id="amo-name" name={FIELD.name} required placeholder="Как к вам обращаться" className={inputClass} />
         </div>
         <div className="space-y-2">
-          <label htmlFor="phone" className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Телефон</label>
-          <Input id="phone" name="phone" type="tel" required placeholder="+7 (___) ___-__-__" className="h-12 rounded-none bg-card border-border" />
+          <label htmlFor="amo-phone" className={labelClass}>Телефон</label>
+          <Input id="amo-phone" name={FIELD.phone} type="tel" required placeholder="+7 (___) ___-__-__" className={inputClass} />
         </div>
         <div className="space-y-2">
-          <label htmlFor="email" className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Email</label>
-          <Input id="email" name="email" type="email" placeholder="mail@example.com" className="h-12 rounded-none bg-card border-border" />
+          <label htmlFor="amo-email" className={labelClass}>Email</label>
+          <Input id="amo-email" name={FIELD.email} type="email" placeholder="mail@example.com" className={inputClass} />
         </div>
         <div className="space-y-2">
-          <label htmlFor="message" className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Комментарий</label>
-          <Textarea id="message" name="message" rows={4} placeholder="Какой автомобиль вы рассматриваете, бюджет, сроки" className="rounded-none bg-card border-border resize-none" />
+          <label htmlFor="amo-note" className={labelClass}>Комментарий</label>
+          <Textarea id="amo-note" name={FIELD.note} rows={4} placeholder="Какой автомобиль вы рассматриваете, бюджет, сроки" className="rounded-none bg-card border-border resize-none" />
         </div>
         <Button type="submit" disabled={sending} className="w-full h-12 rounded-none tracking-[0.2em] uppercase text-xs">
           {sending ? "Отправляю…" : "Отправить заявку"}
