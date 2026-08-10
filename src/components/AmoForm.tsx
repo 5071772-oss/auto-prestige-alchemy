@@ -26,13 +26,14 @@ export default function AmoForm() {
       };
 
     const scriptId = `amoforms_script_${FORM_ID}`;
-    if (!document.getElementById(scriptId)) {
+    if (!document.getElementById(scriptId) && ref.current) {
       const s = document.createElement("script");
       s.id = scriptId;
       s.async = true;
       s.charset = "utf-8";
       s.src = `https://forms.amocrm.ru/forms/assets/js/amoforms.js?${Date.now()}`;
-      document.body.appendChild(s);
+      // amoCRM renders the form right where its script tag lives
+      ref.current.appendChild(s);
     }
   }, []);
 
