@@ -719,7 +719,7 @@ function CTA() {
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
                   <MessageCircle className="w-4 h-4 text-primary" />
                 </span>
-                <span className="text-foreground/90 group-hover:text-foreground">Мессенджер MAX</span>
+                <span className="text-foreground/90 group-hover:text-foreground">Max · +79162253359</span>
               </a>
             </div>
           </Reveal>
