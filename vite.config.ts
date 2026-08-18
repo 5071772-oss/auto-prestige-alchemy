@@ -11,6 +11,15 @@ export default defineConfig(({ mode }) => ({
     hmr: {
       overlay: false,
     },
+    proxy: process.env.LOVABLE_PREVIEW_HOST
+      ? {
+          "/__l5e/assets-v1": {
+            target: `https://${process.env.LOVABLE_PREVIEW_HOST}`,
+            changeOrigin: true,
+            secure: true,
+          },
+        }
+      : undefined,
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
