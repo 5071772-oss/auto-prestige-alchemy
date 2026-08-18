@@ -709,11 +709,11 @@ function CTA() {
                 </span>
                 <span className="text-foreground/90 group-hover:text-foreground">+7 (916) 225-33-59</span>
               </a>
-              <a href="https://t.me/" className="flex items-center gap-4 group">
+              <a href="https://t.me/nixon_motors" className="flex items-center gap-4 group">
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
                   <Send className="w-4 h-4 text-primary" />
                 </span>
-                <span className="text-foreground/90 group-hover:text-foreground">Telegram · @nikolaev_auto</span>
+                <span className="text-foreground/90 group-hover:text-foreground">Telegram · @nixon_motors</span>
               </a>
               <a href="https://max.ru/+79162253359" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
