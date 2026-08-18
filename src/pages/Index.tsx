@@ -719,7 +719,7 @@ function CTA() {
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
                   <MessageCircle className="w-4 h-4 text-primary" />
                 </span>
-                <span className="text-foreground/90 group-hover:text-foreground">'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''\n                                        \n                                            \n                                            I have approved the plan</span>
+                <span className="text-foreground/90 group-hover:text-foreground">Мессенджер MAX</span>
               </a>
             </div>
           </Reveal>
