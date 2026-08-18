@@ -1,4 +1,3 @@
-import AmoForm from "@/components/AmoForm";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Phone, MessageCircle, Send, ArrowRight, ArrowUpRight, Check, Star,
@@ -725,9 +724,6 @@ function CTA() {
           </Reveal>
         </div>
 
-        <Reveal delay={200}>
-          <AmoForm />
-        </Reveal>
       </div>
     </section>
   );
