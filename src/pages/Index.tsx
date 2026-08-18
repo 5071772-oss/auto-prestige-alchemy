@@ -1,3 +1,4 @@
+import AmoForm from "@/components/AmoForm";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Phone, MessageCircle, Send, ArrowRight, ArrowUpRight, Check, Star,
@@ -725,9 +726,7 @@ function CTA() {
         </div>
 
         <Reveal delay={200}>
-          <div className="bg-muted/30 border border-border rounded-lg p-8 h-[400px] flex items-center justify-center text-muted-foreground text-sm uppercase tracking-widest">
-            Форма заявки
-          </div>
+          <AmoForm />
         </Reveal>
       </div>
     </section>
