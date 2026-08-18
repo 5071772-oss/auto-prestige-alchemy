@@ -11,9 +11,8 @@ const ACTION = "https://forms.amocrm.ru/queue/add";
 // Полевые имена берутся из настроек формы amoCRM
 const FIELD = {
   name: "fields[name_1]",
-  phone: "fields[1072531_1][1339131]",
-  email: "fields[1072533_1][1339143]",
-  budget: "fields[1072589_2]",
+  phone: "fields[985603_3][1442081]",
+  email: "fields[985605_1][1442093]",
   note: "fields[note_2]",
 };
 
