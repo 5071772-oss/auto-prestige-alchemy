@@ -715,7 +715,7 @@ function CTA() {
                 </span>
                 <span className="text-foreground/90 group-hover:text-foreground">Telegram · @nixon_motors</span>
               </a>
-              <a href="https://max.ru/+79162253359" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
+              <a href="https://max.ru/u/f9LHodD0cOIVAsyAUIkF0DqVhojFVLR45PrJo6LSR3t2ytElHfdljYBKjM0" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
                   <MessageCircle className="w-4 h-4 text-primary" />
                 </span>
@@ -760,7 +760,7 @@ function Footer() {
             <li><a href="mailto:hello@nikolaev-auto.ru" className="hover:text-foreground transition-smooth">hello@nikolaev-auto.ru</a></li>
             <li className="flex gap-4 pt-2">
               <a href="https://t.me/" aria-label="Telegram" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Send className="w-4 h-4" /></a>
-              <a href="https://max.ru/+79162253359" aria-label="Max" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><MessageCircle className="w-4 h-4" /></a>
+              <a href="https://max.ru/u/f9LHodD0cOIVAsyAUIkF0DqVhojFVLR45PrJo6LSR3t2ytElHfdljYBKjM0" target="_blank" rel="noopener noreferrer" aria-label="Max" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><MessageCircle className="w-4 h-4" /></a>
               <a href="tel:+79162253359" aria-label="Phone" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Phone className="w-4 h-4" /></a>
             </li>
           </ul>
