@@ -135,9 +135,6 @@ function Hero() {
                 Получить консультацию <ArrowRight className="ml-2 w-4 h-4" />
               </a>
             </Button>
-            <Button asChild size="lg" variant="outline" className="h-14 px-8 rounded-sm border-border bg-transparent hover:bg-secondary text-foreground hover:text-foreground text-sm tracking-wide uppercase">
-              <a href="#services">Подобрать автомобиль</a>
-            </Button>
           </div>
         </Reveal>
 
