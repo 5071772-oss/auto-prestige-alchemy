@@ -4,8 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 
-const FORM_ID = "1737146";
-const FORM_HASH = "69729c933f32f7605318fdab731e5827";
+const FORM_ID = "1737982";
+const FORM_HASH = "020f189ecc866669de0391b48066c721";
 const ACTION = "https://forms.amocrm.ru/queue/add";
 
 // Полевые имена берутся из настроек формы amoCRM
