@@ -8,8 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import heroCar from "@/assets/hero-car.jpg";
-import portraitAsset from "@/assets/portrait.jpg.asset.json";
-const portrait = portraitAsset.url;
+import portrait from "@/assets/portrait.jpg";
 import carAudi from "@/assets/car-audi.jpg";
 import carBmw from "@/assets/car-bmw.jpg";
 import carMercedes from "@/assets/car-mercedes.jpg";
