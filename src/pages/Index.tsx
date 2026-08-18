@@ -487,9 +487,6 @@ function Services() {
                 <s.icon className="w-9 h-9 text-primary" strokeWidth={1.2} />
                 <h3 className="font-display text-2xl mt-8">{s.t}</h3>
                 <p className="mt-4 text-sm text-muted-foreground leading-relaxed">{s.d}</p>
-                <div className="mt-8 flex items-center gap-2 text-xs uppercase tracking-[0.3em] text-primary opacity-0 group-hover:opacity-100 transition-smooth">
-                  Подробнее <ArrowRight className="w-3.5 h-3.5" />
-                </div>
               </div>
             </Reveal>
           ))}
