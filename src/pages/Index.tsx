@@ -724,6 +724,11 @@ function CTA() {
           </Reveal>
         </div>
 
+        <Reveal delay={200}>
+          <div className="bg-muted/30 border border-border rounded-lg p-8 h-[400px] flex items-center justify-center text-muted-foreground text-sm uppercase tracking-widest">
+            Форма заявки
+          </div>
+        </Reveal>
       </div>
     </section>
   );
