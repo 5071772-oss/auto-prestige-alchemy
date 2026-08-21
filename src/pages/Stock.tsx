@@ -1,8 +1,7 @@
 import AmoForm from "@/components/AmoForm";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
-  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown, Gauge, Fuel, Zap, Palette, Calendar,
-  ChevronLeft, ChevronRight
+  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown, Gauge, Fuel, Zap, Palette, Calendar
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -124,18 +123,6 @@ function CarCard({ car }: { car: Car }) {
     return new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 }).format(price);
   };
 
-  const nextImage = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setActiveImage((prev) => (prev + 1) % car.images.length);
-  };
-
-  const prevImage = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setActiveImage((prev) => (prev - 1 + car.images.length) % car.images.length);
-  };
-
   return (
     <div className="group bg-graphite-deep border border-border hover:border-primary/40 transition-smooth overflow-hidden flex flex-col h-full">
       {/* Image Gallery */}
@@ -145,38 +132,19 @@ function CarCard({ car }: { car: Car }) {
           alt={`${car.make} ${car.model}`}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
-        
         {car.images.length > 1 && (
-          <>
-            <button
-              onClick={prevImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-primary hover:border-primary"
-              aria-label="Previous image"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button
-              onClick={nextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-primary hover:border-primary"
-              aria-label="Next image"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-            
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full">
-              {car.images.slice(0, 6).map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setActiveImage(idx);
-                  }}
-                  className={`w-1.5 h-1.5 rounded-full transition-smooth ${idx === activeImage ? 'bg-primary w-4' : 'bg-white/40 hover:bg-white/60'}`}
-                />
-              ))}
-            </div>
-          </>
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full">
+            {car.images.slice(0, 6).map((_, idx) => (
+              <button
+                key={idx}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setActiveImage(idx);
+                }}
+                className={`w-1.5 h-1.5 rounded-full transition-smooth ${idx === activeImage ? 'bg-primary w-4' : 'bg-white/40 hover:bg-white/60'}`}
+              />
+            ))}
+          </div>
         )}
         <div className="absolute top-4 left-4 z-10">
           <span className="px-3 py-1 bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-medium rounded-sm">
