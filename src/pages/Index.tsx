@@ -794,7 +794,7 @@ function Footer() {
           <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
             <li><a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a></li>
             <li><a href="#services" className="hover:text-foreground transition-smooth">Услуги</a></li>
-            <li><a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a></li>
+            <li><a href="#gallery" className="hover:text-foreground transition-smooth">В наличии</a></li>
             <li><a href="#process" className="hover:text-foreground transition-smooth">Процесс</a></li>
           </ul>
         </div>
