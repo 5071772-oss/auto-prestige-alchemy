@@ -79,7 +79,7 @@ function Nav() {
         <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
           <a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a>
           <a href="#services" className="hover:text-foreground transition-smooth">Услуги</a>
-          <a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a>
+          <a href="#gallery" className="hover:text-foreground transition-smooth">В наличии</a>
           <a href="#process" className="hover:text-foreground transition-smooth">Процесс</a>
           <a href="#contact" className="hover:text-foreground transition-smooth">Контакты</a>
         </nav>
@@ -132,8 +132,8 @@ function Hero() {
         <Reveal delay={400}>
           <div className="mt-12 flex flex-wrap items-center gap-4">
             <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase">
-              <a href="#contact">
-                Получить консультацию <ArrowRight className="ml-2 w-4 h-4" />
+              <a href="#gallery">
+                Автомобили в наличии <ArrowRight className="ml-2 w-4 h-4" />
               </a>
             </Button>
           </div>
@@ -541,15 +541,15 @@ function Gallery() {
       <div className="container">
         <div className="flex flex-wrap items-end justify-between gap-8">
           <Reveal>
-            <SectionLabel>Гараж клиентов</SectionLabel>
+            <SectionLabel>Автомобили в наличии</SectionLabel>
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl mt-8 max-w-3xl text-gradient-soft">
-              Автомобили, которые<br />я привёз{" "}
-              <span className="italic text-gradient-gold">своим клиентам.</span>
+              Ближайшие поставки<br />и{" "}
+              <span className="italic text-gradient-gold">наличие.</span>
             </h2>
           </Reveal>
           <Reveal delay={150}>
-            <a href="#contact" className="text-sm uppercase tracking-[0.3em] text-primary inline-flex items-center gap-2 group">
-              Заказать подобный <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <a href="#gallery" className="text-sm uppercase tracking-[0.3em] text-primary inline-flex items-center gap-2 group">
+              Смотреть наличие <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </Reveal>
         </div>
@@ -794,7 +794,7 @@ function Footer() {
           <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
             <li><a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a></li>
             <li><a href="#services" className="hover:text-foreground transition-smooth">Услуги</a></li>
-            <li><a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a></li>
+            <li><a href="#gallery" className="hover:text-foreground transition-smooth">В наличии</a></li>
             <li><a href="#process" className="hover:text-foreground transition-smooth">Процесс</a></li>
           </ul>
         </div>
