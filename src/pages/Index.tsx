@@ -3,10 +3,11 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Phone, MessageCircle, Send, ArrowRight, ArrowUpRight, Check, Star,
   Search, KeyRound, Globe2, ShieldCheck, Truck, Award, Users, Clock, Crown,
-  ChevronRight, Landmark, FileText, CreditCard,
+  ChevronRight, Landmark, FileText, CreditCard, Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 import heroCar from "@/assets/hero-car.jpg";
 import portrait from "@/assets/portrait.jpg";
 import carAudi from "@/assets/car-audi.jpg";
