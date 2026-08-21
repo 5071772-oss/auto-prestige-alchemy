@@ -1,7 +1,8 @@
 import AmoForm from "@/components/AmoForm";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
-  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown, Gauge, Fuel, Zap, Palette, Calendar
+  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown, Gauge, Fuel, Zap, Palette, Calendar,
+  ChevronLeft, ChevronRight
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -38,56 +39,6 @@ const STOCK_DATA: Car[] = [
       "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-32.webp",
       "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-33.webp",
       "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-34.webp"
-    ]
-  },
-  {
-    make: "Mercedes-Benz",
-    model: "V-class 300d 4Matic",
-    year: "2024",
-    price: 18500000,
-    mileage: "0",
-    engine: "Дизель",
-    power: "237",
-    color: "Черный обсидиан / Коричневый салон",
-    status: "В наличии",
-    description: "AMG Line, Night пакет, панорамная крыша, акустика Burmester.",
-    images: [
-      "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-25.webp",
-      "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-26.webp",
-      "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-25_2.webp",
-      "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-25_3.webp"
-    ]
-  },
-  {
-    make: "Porsche",
-    model: "Cayenne Coupe S",
-    year: "2024",
-    price: 19800000,
-    mileage: "0",
-    engine: "Бензин",
-    power: "474",
-    color: "Меловой (Chalk) / Красный салон",
-    status: "В пути",
-    description: "Спортивная выхлопная система, пакет SportDesign, матричные фары.",
-    images: [
-      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&q=80&w=1200"
-    ]
-  },
-  {
-    make: "Audi",
-    model: "Q8 50 TDI Quattro",
-    year: "2024",
-    price: 13900000,
-    mileage: "0",
-    engine: "Дизель",
-    power: "286",
-    color: "Серый Дайтона / Черный салон",
-    status: "В пути",
-    description: "S-line, пневмоподвеска, Bang & Olufsen, доводчики дверей.",
-    images: [
-      "https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&q=80&w=1200",
-      "https://images.unsplash.com/photo-1606152421802-db97b9c7a11b?auto=format&fit=crop&q=80&w=1200"
     ]
   }
 ];
@@ -173,6 +124,18 @@ function CarCard({ car }: { car: Car }) {
     return new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 0 }).format(price);
   };
 
+  const nextImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setActiveImage((prev) => (prev + 1) % car.images.length);
+  };
+
+  const prevImage = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setActiveImage((prev) => (prev - 1 + car.images.length) % car.images.length);
+  };
+
   return (
     <div className="group bg-graphite-deep border border-border hover:border-primary/40 transition-smooth overflow-hidden flex flex-col h-full">
       {/* Image Gallery */}
@@ -182,19 +145,38 @@ function CarCard({ car }: { car: Car }) {
           alt={`${car.make} ${car.model}`}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
+        
         {car.images.length > 1 && (
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full">
-            {car.images.slice(0, 6).map((_, idx) => (
-              <button
-                key={idx}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setActiveImage(idx);
-                }}
-                className={`w-1.5 h-1.5 rounded-full transition-smooth ${idx === activeImage ? 'bg-primary w-4' : 'bg-white/40 hover:bg-white/60'}`}
-              />
-            ))}
-          </div>
+          <>
+            <button
+              onClick={prevImage}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-primary hover:border-primary"
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <button
+              onClick={nextImage}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full bg-black/40 backdrop-blur-md border border-white/10 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all hover:bg-primary hover:border-primary"
+              aria-label="Next image"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+            
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 px-3 py-1.5 bg-black/40 backdrop-blur-md rounded-full">
+              {car.images.slice(0, 6).map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setActiveImage(idx);
+                  }}
+                  className={`w-1.5 h-1.5 rounded-full transition-smooth ${idx === activeImage ? 'bg-primary w-4' : 'bg-white/40 hover:bg-white/60'}`}
+                />
+              ))}
+            </div>
+          </>
         )}
         <div className="absolute top-4 left-4 z-10">
           <span className="px-3 py-1 bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-medium rounded-sm">
