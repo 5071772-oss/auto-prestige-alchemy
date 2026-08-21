@@ -79,10 +79,37 @@ function Nav() {
   );
 }
 
+type Car = {
+  id: string;
+  make: string;
+  model: string;
+  description: string | null;
+  year: number | null;
+  price: number | null;
+  mileage: number | null;
+  engine_type: string | null;
+  power: number | null;
+  color: string | null;
+  images: string[] | null;
+};
+
 export default function Stock() {
+  const [cars, setCars] = useState<Car[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    (async () => {
+      const { data } = await (supabase as any)
+        .from("cars")
+        .select("*")
+        .eq("status", "available")
+        .order("created_at", { ascending: false });
+      setCars((data as Car[]) ?? []);
+      setLoading(false);
+    })();
   }, []);
+
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
