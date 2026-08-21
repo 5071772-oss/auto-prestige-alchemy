@@ -17,7 +17,6 @@ interface Car {
   color: string;
   status: string;
   description: string;
-  priceVat?: number;
   images: string[];
 }
 
@@ -27,7 +26,6 @@ const STOCK_DATA: Car[] = [
     model: "BMW Х7 40D",
     year: "2025",
     price: 16200000,
-    priceVat: 18400000,
     mileage: "0",
     engine: "Дизель",
     power: "340",
@@ -196,11 +194,6 @@ function CarCard({ car }: { car: Car }) {
           </div>
           <div className="text-right">
             <div className="text-xl font-medium text-gradient-gold">{formatPrice(car.price)}</div>
-            {car.priceVat && (
-              <div className="text-[10px] uppercase tracking-wider text-muted-foreground mt-1">
-                с НДС: <span className="text-foreground/80">{formatPrice(car.priceVat)}</span>
-              </div>
-            )}
           </div>
         </div>
 
