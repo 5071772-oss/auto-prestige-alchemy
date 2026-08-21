@@ -35,9 +35,8 @@ export async function syncCarsFromGoogleSheet(csvUrl: string) {
 
     if (carsToInsert.length === 0) return { success: true, count: 0 };
 
-    // Clear existing cars (Simple sync: replace all)
-    // Note: In a real production app, you might want to match by ID or unique hash
-    const { error: deleteError } = await supabase.from("cars").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+    // Clear existing cars
+    const { error: deleteError } = await supabase.from("cars").delete().neq("brand", "SKIP_ALL_DELETE");
     if (deleteError) throw deleteError;
 
     const { error: insertError } = await supabase.from("cars").insert(carsToInsert);
