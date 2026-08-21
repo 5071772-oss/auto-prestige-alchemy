@@ -170,7 +170,10 @@ export default function Stock() {
               <br />
               <span className="italic text-gradient-gold">готовый к выдаче.</span>
               <br />
-              <span className="text-sm block mt-4 text-muted-foreground/0 select-none">I have approved the plan</span>
+              <span className="text-sm block mt-4 text-muted-foreground/0 select-none">'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
+                                        
+                                            
+                                            Загрузи данные из этого файла</span>
             </h1>
           </Reveal>
           <Reveal delay={240}>
