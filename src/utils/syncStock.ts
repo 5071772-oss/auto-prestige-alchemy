@@ -2,8 +2,10 @@ import { supabase } from "@/integrations/supabase/client";
 
 /**
  * Syncs car inventory from a Google Sheet CSV export.
- * Expected structure:
+ * Expected structure (comma separated):
  * A: Brand/Make, B: Model, C: Year, D: Price Cash, E: Price VAT, F: Specs, G: Mileage, H: Description, I-T: Images
+ * 
+ * NOTE: This parser uses a robust CSV splitting regex to handle quoted cells with commas.
  */
 export async function syncCarsFromGoogleSheet(csvUrl: string) {
   try {
@@ -11,7 +13,26 @@ export async function syncCarsFromGoogleSheet(csvUrl: string) {
     if (!response.ok) throw new Error("Failed to fetch Google Sheet CSV");
     
     const text = await response.text();
-    const rows = text.split("\n").map(row => row.split(",").map(cell => cell.trim().replace(/^"|"$/g, '')));
+    
+    // Robust CSV parsing regex to handle quoted values containing commas
+    const rows = text.split(/\r?\n/).filter(line => line.trim().length > 0).map(line => {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          result.push(current.trim().replace(/^"|"$/g, ''));
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      result.push(current.trim().replace(/^"|"$/g, ''));
+      return result;
+    });
     
     // Skip header row
     const dataRows = rows.slice(1);
@@ -19,7 +40,9 @@ export async function syncCarsFromGoogleSheet(csvUrl: string) {
     const carsToInsert = dataRows
       .filter(row => row[0] && row[1]) // Must have make and model
       .map(row => {
+        // Images are in columns I through T (indices 8 to 19)
         const images = row.slice(8, 20).filter(url => url && url.startsWith("http"));
+        
         return {
           make: row[0],
           model: row[1],
@@ -27,7 +50,7 @@ export async function syncCarsFromGoogleSheet(csvUrl: string) {
           price_cash: row[3],
           price_vat: row[4],
           specs: row[5],
-          mileage: parseInt(row[6].replace(/\D/g, '')) || null, // Convert "5 000 км" to number
+          mileage: parseInt(row[6]?.toString().replace(/\D/g, '')) || null,
           description: row[7],
           images: images
         };

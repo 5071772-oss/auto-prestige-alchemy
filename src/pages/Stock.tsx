@@ -212,8 +212,17 @@ export default function Stock() {
 
   const handleSync = async () => {
     // Hidden feature: Double click on "В наличии" label to sync
-    const url = prompt("Введите URL CSV файла Google Таблицы:");
+    const url = prompt("Введите URL опубликованной CSV-таблицы Google Sheets:\n(Файл > Поделиться > Опубликовать в интернете > CSV)");
     if (!url) return;
+
+    if (!url.includes("csv")) {
+      toast({
+        title: "Ошибка формата",
+        description: "Убедитесь, что вы выбрали формат CSV при публикации таблицы.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     toast({
       title: "Синхронизация...",
@@ -230,7 +239,7 @@ export default function Stock() {
     } else {
       toast({
         title: "Ошибка",
-        description: "Не удалось синхронизировать данные.",
+        description: "Не удалось синхронизировать данные. Проверьте формат таблицы.",
         variant: "destructive",
       });
     }
