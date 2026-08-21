@@ -8,6 +8,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { syncCarsFromGoogleSheet } from "@/utils/syncStock";
+import { syncCarsFromGoogleSheetsConnector } from "@/utils/googleSheetsSync";
 import { useToast } from "@/components/ui/use-toast";
 
 function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
@@ -212,26 +213,16 @@ export default function Stock() {
   };
 
   const handleSync = async () => {
-    // Hidden feature: Double click on "В наличии" label to sync
-    const url = prompt("Введите URL опубликованной CSV-таблицы Google Sheets:\n(Файл > Поделиться > Опубликовать в интернете > CSV)");
-    if (!url) return;
-
-    if (!url.includes("csv")) {
-      toast({
-        title: "Ошибка формата",
-        description: "Убедитесь, что вы выбрали формат CSV при публикации таблицы.",
-        variant: "destructive",
-      });
-      return;
-    }
+    const sheetId = prompt("Введите ID вашей Google Таблицы (из URL таблицы):\nНапример: 1NNC5Z3fDUYh8NLN_bJ8j5qgFfdTF3xcSE-j33NKr4H0");
+    if (!sheetId) return;
 
     toast({
-      title: "Синхронизация...",
-      description: "Загружаем данные из таблицы.",
+      title: "Синхронизация через Connector...",
+      description: "Загружаем данные из таблицы с помощью Google Sheets Connector.",
     });
 
     try {
-      const result = await syncCarsFromGoogleSheet(url);
+      const result = await syncCarsFromGoogleSheetsConnector(sheetId);
       if (result.success) {
         toast({
           title: "Успех!",
@@ -239,12 +230,13 @@ export default function Stock() {
         });
         fetchCars();
       } else {
-        throw new Error("Sync failed");
+        throw new Error(result.error || "Sync failed");
       }
-    } catch (err) {
+    } catch (err: any) {
+      console.error("Sync error:", err);
       toast({
         title: "Ошибка",
-        description: "Не удалось синхронизировать данные. Проверьте формат таблицы.",
+        description: err.message || "Не удалось синхронизировать данные через Connector.",
         variant: "destructive",
       });
     }
