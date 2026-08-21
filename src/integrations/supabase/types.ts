@@ -16,31 +16,49 @@ export type Database = {
     Tables: {
       cars: {
         Row: {
-          brand: string
+          color: string | null
           created_at: string | null
           description: string | null
+          engine_type: string | null
           id: string
-          image_url: string
+          images: string[] | null
+          make: string
+          mileage: number | null
           model: string
-          spec: string
+          power: number | null
+          price: number | null
+          status: string | null
+          year: number | null
         }
         Insert: {
-          brand: string
+          color?: string | null
           created_at?: string | null
           description?: string | null
+          engine_type?: string | null
           id?: string
-          image_url: string
+          images?: string[] | null
+          make: string
+          mileage?: number | null
           model: string
-          spec: string
+          power?: number | null
+          price?: number | null
+          status?: string | null
+          year?: number | null
         }
         Update: {
-          brand?: string
+          color?: string | null
           created_at?: string | null
           description?: string | null
+          engine_type?: string | null
           id?: string
-          image_url?: string
+          images?: string[] | null
+          make?: string
+          mileage?: number | null
           model?: string
-          spec?: string
+          power?: number | null
+          price?: number | null
+          status?: string | null
+          year?: number | null
         }
         Relationships: []
       }
