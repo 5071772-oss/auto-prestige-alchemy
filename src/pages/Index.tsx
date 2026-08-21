@@ -498,14 +498,44 @@ function Services() {
 }
 
 function Gallery() {
-  const cars = [
-    { img: carMercedes, brand: "Mercedes-Benz", model: "G63 AMG", spec: "2024 · Германия", n: "01" },
-    { img: carAudi, brand: "Audi", model: "RS7 Performance", spec: "2024 · Германия", n: "02" },
-    { img: carBmw, brand: "BMW", model: "M8 Competition", spec: "2024 · Германия", n: "03" },
-    { img: carPorsche, brand: "Porsche", model: "911 Turbo S", spec: "2024 · Германия", n: "04" },
-    { img: carRange, brand: "Range Rover", model: "Autobiography", spec: "2024 · Великобритания", n: "05" },
-    { img: heroCar, brand: "Mercedes-Maybach", model: "S 680", spec: "2024 · ОАЭ", n: "06" },
-  ];
+  const [cars, setCars] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCars = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("cars")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (error) throw error;
+        setCars(data || []);
+      } catch (error) {
+        console.error("Error fetching cars:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCars();
+
+    const channel = supabase
+      .channel("cars_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "cars" },
+        () => {
+          fetchCars();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+
   return (
     <section id="gallery" className="py-32 bg-graphite-deep">
       <div className="container">
@@ -524,32 +554,52 @@ function Gallery() {
           </Reveal>
         </div>
 
-        <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {cars.map((c, i) => (
-            <Reveal key={c.n} delay={(i % 3) * 100}>
-              <div className="group relative overflow-hidden bg-background border border-border">
-                <div className="aspect-[4/3] overflow-hidden bg-graphite">
-                  <img
-                    src={c.img}
-                    alt={`${c.brand} ${c.model}`}
-                    loading="lazy"
-                    width={1280}
-                    height={960}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-6 flex items-start justify-between gap-4 border-t border-border">
-                  <div>
-                    <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">{c.brand}</div>
-                    <div className="font-display text-2xl mt-2">{c.model}</div>
-                    <div className="text-sm text-muted-foreground mt-2">{c.spec}</div>
+        {loading ? (
+          <div className="mt-20 flex justify-center">
+            <Loader2 className="w-8 h-8 text-primary animate-spin" />
+          </div>
+        ) : (
+          <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {cars.map((c, i) => (
+              <Reveal key={c.id} delay={(i % 3) * 100}>
+                <div className="group relative overflow-hidden bg-background border border-border">
+                  <div className="aspect-[4/3] overflow-hidden bg-graphite">
+                    <img
+                      src={c.image_url}
+                      alt={`${c.brand} ${c.model}`}
+                      loading="lazy"
+                      width={1280}
+                      height={960}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
                   </div>
-                  <div className="font-display text-xs text-primary/70 tracking-widest">{c.n}</div>
+                  <div className="p-6 flex items-start justify-between gap-4 border-t border-border">
+                    <div className="flex-1">
+                      <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">{c.brand}</div>
+                      <div className="font-display text-2xl mt-2">{c.model}</div>
+                      <div className="text-sm text-muted-foreground mt-2">{c.spec}</div>
+                      {c.description && (
+                        <p className="mt-3 text-sm text-muted-foreground/80 leading-relaxed italic line-clamp-2">
+                          {c.description}
+                        </p>
+                      )}
+                      <Button asChild variant="outline" size="sm" className="mt-6 w-full rounded-sm border-primary/20 hover:border-primary hover:bg-primary/5 text-xs uppercase tracking-widest group/btn">
+                        <a href="#contact">
+                          Заказать такой <ArrowUpRight className="ml-2 w-3 h-3 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5 transition-transform" />
+                        </a>
+                      </Button>
+                    </div>
+                  </div>
                 </div>
+              </Reveal>
+            ))}
+            {cars.length === 0 && (
+              <div className="col-span-full py-20 text-center text-muted-foreground italic">
+                Скоро здесь появятся новые автомобили из Google Таблиц...
               </div>
-            </Reveal>
-          ))}
-        </div>
+            )}
+          </div>
+        )}
       </div>
     </section>
   );
