@@ -16,31 +16,70 @@ export type Database = {
     Tables: {
       cars: {
         Row: {
-          brand: string
+          color: string | null
           created_at: string | null
           description: string | null
+          engine_type: string | null
           id: string
-          image_url: string
+          images: string[] | null
+          make: string
+          mileage: number | null
           model: string
-          spec: string
+          power: number | null
+          price: number | null
+          status: string | null
+          year: number | null
         }
         Insert: {
-          brand: string
+          color?: string | null
           created_at?: string | null
           description?: string | null
+          engine_type?: string | null
           id?: string
-          image_url: string
+          images?: string[] | null
+          make: string
+          mileage?: number | null
           model: string
-          spec: string
+          power?: number | null
+          price?: number | null
+          status?: string | null
+          year?: number | null
         }
         Update: {
-          brand?: string
+          color?: string | null
           created_at?: string | null
           description?: string | null
+          engine_type?: string | null
           id?: string
-          image_url?: string
+          images?: string[] | null
+          make?: string
+          mileage?: number | null
           model?: string
-          spec?: string
+          power?: number | null
+          price?: number | null
+          status?: string | null
+          year?: number | null
+        }
+        Relationships: []
+      }
+      sync_logs: {
+        Row: {
+          created_at: string | null
+          id: string
+          message: string | null
+          status: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          message?: string | null
+          status: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          message?: string | null
+          status?: string
         }
         Relationships: []
       }
@@ -49,7 +88,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      trigger_stock_sync: { Args: never; Returns: undefined }
     }
     Enums: {
       [_ in never]: never
