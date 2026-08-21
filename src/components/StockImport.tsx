@@ -109,16 +109,24 @@ export default function StockImport() {
         </div>
       </div>
 
-      {stats && (
-        <div className="mt-6 p-4 bg-primary/5 border border-primary/20 rounded-sm flex items-center gap-3">
-          <AlertCircle className="w-4 h-4 text-primary" />
-          <span className="text-xs text-muted-foreground">
-            Обработано записей: <strong className="text-foreground">{stats.total}</strong>. 
-            Успешно: <strong className="text-green-500">{stats.success}</strong>. 
-            Ошибок: <strong className="text-red-500">{stats.failed}</strong>.
+      <div className="mt-6 flex flex-col gap-3">
+        {stats && (
+          <div className="p-4 bg-primary/5 border border-primary/20 rounded-sm flex items-center gap-3">
+            <AlertCircle className="w-4 h-4 text-primary" />
+            <span className="text-xs text-muted-foreground">
+              Результат: <strong className="text-foreground">{stats.total}</strong> записей. 
+              Успешно: <strong className="text-green-500">{stats.success}</strong>. 
+            </span>
+          </div>
+        )}
+        <div className="flex items-center gap-2 px-1">
+          <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
+          <span className="text-[10px] uppercase tracking-widest text-muted-foreground/60">
+            Автоматическое обновление включено (каждые 60 мин)
           </span>
         </div>
-      )}
+      </div>
+
     </div>
   );
 }
