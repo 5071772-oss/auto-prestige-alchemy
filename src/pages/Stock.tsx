@@ -92,7 +92,11 @@ type Car = {
   power: number | null;
   color: string | null;
   images: string[] | null;
+  status: string | null;
 };
+
+const SPREADSHEET_ID = "1mwPyeq_pnRIJ0yV0D-xH0wbHVrUB438mHKZvk_nnhog";
+const RANGE = "Stock!A1:Z100";
 
 export default function Stock() {
   const [cars, setCars] = useState<Car[]>([]);
@@ -100,15 +104,53 @@ export default function Stock() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    (async () => {
-      const { data } = await (supabase as any)
-        .from("cars")
-        .select("*")
-        .eq("status", "available")
-        .order("created_at", { ascending: false });
-      setCars((data as Car[]) ?? []);
-      setLoading(false);
-    })();
+    const fetchStock = async () => {
+      try {
+        const url = `https://connector-gateway.lovable.dev/google_sheets/v4/spreadsheets/${SPREADSHEET_ID}/values/${RANGE}`;
+        const response = await fetch(url, {
+          headers: {
+            // These headers are automatically handled by Lovable Cloud when running in the browser
+            // for configured connectors, but we use them explicitly if needed for the gateway.
+            "Accept": "application/json",
+          },
+        });
+        
+        const data = await response.json();
+        
+        if (data.values && data.values.length > 1) {
+          const rows = data.values;
+          // Skip header row
+          const carsData: Car[] = rows.slice(1).map((row: string[], index: number) => ({
+            id: `gsheet-${index}`,
+            make: row[0] || "",
+            model: row[1] || "",
+            year: row[2] ? parseInt(row[2]) : null,
+            price: row[3] ? parseFloat(row[3]) : null,
+            mileage: row[4] ? parseInt(row[4]) : null,
+            engine_type: row[5] || null,
+            power: row[6] ? parseInt(row[6]) : null,
+            color: row[7] || null,
+            status: row[8] || "available",
+            description: row[9] || null,
+            images: row[10] ? row[10].split(",").map(url => url.trim()) : [],
+          }));
+
+          // Filter for available cars
+          const availableCars = carsData.filter(car => 
+            car.status?.toLowerCase().includes("наличии") || 
+            car.status?.toLowerCase().includes("available")
+          );
+
+          setCars(availableCars);
+        }
+      } catch (error) {
+        console.error("Error fetching stock from Google Sheets:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStock();
   }, []);
 
 
