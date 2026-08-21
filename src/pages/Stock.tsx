@@ -229,14 +229,18 @@ export default function Stock() {
       description: "Загружаем данные из таблицы.",
     });
 
-    const result = await syncCarsFromGoogleSheet(url);
-    if (result.success) {
-      toast({
-        title: "Успех!",
-        description: `Синхронизировано ${result.count} автомобилей.`,
-      });
-      fetchCars();
-    } else {
+    try {
+      const result = await syncCarsFromGoogleSheet(url);
+      if (result.success) {
+        toast({
+          title: "Успех!",
+          description: `Синхронизировано ${result.count} автомобилей.`,
+        });
+        fetchCars();
+      } else {
+        throw new Error("Sync failed");
+      }
+    } catch (err) {
       toast({
         title: "Ошибка",
         description: "Не удалось синхронизировать данные. Проверьте формат таблицы.",
