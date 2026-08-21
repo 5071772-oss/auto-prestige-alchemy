@@ -1,0 +1,325 @@
+import AmoForm from "@/components/AmoForm";
+import { useEffect, useState, useRef } from "react";
+import { ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown, ChevronLeft, ChevronRight, Calendar, Gauge, FileText, Landmark } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
+import { syncCarsFromGoogleSheet } from "@/utils/syncStock";
+import { useToast } from "@/components/ui/use-toast";
+function Reveal({ children, delay = 0, className = "" }) {
+    const ref = useRef(null);
+    const [shown, setShown] = useState(false);
+    useEffect(() => {
+        const el = ref.current;
+        if (!el)
+            return;
+        const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) {
+            setShown(true);
+            io.disconnect();
+        } }, { threshold: 0.15 });
+        io.observe(el);
+        return () => io.disconnect();
+    }, []);
+    return (<div ref={ref} className={className} style={{
+            opacity: shown ? 1 : 0,
+            transform: shown ? "translateY(0)" : "translateY(28px)",
+            transition: `opacity 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+        }}>
+      {children}
+    </div>);
+}
+function SectionLabel({ children }) {
+    return (<div className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-primary">
+      <span className="h-px w-8 bg-primary/60"/>
+      {children}
+    </div>);
+}
+function CarCard({ car }) {
+    const [currentImage, setCurrentImage] = useState(0);
+    const images = car.images?.length > 0 ? car.images : ["https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80"];
+    const nextImage = (e) => {
+        e.preventDefault();
+        setCurrentImage((prev) => (prev + 1) % images.length);
+    };
+    const prevImage = (e) => {
+        e.preventDefault();
+        setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+    };
+    return (<Reveal className="group bg-graphite-deep border border-border overflow-hidden rounded-sm hover:border-primary/40 transition-smooth">
+      <div className="relative aspect-[16/10] overflow-hidden">
+        <img src={images[currentImage]} alt={`${car.make} ${car.model}`} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"/>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60"/>
+        
+        {images.length > 1 && (<>
+            <button onClick={prevImage} className="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-smooth hover:bg-primary hover:text-primary-foreground">
+              <ChevronLeft className="w-4 h-4"/>
+            </button>
+            <button onClick={nextImage} className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-smooth hover:bg-primary hover:text-primary-foreground">
+              <ChevronRight className="w-4 h-4"/>
+            </button>
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
+              {images.map((_, idx) => (<div key={idx} className={`h-1 rounded-full transition-all duration-300 ${idx === currentImage ? "w-4 bg-primary" : "w-1 bg-white/40"}`}/>))}
+            </div>
+          </>)}
+      </div>
+
+      <div className="p-6">
+        <div className="flex justify-between items-start mb-4">
+          <div>
+            <h3 className="text-xl font-display text-gradient-soft">{car.make} {car.model}</h3>
+            <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground uppercase tracking-widest">
+              <span className="flex items-center gap-1"><Calendar className="w-3 h-3"/> {car.year}</span>
+              <span className="w-1 h-1 rounded-full bg-border"/>
+              <span className="flex items-center gap-1"><Gauge className="w-3 h-3"/> {car.mileage?.toLocaleString()} км</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-4 mb-6">
+          <div className="flex justify-between items-end">
+            <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Наличные</div>
+            <div className="text-xl font-medium text-foreground">{car.price_cash}</div>
+          </div>
+          {car.price_vat && (<div className="flex justify-between items-end border-t border-border pt-2">
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">С НДС</div>
+              <div className="text-sm text-primary font-medium">{car.price_vat}</div>
+            </div>)}
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 mb-6">
+          <div className="flex items-start gap-2 p-3 bg-background/50 border border-border rounded-sm">
+            <FileText className="w-4 h-4 text-primary shrink-0 mt-0.5"/>
+            <div className="text-[10px] leading-tight text-muted-foreground uppercase tracking-wider">
+              Комплектация: <span className="block text-foreground mt-0.5">{car.specs || 'Premium'}</span>
+            </div>
+          </div>
+          <div className="flex items-start gap-2 p-3 bg-background/50 border border-border rounded-sm">
+            <Landmark className="w-4 h-4 text-primary shrink-0 mt-0.5"/>
+            <div className="text-[10px] leading-tight text-muted-foreground uppercase tracking-wider">
+              Статус: <span className="block text-foreground mt-0.5">В наличии</span>
+            </div>
+          </div>
+        </div>
+
+        <Button asChild className="w-full bg-primary hover:bg-primary-glow text-primary-foreground rounded-sm transition-smooth group/btn">
+          <a href="#contact" className="flex items-center justify-center gap-2">
+            Забронировать <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform"/>
+          </a>
+        </Button>
+      </div>
+    </Reveal>);
+}
+function Nav() {
+    const [scrolled, setScrolled] = useState(false);
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 30);
+        window.addEventListener("scroll", onScroll);
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+    return (<header className={`fixed top-0 inset-x-0 z-50 transition-smooth ${scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"}`}>
+      <div className="container flex items-center justify-between h-20">
+        <a href="/" className="flex items-center gap-3">
+          <span className="font-display text-2xl tracking-tight text-gradient-soft">Николаев</span>
+          <span className="hidden sm:block h-4 w-px bg-border"/>
+          <span className="hidden sm:block text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Premium auto</span>
+        </a>
+        <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
+          <a href="/" className="hover:text-foreground transition-smooth">Главная</a>
+          <a href="/stock" className="text-foreground transition-smooth">В наличии</a>
+          <a href="/#services" className="hover:text-foreground transition-smooth">Услуги</a>
+          <a href="/#contact" className="hover:text-foreground transition-smooth">Контакты</a>
+        </nav>
+        <a href="#contact" className="group inline-flex items-center gap-2 text-sm border border-border hover:border-primary px-5 h-11 rounded-sm transition-smooth">
+          Связаться
+          <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"/>
+        </a>
+      </div>
+    </header>);
+}
+export default function Stock() {
+    const [cars, setCars] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const { toast } = useToast();
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        fetchCars();
+    }, []);
+    const fetchCars = async () => {
+        try {
+            setLoading(true);
+            const { data, error } = await supabase
+                .from("cars")
+                .select("*")
+                .order("created_at", { ascending: false });
+            if (error)
+                throw error;
+            setCars(data || []);
+        }
+        catch (error) {
+            console.error("Fetch error:", error);
+        }
+        finally {
+            setLoading(false);
+        }
+    };
+    const handleSync = async () => {
+        // Hidden feature: Double click on "В наличии" label to sync
+        const url = prompt("Введите URL CSV файла Google Таблицы:");
+        if (!url)
+            return;
+        toast({
+            title: "Синхронизация...",
+            description: "Загружаем данные из таблицы.",
+        });
+        const result = await syncCarsFromGoogleSheet(url);
+        if (result.success) {
+            toast({
+                title: "Успех!",
+                description: `Синхронизировано ${result.count} автомобилей.`,
+            });
+            fetchCars();
+        }
+        else {
+            toast({
+                title: "Ошибка",
+                description: "Не удалось синхронизировать данные.",
+                variant: "destructive",
+            });
+        }
+    };
+    return (<div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
+      <Nav />
+      
+      {/* Hero Section */}
+      <section className="relative pt-40 pb-20 overflow-hidden">
+        <div className="container relative z-10">
+          <Reveal>
+            <div onDoubleClick={handleSync} className="cursor-default">
+              <SectionLabel>Автомобили в наличии</SectionLabel>
+            </div>
+          </Reveal>
+          <Reveal delay={120}>
+            <h1 className="font-display mt-8 text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-4xl text-gradient-soft">
+              Премиальный парк,
+              <br />
+              <span className="italic text-gradient-gold">готовый к выдаче.</span>
+            </h1>
+          </Reveal>
+          <Reveal delay={240}>
+            <p className="mt-8 max-w-2xl text-lg text-muted-foreground leading-relaxed">
+              Все представленные автомобили прошли комплексную техническую проверку, 
+              юридическую очистку и готовы к оформлению в день обращения.
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      {/* Stock Grid */}
+      <section className="py-20 bg-graphite-deep/30">
+        <div className="container">
+          {loading ? (<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1, 2, 3].map((i) => (<div key={i} className="aspect-[16/20] bg-graphite-deep animate-pulse border border-border rounded-sm"/>))}
+            </div>) : cars.length > 0 ? (<div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {cars.map((car) => (<CarCard key={car.id} car={car}/>))}
+            </div>) : (<div className="text-center py-40 border border-dashed border-border/60">
+              <Reveal>
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-8">
+                  <ShieldCheck className="w-10 h-10 text-primary"/>
+                </div>
+                <h2 className="font-display text-3xl text-gradient-soft">Раздел наполняется</h2>
+                <p className="mt-4 text-muted-foreground max-w-md mx-auto">
+                  В данный момент мы обновляем каталог доступных автомобилей. 
+                  Оставьте заявку, чтобы получить актуальный список в PDF.
+                </p>
+                <div className="mt-10">
+                   <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase">
+                    <a href="#contact">
+                      Получить список в PDF <ArrowRight className="ml-2 w-4 h-4"/>
+                    </a>
+                  </Button>
+                </div>
+              </Reveal>
+            </div>)}
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-32 bg-background relative overflow-hidden">
+        <div className="container relative z-10">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+            <Reveal>
+              <SectionLabel>Персональный запрос</SectionLabel>
+              <h2 className="font-display text-4xl sm:text-5xl mt-8 text-gradient-soft leading-[1.1]">
+                Не нашли нужный <br />
+                <span className="italic text-gradient-gold">автомобиль в наличии?</span>
+              </h2>
+              <p className="mt-8 text-muted-foreground text-lg leading-relaxed max-w-lg">
+                Оставьте заявку, и я подберу идеальный вариант под ваши критерии 
+                из закрытых дилерских баз Европы и ОАЭ.
+              </p>
+              
+              <div className="mt-12 space-y-8">
+                <div>
+                  <div className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Связь напрямую</div>
+                  <div className="flex flex-wrap gap-4">
+                    <a href="tel:+79778468567" className="group flex items-center gap-3 p-4 bg-graphite-deep border border-border hover:border-primary transition-smooth rounded-sm">
+                      <div className="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-smooth">
+                        <Phone className="w-5 h-5"/>
+                      </div>
+                      <div>
+                        <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Звонок</div>
+                        <div className="text-sm font-medium">+7 (977) 846-85-67</div>
+                      </div>
+                    </a>
+                    <a href="https://t.me/nixon_motors" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-4 bg-graphite-deep border border-border hover:border-primary transition-smooth rounded-sm">
+                      <div className="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-smooth">
+                        <Send className="w-5 h-5"/>
+                      </div>
+                      <div>
+                        <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Telegram</div>
+                        <div className="text-sm font-medium">@nixon_motors</div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={200}>
+              <div className="relative p-8 sm:p-12 bg-graphite-deep border border-border shadow-2xl">
+                <div className="absolute top-0 right-0 p-8 opacity-10">
+                  <Crown className="w-24 h-24 text-primary"/>
+                </div>
+                <h3 className="font-display text-2xl mb-8 text-gradient-soft">Оставить заявку</h3>
+                <AmoForm />
+                <p className="mt-8 text-[11px] text-muted-foreground leading-relaxed text-center">
+                  Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности <br />
+                  и обработки персональных данных.
+                </p>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-20 border-t border-border bg-graphite-deep">
+        <div className="container">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-10">
+            <div>
+              <div className="font-display text-2xl tracking-tight text-gradient-soft mb-2">Николаев</div>
+              <div className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">Premium Automotive Expert</div>
+            </div>
+            <div className="flex flex-wrap gap-x-12 gap-y-6 text-sm text-muted-foreground">
+              <a href="/" className="hover:text-primary transition-smooth">Главная</a>
+              <a href="/stock" className="text-foreground">В наличии</a>
+              <a href="/#about" className="hover:text-primary transition-smooth">Об эксперте</a>
+              <a href="/#services" className="hover:text-primary transition-smooth">Услуги</a>
+            </div>
+            <div className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} Все права защищены
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>);
+}
