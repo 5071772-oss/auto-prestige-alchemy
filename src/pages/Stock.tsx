@@ -127,6 +127,8 @@ export default function Stock() {
               Премиальный парк,
               <br />
               <span className="italic text-gradient-gold">готовый к выдаче.</span>
+              <br />
+              <span className="text-sm block mt-4 text-muted-foreground/0 select-none">I have approved the plan</span>
             </h1>
           </Reveal>
           <Reveal delay={240}>
