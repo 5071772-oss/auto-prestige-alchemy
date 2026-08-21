@@ -1,4 +1,5 @@
 import AmoForm from "@/components/AmoForm";
+import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
   ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown
@@ -79,10 +80,37 @@ function Nav() {
   );
 }
 
+type Car = {
+  id: string;
+  make: string;
+  model: string;
+  description: string | null;
+  year: number | null;
+  price: number | null;
+  mileage: number | null;
+  engine_type: string | null;
+  power: number | null;
+  color: string | null;
+  images: string[] | null;
+};
+
 export default function Stock() {
+  const [cars, setCars] = useState<Car[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    (async () => {
+      const { data } = await (supabase as any)
+        .from("cars")
+        .select("*")
+        .eq("status", "available")
+        .order("created_at", { ascending: false });
+      setCars((data as Car[]) ?? []);
+      setLoading(false);
+    })();
   }, []);
+
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
@@ -110,28 +138,85 @@ export default function Stock() {
         </div>
       </section>
 
-      {/* Stock Grid Placeholder */}
+      {/* Stock Grid */}
       <section className="py-20 bg-graphite-deep/30">
-        <div className="container text-center py-40 border border-dashed border-border/60">
-          <Reveal>
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-8">
-              <ShieldCheck className="w-10 h-10 text-primary" />
+        <div className="container">
+          {loading ? (
+            <div className="text-center py-40 text-muted-foreground">Загружаем каталог…</div>
+          ) : cars.length === 0 ? (
+            <div className="text-center py-40 border border-dashed border-border/60">
+              <Reveal>
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-8">
+                  <ShieldCheck className="w-10 h-10 text-primary" />
+                </div>
+                <h2 className="font-display text-3xl text-gradient-soft">Раздел наполняется</h2>
+                <p className="mt-4 text-muted-foreground max-w-md mx-auto">
+                  В данный момент мы обновляем каталог доступных автомобилей.
+                  Оставьте заявку, чтобы получить актуальный список в PDF.
+                </p>
+                <div className="mt-10">
+                  <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase">
+                    <a href="#contact">
+                      Получить список в PDF <ArrowRight className="ml-2 w-4 h-4" />
+                    </a>
+                  </Button>
+                </div>
+              </Reveal>
             </div>
-            <h2 className="font-display text-3xl text-gradient-soft">Раздел наполняется</h2>
-            <p className="mt-4 text-muted-foreground max-w-md mx-auto">
-              В данный момент мы обновляем каталог доступных автомобилей. 
-              Оставьте заявку, чтобы получить актуальный список в PDF.
-            </p>
-            <div className="mt-10">
-               <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase">
-                <a href="#contact">
-                  Получить список в PDF <ArrowRight className="ml-2 w-4 h-4" />
-                </a>
-              </Button>
+          ) : (
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+              {cars.map((car, i) => (
+                <Reveal key={car.id} delay={i * 80}>
+                  <article className="group h-full flex flex-col bg-graphite-deep border border-border hover:border-primary/60 transition-smooth rounded-sm overflow-hidden">
+                    <div className="aspect-[4/3] overflow-hidden bg-background/40">
+                      {car.images?.[0] ? (
+                        <img
+                          src={car.images[0]}
+                          alt={`${car.make} ${car.model}`}
+                          loading="lazy"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-muted-foreground text-xs uppercase tracking-widest">
+                          Фото по запросу
+                        </div>
+                      )}
+                    </div>
+                    <div className="p-6 flex flex-col flex-1">
+                      <div className="text-[10px] uppercase tracking-[0.3em] text-primary">{car.make}</div>
+                      <h3 className="font-display text-2xl mt-2 text-gradient-soft">{car.model}</h3>
+                      <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-xs text-muted-foreground">
+                        {car.year && <span>{car.year} г.</span>}
+                        {car.mileage != null && <span>{car.mileage.toLocaleString("ru-RU")} км</span>}
+                        {car.engine_type && <span>{car.engine_type}</span>}
+                        {car.power != null && <span>{car.power} л.с.</span>}
+                        {car.color && <span>{car.color}</span>}
+                      </div>
+                      {car.description && (
+                        <p className="mt-4 text-sm text-muted-foreground leading-relaxed line-clamp-3">{car.description}</p>
+                      )}
+                      <div className="mt-6 pt-6 border-t border-border flex items-center justify-between gap-4">
+                        <div className="text-lg font-medium">
+                          {car.price != null
+                            ? `${Number(car.price).toLocaleString("ru-RU")} ₽`
+                            : "Цена по запросу"}
+                        </div>
+                        <a
+                          href="#contact"
+                          className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-primary hover:gap-3 transition-all"
+                        >
+                          Запросить <ArrowUpRight className="w-4 h-4" />
+                        </a>
+                      </div>
+                    </div>
+                  </article>
+                </Reveal>
+              ))}
             </div>
-          </Reveal>
+          )}
         </div>
       </section>
+
 
       {/* Contact Section */}
       <section id="contact" className="py-32 bg-background relative overflow-hidden">
