@@ -697,11 +697,11 @@ function CTA() {
           </Reveal>
           <Reveal delay={300}>
             <div className="mt-10 space-y-4 text-sm">
-              <a href="tel:+79162253359" className="flex items-center gap-4 group">
+              <a href="tel:+79778468567" className="flex items-center gap-4 group">
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
                   <Phone className="w-4 h-4 text-primary" />
                 </span>
-                <span className="text-foreground/90 group-hover:text-foreground">+7 (916) 225-33-59</span>
+                <span className="text-foreground/90 group-hover:text-foreground">+7 (977) 846-85-67</span>
               </a>
               <a href="https://t.me/nixon_motors" className="flex items-center gap-4 group">
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
@@ -713,7 +713,7 @@ function CTA() {
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
                   <MessageCircle className="w-4 h-4 text-primary" />
                 </span>
-                <span className="text-foreground/90 group-hover:text-foreground">Max · +79162253359</span>
+                <span className="text-foreground/90 group-hover:text-foreground">Max · +79778468567</span>
               </a>
             </div>
           </Reveal>
@@ -750,12 +750,12 @@ function Footer() {
         <div>
           <div className="text-xs uppercase tracking-[0.3em] text-primary">Контакты</div>
           <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
-            <li><a href="tel:+79162253359" className="hover:text-foreground transition-smooth">+7 (916) 225-33-59</a></li>
+            <li><a href="tel:+79778468567" className="hover:text-foreground transition-smooth">+7 (977) 846-85-67</a></li>
             <li><a href="mailto:hello@nikolaev-auto.ru" className="hover:text-foreground transition-smooth">hello@nikolaev-auto.ru</a></li>
             <li className="flex gap-4 pt-2">
               <a href="https://t.me/" aria-label="Telegram" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Send className="w-4 h-4" /></a>
               <a href="https://max.ru/u/f9LHodD0cOIVAsyAUIkF0DqVhojFVLR45PrJo6LSR3t2ytElHfdljYBKjM0" target="_blank" rel="noopener noreferrer" aria-label="Max" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><MessageCircle className="w-4 h-4" /></a>
-              <a href="tel:+79162253359" aria-label="Phone" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Phone className="w-4 h-4" /></a>
+              <a href="tel:+79778468567" aria-label="Phone" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Phone className="w-4 h-4" /></a>
             </li>
           </ul>
         </div>
