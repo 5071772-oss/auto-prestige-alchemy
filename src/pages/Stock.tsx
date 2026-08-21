@@ -2,7 +2,8 @@ import AmoForm from "@/components/AmoForm";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
   ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown, 
-  ChevronLeft, ChevronRight, Calendar, Gauge, FileText, Landmark
+  ChevronLeft, ChevronRight, Calendar, Gauge, FileText, Landmark,
+  RefreshCcw
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -273,6 +274,17 @@ export default function Stock() {
               Все представленные автомобили прошли комплексную техническую проверку, 
               юридическую очистку и готовы к оформлению в день обращения.
             </p>
+          </Reveal>
+          
+          <Reveal delay={360} className="mt-10">
+            <Button 
+              onClick={handleSync}
+              variant="outline"
+              className="border-primary/30 hover:border-primary/60 text-primary hover:bg-primary/5 rounded-sm transition-smooth gap-2"
+            >
+              <RefreshCcw className="w-4 h-4" />
+              Проверить импорт
+            </Button>
           </Reveal>
         </div>
       </section>
