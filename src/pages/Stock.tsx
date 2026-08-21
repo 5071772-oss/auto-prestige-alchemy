@@ -39,6 +39,56 @@ const STOCK_DATA: Car[] = [
       "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-33.webp",
       "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-34.webp"
     ]
+  },
+  {
+    make: "Mercedes-Benz",
+    model: "V-class 300d 4Matic",
+    year: "2024",
+    price: 18500000,
+    mileage: "0",
+    engine: "Дизель",
+    power: "237",
+    color: "Черный обсидиан / Коричневый салон",
+    status: "В наличии",
+    description: "AMG Line, Night пакет, панорамная крыша, акустика Burmester.",
+    images: [
+      "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-25.webp",
+      "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-26.webp",
+      "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-25_2.webp",
+      "https://cdn.relaxdev.ru/users/avnhome2012@yandex.ru/auto-prestige-alchemy/photo_2026-08-20_23-04-25_3.webp"
+    ]
+  },
+  {
+    make: "Porsche",
+    model: "Cayenne Coupe S",
+    year: "2024",
+    price: 19800000,
+    mileage: "0",
+    engine: "Бензин",
+    power: "474",
+    color: "Меловой (Chalk) / Красный салон",
+    status: "В пути",
+    description: "Спортивная выхлопная система, пакет SportDesign, матричные фары.",
+    images: [
+      "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1544636331-e26879cd4d9b?auto=format&fit=crop&q=80&w=1200"
+    ]
+  },
+  {
+    make: "Audi",
+    model: "Q8 50 TDI Quattro",
+    year: "2024",
+    price: 13900000,
+    mileage: "0",
+    engine: "Дизель",
+    power: "286",
+    color: "Серый Дайтона / Черный салон",
+    status: "В пути",
+    description: "S-line, пневмоподвеска, Bang & Olufsen, доводчики дверей.",
+    images: [
+      "https://images.unsplash.com/photo-1541443131876-44b03de101c5?auto=format&fit=crop&q=80&w=1200",
+      "https://images.unsplash.com/photo-1606152421802-db97b9c7a11b?auto=format&fit=crop&q=80&w=1200"
+    ]
   }
 ];
 
