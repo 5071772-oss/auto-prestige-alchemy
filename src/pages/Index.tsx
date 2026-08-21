@@ -132,8 +132,8 @@ function Hero() {
         <Reveal delay={400}>
           <div className="mt-12 flex flex-wrap items-center gap-4">
             <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase">
-              <a href="#contact">
-                Получить консультацию <ArrowRight className="ml-2 w-4 h-4" />
+              <a href="#gallery">
+                Автомобили в наличии <ArrowRight className="ml-2 w-4 h-4" />
               </a>
             </Button>
           </div>
