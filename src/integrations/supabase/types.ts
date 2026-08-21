@@ -27,6 +27,9 @@ export type Database = {
           model: string
           power: number | null
           price: number | null
+          price_cash: string | null
+          price_vat: string | null
+          specs: string | null
           status: string | null
           year: number | null
         }
@@ -42,6 +45,9 @@ export type Database = {
           model: string
           power?: number | null
           price?: number | null
+          price_cash?: string | null
+          price_vat?: string | null
+          specs?: string | null
           status?: string | null
           year?: number | null
         }
@@ -57,6 +63,9 @@ export type Database = {
           model?: string
           power?: number | null
           price?: number | null
+          price_cash?: string | null
+          price_vat?: string | null
+          specs?: string | null
           status?: string | null
           year?: number | null
         }
