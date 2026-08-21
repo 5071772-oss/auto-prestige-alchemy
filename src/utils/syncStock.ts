@@ -3,7 +3,7 @@ import { supabase } from "@/integrations/supabase/client";
 /**
  * Syncs car inventory from a Google Sheet CSV export.
  * Expected structure:
- * A: Brand, B: Model, C: Year, D: Price Cash, E: Price VAT, F: Specs, G: Mileage, H: Description, I-T: Images
+ * A: Brand/Make, B: Model, C: Year, D: Price Cash, E: Price VAT, F: Specs, G: Mileage, H: Description, I-T: Images
  */
 export async function syncCarsFromGoogleSheet(csvUrl: string) {
   try {
@@ -17,17 +17,17 @@ export async function syncCarsFromGoogleSheet(csvUrl: string) {
     const dataRows = rows.slice(1);
     
     const carsToInsert = dataRows
-      .filter(row => row[0] && row[1]) // Must have brand and model
+      .filter(row => row[0] && row[1]) // Must have make and model
       .map(row => {
         const images = row.slice(8, 20).filter(url => url && url.startsWith("http"));
         return {
-          brand: row[0],
+          make: row[0],
           model: row[1],
           year: parseInt(row[2]) || null,
           price_cash: row[3],
           price_vat: row[4],
           specs: row[5],
-          mileage: row[6],
+          mileage: parseInt(row[6].replace(/\D/g, '')) || null, // Convert "5 000 км" to number
           description: row[7],
           images: images
         };
@@ -36,7 +36,7 @@ export async function syncCarsFromGoogleSheet(csvUrl: string) {
     if (carsToInsert.length === 0) return { success: true, count: 0 };
 
     // Clear existing cars
-    const { error: deleteError } = await supabase.from("cars").delete().neq("brand", "SKIP_ALL_DELETE");
+    const { error: deleteError } = await supabase.from("cars").delete().neq("make", "SKIP_ALL_DELETE");
     if (deleteError) throw deleteError;
 
     const { error: insertError } = await supabase.from("cars").insert(carsToInsert);
