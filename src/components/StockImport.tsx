@@ -122,10 +122,30 @@ export default function StockImport() {
         <div className="flex items-center gap-2 px-1">
           <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
           <span className="text-[10px] uppercase tracking-widest text-muted-foreground/60">
-            Автоматическое обновление включено (каждые 60 мин)
+            For the code present, I get the error below.
+
+Please think step-by-step in order to resolve it.
+```
+build failed with exit status 1: stderr:
+de/chunks/dep-C6uTJdX2.js:65869:5)
+    at onwarn (file:///dev-server/node_modules/vite/dist/node/chunks/dep-C6uTJdX2.js:65534:7)
+    at file:///dev-server/node_modules/rollup/dist/es/shared/node-entry.js:18669:13
+    at Object.logger [as onLog] (file:///dev-server/node_modules/rollup/dist/es/shared/node-entry.js:20307:9)
+    at ModuleLoader.handleInvalidResolvedId (file:///dev-server/node_modules/rollup/dist/es/shared/node-entry.js:19258:26)
+    at file:///dev-server/node_modules/rollup/dist/es/shared/node-entry.js:19216:26
+error: script "build:dev" exited with code 1
+
+stdout:
+vite v5.4.19 building for development...
+transforming...
+✓ 108 modules transformed.
+
+If these errors do not contain enough detail to identify the fix, run lovable build diagnostics br_2f27eeae-3169-4134-b788-9864849bd60a --json with code--exec.
+```
           </span>
         </div>
       </div>
+
 
     </div>
   );
