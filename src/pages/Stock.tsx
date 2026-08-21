@@ -1,11 +1,28 @@
 import AmoForm from "@/components/AmoForm";
+import StockImport from "@/components/StockImport";
 import { useEffect, useState, useRef, type ReactNode } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { 
   ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown,
-  Calendar, Gauge, Fuel, Zap, Palette, Info
+  Calendar, Gauge, Fuel, Zap, Palette, Info, Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import stockBmw from "@/assets/stock-bmw-x5.jpg";
+
+type Car = {
+  id: string;
+  make: string;
+  model: string;
+  year: number;
+  price: number;
+  mileage: number;
+  engine_type: string;
+  power: number;
+  color: string;
+  status: string;
+  description: string;
+  images: string[];
+};
 
 function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
