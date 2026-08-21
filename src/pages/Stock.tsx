@@ -5,14 +5,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { 
   ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown,
   Calendar, Gauge, Fuel, Zap, Palette, Info, Loader2
-} from "lucide-center"; // Fixed icon import if needed, but lucide-react was correct
-import { 
-  Calendar as CalendarIcon, 
-  Gauge as GaugeIcon, 
-  Fuel as FuelIcon, 
-  Zap as ZapIcon, 
-  Palette as PaletteIcon, 
-  Info as InfoIcon 
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import stockBmw from "@/assets/stock-bmw-x5.jpg";
