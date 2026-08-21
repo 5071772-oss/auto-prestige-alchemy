@@ -9,17 +9,6 @@ import {
 import { Button } from "@/components/ui/button";
 import stockBmw from "@/assets/stock-bmw-x5.jpg";
 
-// Re-import with proper names to avoid conflicts
-import { 
-  ArrowRight as ArrowRightIcon,
-  ArrowUpRight as ArrowUpRightIcon,
-  Phone as PhoneIcon,
-  Send as SendIcon,
-  ShieldCheck as ShieldCheckIcon,
-  Crown as CrownIcon,
-  Loader2 as Loader2Icon
-} from "lucide-react";
-
 type Car = {
   id: string;
   make: string;
@@ -102,7 +91,7 @@ function Nav() {
           className="group inline-flex items-center gap-2 text-sm border border-border hover:border-primary px-5 h-11 rounded-sm transition-smooth"
         >
           Связаться
-          <ArrowUpRightIcon className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
         </a>
       </div>
     </header>
@@ -170,7 +159,7 @@ export default function Stock() {
         <div className="container">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-40">
-              <Loader2Icon className="w-10 h-10 text-primary animate-spin mb-4" />
+              <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
               <p className="text-muted-foreground uppercase tracking-widest text-xs">Загрузка каталога...</p>
             </div>
           ) : cars.length > 0 ? (
@@ -216,7 +205,7 @@ export default function Stock() {
                           <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-6">
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
-                                <CalendarIcon className="w-4 h-4 text-primary/60" />
+                                <Calendar className="w-4 h-4 text-primary/60" />
                               </div>
                               <div>
                                 <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Год</div>
@@ -225,7 +214,7 @@ export default function Stock() {
                             </div>
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
-                                <GaugeIcon className="w-4 h-4 text-primary/60" />
+                                <Gauge className="w-4 h-4 text-primary/60" />
                               </div>
                               <div>
                                 <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Пробег</div>
@@ -234,7 +223,7 @@ export default function Stock() {
                             </div>
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
-                                <FuelIcon className="w-4 h-4 text-primary/60" />
+                                <Fuel className="w-4 h-4 text-primary/60" />
                               </div>
                               <div>
                                 <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Двигатель</div>
@@ -243,7 +232,7 @@ export default function Stock() {
                             </div>
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
-                                <ZapIcon className="w-4 h-4 text-primary/60" />
+                                <Zap className="w-4 h-4 text-primary/60" />
                               </div>
                               <div>
                                 <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Мощность</div>
@@ -252,7 +241,7 @@ export default function Stock() {
                             </div>
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
-                                <PaletteIcon className="w-4 h-4 text-primary/60" />
+                                <Palette className="w-4 h-4 text-primary/60" />
                               </div>
                               <div>
                                 <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Цвет</div>
@@ -261,7 +250,7 @@ export default function Stock() {
                             </div>
                             <div className="flex items-center gap-3">
                               <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
-                                <InfoIcon className="w-4 h-4 text-primary/60" />
+                                <Info className="w-4 h-4 text-primary/60" />
                               </div>
                               <div>
                                 <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Статус</div>
@@ -281,7 +270,7 @@ export default function Stock() {
                         <div className="mt-12 flex flex-wrap gap-4">
                           <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase flex-1 sm:flex-none">
                             <a href="#contact">
-                              Забронировать <ArrowUpRightIcon className="ml-2 w-4 h-4" />
+                              Забронировать <ArrowUpRight className="ml-2 w-4 h-4" />
                             </a>
                           </Button>
                           <Button variant="outline" size="lg" className="h-14 px-8 rounded-sm border-border hover:border-primary transition-smooth text-sm tracking-wide uppercase flex-1 sm:flex-none">
@@ -298,7 +287,7 @@ export default function Stock() {
             <div className="text-center py-40 border border-dashed border-border/60">
               <Reveal>
                 <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-8">
-                  <ShieldCheckIcon className="w-10 h-10 text-primary" />
+                  <ShieldCheck className="w-10 h-10 text-primary" />
                 </div>
                 <h2 className="font-display text-3xl text-gradient-soft">Раздел наполняется</h2>
                 <p className="mt-4 text-muted-foreground max-w-md mx-auto">
@@ -332,7 +321,7 @@ export default function Stock() {
                   <div className="flex flex-wrap gap-4">
                     <a href="tel:+79778468567" className="group flex items-center gap-3 p-4 bg-graphite-deep border border-border hover:border-primary transition-smooth rounded-sm">
                       <div className="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-smooth">
-                        <PhoneIcon className="w-5 h-5" />
+                        <Phone className="w-5 h-5" />
                       </div>
                       <div>
                         <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Звонок</div>
@@ -341,7 +330,7 @@ export default function Stock() {
                     </a>
                     <a href="https://t.me/nixon_motors" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-4 bg-graphite-deep border border-border hover:border-primary transition-smooth rounded-sm">
                       <div className="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-smooth">
-                        <SendIcon className="w-5 h-5" />
+                        <Send className="w-5 h-5" />
                       </div>
                       <div>
                         <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Telegram</div>
@@ -356,7 +345,7 @@ export default function Stock() {
             <Reveal delay={200}>
               <div className="relative p-8 sm:p-12 bg-graphite-deep border border-border shadow-2xl">
                 <div className="absolute top-0 right-0 p-8 opacity-10">
-                  <CrownIcon className="w-24 h-24 text-primary" />
+                  <Crown className="w-24 h-24 text-primary" />
                 </div>
                 <h3 className="font-display text-2xl mb-8 text-gradient-soft">Оставить заявку</h3>
                 <AmoForm />
