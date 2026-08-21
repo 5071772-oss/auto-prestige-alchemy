@@ -1,9 +1,11 @@
 import AmoForm from "@/components/AmoForm";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
-  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown
+  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown,
+  Calendar, Gauge, Fuel, Zap, Palette, Info
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import stockBmw from "@/assets/stock-bmw-x5.jpg";
 
 function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
