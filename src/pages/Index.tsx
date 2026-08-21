@@ -1,5 +1,7 @@
 import AmoForm from "@/components/AmoForm";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { Link } from "react-router-dom";
+
 import {
   Phone, MessageCircle, Send, ArrowRight, ArrowUpRight, Check, Star,
   Search, KeyRound, Globe2, ShieldCheck, Truck, Award, Users, Clock, Crown,
@@ -17,7 +19,7 @@ import carRange from "@/assets/car-range.jpg";
 
 /* ---------- helpers ---------- */
 
-function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
+export function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [shown, setShown] = useState(false);
   useEffect(() => {
@@ -45,7 +47,7 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
   );
 }
 
-function SectionLabel({ children }: { children: ReactNode }) {
+export function SectionLabel({ children }: { children: ReactNode }) {
   return (
     <div className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-primary">
       <span className="h-px w-8 bg-primary/60" />
@@ -56,7 +58,7 @@ function SectionLabel({ children }: { children: ReactNode }) {
 
 /* ---------- navbar ---------- */
 
-function Nav() {
+export function Nav() {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
@@ -78,6 +80,7 @@ function Nav() {
         <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
           <a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a>
           <a href="#services" className="hover:text-foreground transition-smooth">Услуги</a>
+          <Link to="/stock" className="hover:text-foreground transition-smooth font-medium text-primary">В наличии</Link>
           <a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a>
           <a href="#process" className="hover:text-foreground transition-smooth">Процесс</a>
           <a href="#contact" className="hover:text-foreground transition-smooth">Контакты</a>
@@ -131,9 +134,9 @@ function Hero() {
         <Reveal delay={400}>
           <div className="mt-12 flex flex-wrap items-center gap-4">
             <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase">
-              <a href="#contact">
-                Получить консультацию <ArrowRight className="ml-2 w-4 h-4" />
-              </a>
+              <Link to="/stock">
+                Автомобили в наличии <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
             </Button>
           </div>
         </Reveal>
@@ -517,16 +520,16 @@ function Gallery() {
             </h2>
           </Reveal>
           <Reveal delay={150}>
-            <a href="#contact" className="text-sm uppercase tracking-[0.3em] text-primary inline-flex items-center gap-2 group">
-              Заказать подобный <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </a>
+            <Link to="/stock" className="text-sm uppercase tracking-[0.3em] text-primary inline-flex items-center gap-2 group">
+              Смотреть все в наличии <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
           </Reveal>
         </div>
 
         <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {cars.map((c, i) => (
             <Reveal key={c.n} delay={(i % 3) * 100}>
-              <div className="group relative overflow-hidden bg-background border border-border">
+              <Link to="/stock" className="group relative overflow-hidden bg-background border border-border block">
                 <div className="aspect-[4/3] overflow-hidden bg-graphite">
                   <img
                     src={c.img}
@@ -545,7 +548,8 @@ function Gallery() {
                   </div>
                   <div className="font-display text-xs text-primary/70 tracking-widest">{c.n}</div>
                 </div>
-              </div>
+              </Link>
+
             </Reveal>
           ))}
         </div>
@@ -727,7 +731,7 @@ function CTA() {
   );
 }
 
-function Footer() {
+export function Footer() {
   return (
     <footer className="border-t border-border bg-background py-16">
       <div className="container grid md:grid-cols-3 gap-12">
@@ -743,6 +747,7 @@ function Footer() {
           <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
             <li><a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a></li>
             <li><a href="#services" className="hover:text-foreground transition-smooth">Услуги</a></li>
+            <li><Link to="/stock" className="hover:text-foreground transition-smooth">В наличии</Link></li>
             <li><a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a></li>
             <li><a href="#process" className="hover:text-foreground transition-smooth">Процесс</a></li>
           </ul>
