@@ -16,70 +16,31 @@ export type Database = {
     Tables: {
       cars: {
         Row: {
-          color: string | null
+          brand: string
           created_at: string | null
           description: string | null
-          engine_type: string | null
           id: string
-          images: string[] | null
-          make: string
-          mileage: number | null
+          image_url: string
           model: string
-          power: number | null
-          price: number | null
-          status: string | null
-          year: number | null
+          spec: string
         }
         Insert: {
-          color?: string | null
+          brand: string
           created_at?: string | null
           description?: string | null
-          engine_type?: string | null
           id?: string
-          images?: string[] | null
-          make: string
-          mileage?: number | null
+          image_url: string
           model: string
-          power?: number | null
-          price?: number | null
-          status?: string | null
-          year?: number | null
+          spec: string
         }
         Update: {
-          color?: string | null
+          brand?: string
           created_at?: string | null
           description?: string | null
-          engine_type?: string | null
           id?: string
-          images?: string[] | null
-          make?: string
-          mileage?: number | null
+          image_url?: string
           model?: string
-          power?: number | null
-          price?: number | null
-          status?: string | null
-          year?: number | null
-        }
-        Relationships: []
-      }
-      sync_logs: {
-        Row: {
-          created_at: string | null
-          id: string
-          message: string | null
-          status: string
-        }
-        Insert: {
-          created_at?: string | null
-          id?: string
-          message?: string | null
-          status: string
-        }
-        Update: {
-          created_at?: string | null
-          id?: string
-          message?: string | null
-          status?: string
+          spec?: string
         }
         Relationships: []
       }
@@ -88,7 +49,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      trigger_stock_sync: { Args: never; Returns: undefined }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never
