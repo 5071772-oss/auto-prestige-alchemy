@@ -1,4 +1,5 @@
 import AmoForm from "@/components/AmoForm";
+import { supabase } from "@/integrations/supabase/client";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
   ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown
