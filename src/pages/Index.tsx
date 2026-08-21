@@ -16,86 +16,9 @@ import carBmw from "@/assets/car-bmw.jpg";
 import carMercedes from "@/assets/car-mercedes.jpg";
 import carPorsche from "@/assets/car-porsche.jpg";
 import carRange from "@/assets/car-range.jpg";
-
-/* ---------- helpers ---------- */
-
-export function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setShown(true); io.disconnect(); } },
-      { threshold: 0.15 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
-  return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: shown ? 1 : 0,
-        transform: shown ? "translateY(0)" : "translateY(28px)",
-        transition: `opacity 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-export function SectionLabel({ children }: { children: ReactNode }) {
-  return (
-    <div className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-primary">
-      <span className="h-px w-8 bg-primary/60" />
-      {children}
-    </div>
-  );
-}
-
-/* ---------- navbar ---------- */
-
-export function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-smooth ${
-        scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"
-      }`}
-    >
-      <div className="container flex items-center justify-between h-20">
-        <a href="#top" className="flex items-center gap-3">
-          <span className="font-display text-2xl tracking-tight text-gradient-soft">Николаев</span>
-          <span className="hidden sm:block h-4 w-px bg-border" />
-          <span className="hidden sm:block text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Premium auto</span>
-        </a>
-        <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
-          <a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a>
-          <a href="#services" className="hover:text-foreground transition-smooth">Услуги</a>
-          <Link to="/stock" className="hover:text-foreground transition-smooth font-medium text-primary">В наличии</Link>
-          <a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a>
-          <a href="#process" className="hover:text-foreground transition-smooth">Процесс</a>
-          <a href="#contact" className="hover:text-foreground transition-smooth">Контакты</a>
-        </nav>
-        <a
-          href="#contact"
-          className="group inline-flex items-center gap-2 text-sm border border-border hover:border-primary px-5 h-11 rounded-sm transition-smooth"
-        >
-          Связаться
-          <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </a>
-      </div>
-    </header>
-  );
-}
+import { Reveal, SectionLabel } from "@/components/layout/SharedComponents";
+import { Nav } from "@/components/layout/Nav";
+import { Footer } from "@/components/layout/Footer";
 
 /* ---------- sections ---------- */
 
@@ -731,47 +654,6 @@ function CTA() {
   );
 }
 
-export function Footer() {
-  return (
-    <footer className="border-t border-border bg-background py-16">
-      <div className="container grid md:grid-cols-3 gap-12">
-        <div>
-          <div className="font-display text-2xl text-gradient-soft">Николаев Алексей</div>
-          <p className="text-sm text-muted-foreground mt-3 max-w-xs">
-            Личный эксперт по премиальным автомобилям. Подбор, импорт и сопровождение
-            сделок с 2003 года.
-          </p>
-        </div>
-        <div>
-          <div className="text-xs uppercase tracking-[0.3em] text-primary">Навигация</div>
-          <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
-            <li><a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a></li>
-            <li><a href="#services" className="hover:text-foreground transition-smooth">Услуги</a></li>
-            <li><Link to="/stock" className="hover:text-foreground transition-smooth">В наличии</Link></li>
-            <li><a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a></li>
-            <li><a href="#process" className="hover:text-foreground transition-smooth">Процесс</a></li>
-          </ul>
-        </div>
-        <div>
-          <div className="text-xs uppercase tracking-[0.3em] text-primary">Контакты</div>
-          <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
-            <li><a href="tel:+79778468567" className="hover:text-foreground transition-smooth">+7 (977) 846-85-67</a></li>
-            <li><a href="mailto:hello@nikolaev-auto.ru" className="hover:text-foreground transition-smooth">hello@nikolaev-auto.ru</a></li>
-            <li className="flex gap-4 pt-2">
-              <a href="https://t.me/" aria-label="Telegram" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Send className="w-4 h-4" /></a>
-              <a href="https://max.ru/u/f9LHodD0cOIVAsyAUIkF0DqVhojFVLR45PrJo6LSR3t2ytElHfdljYBKjM0" target="_blank" rel="noopener noreferrer" aria-label="Max" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><MessageCircle className="w-4 h-4" /></a>
-              <a href="tel:+79778468567" aria-label="Phone" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Phone className="w-4 h-4" /></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="container mt-12 pt-8 border-t border-border flex flex-wrap justify-between gap-4 text-xs text-muted-foreground">
-        <div>© {new Date().getFullYear()} Николаев Алексей. Все права защищены.</div>
-        <div className="uppercase tracking-[0.3em]">Premium automotive consulting</div>
-      </div>
-    </footer>
-  );
-}
 
 const Index = () => (
   <div className="min-h-screen bg-background text-foreground">

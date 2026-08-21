@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { Reveal, SectionLabel, Nav, Footer } from "@/pages/Index";
+import { Reveal, SectionLabel } from "@/components/layout/SharedComponents";
+import { Nav } from "@/components/layout/Nav";
+import { Footer } from "@/components/layout/Footer";
 import { ArrowLeft, Loader2, Phone, Send, MessageCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
