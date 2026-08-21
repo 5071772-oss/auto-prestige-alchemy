@@ -548,8 +548,8 @@ function Gallery() {
             </h2>
           </Reveal>
           <Reveal delay={150}>
-            <a href="#contact" className="text-sm uppercase tracking-[0.3em] text-primary inline-flex items-center gap-2 group">
-              Заказать подобный <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <a href="#gallery" className="text-sm uppercase tracking-[0.3em] text-primary inline-flex items-center gap-2 group">
+              Смотреть наличие <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </Reveal>
         </div>
