@@ -3,11 +3,10 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Phone, MessageCircle, Send, ArrowRight, ArrowUpRight, Check, Star,
   Search, KeyRound, Globe2, ShieldCheck, Truck, Award, Users, Clock, Crown,
-  ChevronRight, Landmark, FileText, CreditCard, Loader2,
+  ChevronRight, Landmark, FileText, CreditCard,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 import heroCar from "@/assets/hero-car.jpg";
 import portrait from "@/assets/portrait.jpg";
 import carAudi from "@/assets/car-audi.jpg";
@@ -79,7 +78,7 @@ function Nav() {
         <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
           <a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a>
           <a href="#services" className="hover:text-foreground transition-smooth">Услуги</a>
-          <a href="#gallery" className="hover:text-foreground transition-smooth">В наличии</a>
+          <a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a>
           <a href="#process" className="hover:text-foreground transition-smooth">Процесс</a>
           <a href="#contact" className="hover:text-foreground transition-smooth">Контакты</a>
         </nav>
@@ -132,8 +131,8 @@ function Hero() {
         <Reveal delay={400}>
           <div className="mt-12 flex flex-wrap items-center gap-4">
             <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase">
-              <a href="#gallery">
-                Автомобили в наличии <ArrowRight className="ml-2 w-4 h-4" />
+              <a href="#contact">
+                Получить консультацию <ArrowRight className="ml-2 w-4 h-4" />
               </a>
             </Button>
           </div>
@@ -498,108 +497,58 @@ function Services() {
 }
 
 function Gallery() {
-  const [cars, setCars] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCars = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("cars")
-          .select("*")
-          .order("created_at", { ascending: false });
-
-        if (error) throw error;
-        setCars(data || []);
-      } catch (error) {
-        console.error("Error fetching cars:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCars();
-
-    const channel = supabase
-      .channel("cars_changes")
-      .on(
-        "postgres_changes",
-        { event: "*", schema: "public", table: "cars" },
-        () => {
-          fetchCars();
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, []);
-
+  const cars = [
+    { img: carMercedes, brand: "Mercedes-Benz", model: "G63 AMG", spec: "2024 · Германия", n: "01" },
+    { img: carAudi, brand: "Audi", model: "RS7 Performance", spec: "2024 · Германия", n: "02" },
+    { img: carBmw, brand: "BMW", model: "M8 Competition", spec: "2024 · Германия", n: "03" },
+    { img: carPorsche, brand: "Porsche", model: "911 Turbo S", spec: "2024 · Германия", n: "04" },
+    { img: carRange, brand: "Range Rover", model: "Autobiography", spec: "2024 · Великобритания", n: "05" },
+    { img: heroCar, brand: "Mercedes-Maybach", model: "S 680", spec: "2024 · ОАЭ", n: "06" },
+  ];
   return (
     <section id="gallery" className="py-32 bg-graphite-deep">
       <div className="container">
         <div className="flex flex-wrap items-end justify-between gap-8">
           <Reveal>
-            <SectionLabel>Автомобили в наличии</SectionLabel>
+            <SectionLabel>Гараж клиентов</SectionLabel>
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl mt-8 max-w-3xl text-gradient-soft">
-              Ближайшие поставки<br />и{" "}
-              <span className="italic text-gradient-gold">наличие.</span>
+              Автомобили, которые<br />я привёз{" "}
+              <span className="italic text-gradient-gold">своим клиентам.</span>
             </h2>
           </Reveal>
           <Reveal delay={150}>
-            <a href="#gallery" className="text-sm uppercase tracking-[0.3em] text-primary inline-flex items-center gap-2 group">
-              Смотреть наличие <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <a href="#contact" className="text-sm uppercase tracking-[0.3em] text-primary inline-flex items-center gap-2 group">
+              Заказать подобный <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
           </Reveal>
         </div>
 
-        {loading ? (
-          <div className="mt-20 flex justify-center">
-            <Loader2 className="w-8 h-8 text-primary animate-spin" />
-          </div>
-        ) : (
-          <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {cars.map((c, i) => (
-              <Reveal key={c.id} delay={(i % 3) * 100}>
-                <div className="group relative overflow-hidden bg-background border border-border">
-                  <div className="aspect-[4/3] overflow-hidden bg-graphite">
-                    <img
-                      src={c.image_url}
-                      alt={`${c.brand} ${c.model}`}
-                      loading="lazy"
-                      width={1280}
-                      height={960}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </div>
-                  <div className="p-6 flex items-start justify-between gap-4 border-t border-border">
-                    <div className="flex-1">
-                      <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">{c.brand}</div>
-                      <div className="font-display text-2xl mt-2">{c.model}</div>
-                      <div className="text-sm text-muted-foreground mt-2">{c.spec}</div>
-                      {c.description && (
-                        <p className="mt-3 text-sm text-muted-foreground/80 leading-relaxed italic line-clamp-2">
-                          {c.description}
-                        </p>
-                      )}
-                      <Button asChild variant="outline" size="sm" className="mt-6 w-full rounded-sm border-primary/20 hover:border-primary hover:bg-primary/5 text-xs uppercase tracking-widest group/btn">
-                        <a href="#contact">
-                          Заказать такой <ArrowUpRight className="ml-2 w-3 h-3 group-hover/btn:-translate-y-0.5 group-hover/btn:translate-x-0.5 transition-transform" />
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
+        <div className="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {cars.map((c, i) => (
+            <Reveal key={c.n} delay={(i % 3) * 100}>
+              <div className="group relative overflow-hidden bg-background border border-border">
+                <div className="aspect-[4/3] overflow-hidden bg-graphite">
+                  <img
+                    src={c.img}
+                    alt={`${c.brand} ${c.model}`}
+                    loading="lazy"
+                    width={1280}
+                    height={960}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
                 </div>
-              </Reveal>
-            ))}
-            {cars.length === 0 && (
-              <div className="col-span-full py-20 text-center text-muted-foreground italic">
-                Скоро здесь появятся новые автомобили из Google Таблиц...
+                <div className="p-6 flex items-start justify-between gap-4 border-t border-border">
+                  <div>
+                    <div className="text-xs uppercase tracking-[0.3em] text-muted-foreground">{c.brand}</div>
+                    <div className="font-display text-2xl mt-2">{c.model}</div>
+                    <div className="text-sm text-muted-foreground mt-2">{c.spec}</div>
+                  </div>
+                  <div className="font-display text-xs text-primary/70 tracking-widest">{c.n}</div>
+                </div>
               </div>
-            )}
-          </div>
-        )}
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
@@ -794,7 +743,7 @@ function Footer() {
           <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
             <li><a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a></li>
             <li><a href="#services" className="hover:text-foreground transition-smooth">Услуги</a></li>
-            <li><a href="#gallery" className="hover:text-foreground transition-smooth">В наличии</a></li>
+            <li><a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a></li>
             <li><a href="#process" className="hover:text-foreground transition-smooth">Процесс</a></li>
           </ul>
         </div>
