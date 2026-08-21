@@ -1,8 +1,7 @@
 import AmoForm from "@/components/AmoForm";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
-  ArrowRight, ArrowUpRight, Check, ShieldCheck, 
-  Phone, MessageCircle, Send, ChevronRight 
+  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -26,7 +25,7 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
       style={{
         opacity: shown ? 1 : 0,
         transform: shown ? "translateY(0)" : "translateY(28px)",
-        transition: \`opacity 0.9s cubic-bezier(0.16,1,0.3,1) \${delay}ms, transform 0.9s cubic-bezier(0.16,1,0.3,1) \${delay}ms\`,
+        transition: `opacity 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.9s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
       }}
     >
       {children}
@@ -52,9 +51,9 @@ function Nav() {
   }, []);
   return (
     <header
-      className={\`fixed top-0 inset-x-0 z-50 transition-smooth \${
+      className={`fixed top-0 inset-x-0 z-50 transition-smooth ${
         scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"
-      }\`}
+      }`}
     >
       <div className="container flex items-center justify-between h-20">
         <a href="/" className="flex items-center gap-3">
@@ -216,6 +215,3 @@ export default function Stock() {
     </div>
   );
 }
-
-// Add Crown icon import that was missing in first line but used later
-import { Crown } from "lucide-react";
