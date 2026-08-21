@@ -745,6 +745,7 @@ function Footer() {
             <li><a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a></li>
             <li><a href="#services" className="hover:text-foreground transition-smooth">Услуги</a></li>
             <li><a href="/stock" className="hover:text-foreground transition-smooth font-medium text-primary/90">В наличии</a></li>
+            <li><a href="/stock#contact" className="hover:text-foreground transition-smooth">Подбор авто</a></li>
             <li><a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a></li>
             <li><a href="#process" className="hover:text-foreground transition-smooth">Процесс</a></li>
           </ul>
