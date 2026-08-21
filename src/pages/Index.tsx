@@ -541,10 +541,10 @@ function Gallery() {
       <div className="container">
         <div className="flex flex-wrap items-end justify-between gap-8">
           <Reveal>
-            <SectionLabel>Гараж клиентов</SectionLabel>
+            <SectionLabel>Автомобили в наличии</SectionLabel>
             <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl mt-8 max-w-3xl text-gradient-soft">
-              Автомобили, которые<br />я привёз{" "}
-              <span className="italic text-gradient-gold">своим клиентам.</span>
+              Ближайшие поставки<br />и{" "}
+              <span className="italic text-gradient-gold">наличие.</span>
             </h2>
           </Reveal>
           <Reveal delay={150}>
