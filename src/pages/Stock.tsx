@@ -1,11 +1,28 @@
 import AmoForm from "@/components/AmoForm";
+import StockImport from "@/components/StockImport";
 import { useEffect, useState, useRef, type ReactNode } from "react";
+import { supabase } from "@/integrations/supabase/client";
 import { 
   ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown,
-  Calendar, Gauge, Fuel, Zap, Palette, Info
+  Calendar, Gauge, Fuel, Zap, Palette, Info, Loader2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import stockBmw from "@/assets/stock-bmw-x5.jpg";
+
+type Car = {
+  id: string;
+  make: string;
+  model: string;
+  year: number | null;
+  price: number | null;
+  mileage: number | null;
+  engine_type: string | null;
+  power: number | null;
+  color: string | null;
+  status: string | null;
+  description: string | null;
+  images: string[] | null;
+};
 
 function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -82,9 +99,29 @@ function Nav() {
 }
 
 export default function Stock() {
+  const [cars, setCars] = useState<Car[]>([]);
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    fetchCars();
   }, []);
+
+  const fetchCars = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('cars')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setCars(data || []);
+    } catch (error) {
+      console.error('Error fetching cars:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
@@ -103,138 +140,163 @@ export default function Stock() {
               <span className="italic text-gradient-gold">готовый к выдаче.</span>
             </h1>
           </Reveal>
-          <Reveal delay={240}>
-            <p className="mt-8 max-w-2xl text-lg text-muted-foreground leading-relaxed">
-              Все представленные автомобили прошли комплексную техническую проверку, 
-              юридическую очистку и готовы к оформлению в день обращения.
-            </p>
-          </Reveal>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mt-8">
+            <Reveal delay={240}>
+              <p className="max-w-2xl text-lg text-muted-foreground leading-relaxed">
+                Все представленные автомобили прошли комплексную техническую проверку, 
+                юридическую очистку и готовы к оформлению в день обращения.
+              </p>
+            </Reveal>
+            <Reveal delay={300}>
+              <StockImport />
+            </Reveal>
+          </div>
         </div>
       </section>
 
       {/* Stock Grid */}
       <section className="py-20 bg-background">
         <div className="container">
-          <div className="grid lg:grid-cols-1 gap-12">
-            <Reveal>
-              <div className="group relative bg-graphite-deep border border-border overflow-hidden">
-                <div className="grid lg:grid-cols-2">
-                  {/* Car Image */}
-                  <div className="relative aspect-[16/10] lg:aspect-auto overflow-hidden">
-                    <img 
-                      src={stockBmw} 
-                      alt="BMW X5 M-Sport" 
-                      className="w-full h-full object-cover transition-smooth duration-700 group-hover:scale-105"
-                    />
-                    <div className="absolute top-6 left-6 flex gap-2">
-                      <span className="px-3 py-1 bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-bold">
-                        В наличии
-                      </span>
-                      <span className="px-3 py-1 bg-background/80 backdrop-blur-md text-foreground text-[10px] uppercase tracking-widest border border-border">
-                        M-Sport
-                      </span>
-                    </div>
-                  </div>
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-40">
+              <Loader2 className="w-10 h-10 text-primary animate-spin mb-4" />
+              <p className="text-muted-foreground uppercase tracking-widest text-xs">Загрузка каталога...</p>
+            </div>
+          ) : cars.length > 0 ? (
+            <div className="grid lg:grid-cols-1 gap-12">
+              {cars.map((car, index) => (
+                <Reveal key={car.id} delay={index * 100}>
+                  <div className="group relative bg-graphite-deep border border-border overflow-hidden">
+                    <div className="grid lg:grid-cols-2">
+                      {/* Car Image */}
+                      <div className="relative aspect-[16/10] lg:aspect-auto overflow-hidden">
+                        <img 
+                          src={car.images && car.images.length > 0 ? car.images[0] : stockBmw} 
+                          alt={`${car.make} ${car.model}`} 
+                          className="w-full h-full object-cover transition-smooth duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute top-6 left-6 flex gap-2">
+                          <span className="px-3 py-1 bg-primary text-primary-foreground text-[10px] uppercase tracking-widest font-bold">
+                            {car.status || 'В наличии'}
+                          </span>
+                        </div>
+                      </div>
 
-                  {/* Car Details */}
-                  <div className="p-8 sm:p-12 flex flex-col justify-between">
-                    <div>
-                      <div className="flex justify-between items-start">
+                      {/* Car Details */}
+                      <div className="p-8 sm:p-12 flex flex-col justify-between">
                         <div>
-                          <h2 className="font-display text-3xl sm:text-4xl text-gradient-soft">
-                            BMW X5 xDrive30d
-                          </h2>
-                          <p className="text-muted-foreground mt-2 uppercase tracking-[0.2em] text-xs">
-                            G05 LCI · Black Sapphire Metallic
-                          </p>
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <h2 className="font-display text-3xl sm:text-4xl text-gradient-soft">
+                                {car.make} {car.model}
+                              </h2>
+                              <p className="text-muted-foreground mt-2 uppercase tracking-[0.2em] text-xs">
+                                {car.color || 'Premium Selection'}
+                              </p>
+                            </div>
+                            <div className="text-right">
+                              <div className="text-2xl font-display text-primary">
+                                {car.price ? new Intl.NumberFormat('ru-RU').format(car.price) : '—'} ₽
+                              </div>
+                              <div className="text-[10px] text-muted-foreground uppercase tracking-wider mt-1">С учётом утильсбора</div>
+                            </div>
+                          </div>
+
+                          <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-6">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
+                                <Calendar className="w-4 h-4 text-primary/60" />
+                              </div>
+                              <div>
+                                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Год</div>
+                                <div className="text-sm font-medium">{car.year}</div>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
+                                <Gauge className="w-4 h-4 text-primary/60" />
+                              </div>
+                              <div>
+                                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Пробег</div>
+                                <div className="text-sm font-medium">{new Intl.NumberFormat('ru-RU').format(car.mileage || 0)} км</div>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
+                                <Fuel className="w-4 h-4 text-primary/60" />
+                              </div>
+                              <div>
+                                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Двигатель</div>
+                                <div className="text-sm font-medium">{car.engine_type}</div>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
+                                <Zap className="w-4 h-4 text-primary/60" />
+                              </div>
+                              <div>
+                                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Мощность</div>
+                                <div className="text-sm font-medium">{car.power} л.с.</div>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
+                                <Palette className="w-4 h-4 text-primary/60" />
+                              </div>
+                              <div>
+                                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Цвет</div>
+                                <div className="text-sm font-medium">{car.color}</div>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
+                                <Info className="w-4 h-4 text-primary/60" />
+                              </div>
+                              <div>
+                                <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Статус</div>
+                                <div className="text-sm font-medium">{car.status}</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="mt-10 p-6 bg-white/5 border border-white/10 rounded-sm">
+                            <div className="text-xs uppercase tracking-widest text-muted-foreground mb-3 font-medium">Комплектация / Описание</div>
+                            <p className="text-sm text-muted-foreground leading-relaxed">
+                              {car.description}
+                            </p>
+                          </div>
                         </div>
-                        <div className="text-right">
-                          <div className="text-2xl font-display text-primary">12 450 000 ₽</div>
-                          <div className="text-[10px] text-muted-foreground uppercase tracking-wider mt-1">С учётом утильсбора</div>
+
+                        <div className="mt-12 flex flex-wrap gap-4">
+                          <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase flex-1 sm:flex-none">
+                            <a href="#contact">
+                              Забронировать <ArrowUpRight className="ml-2 w-4 h-4" />
+                            </a>
+                          </Button>
+                          <Button variant="outline" size="lg" className="h-14 px-8 rounded-sm border-border hover:border-primary transition-smooth text-sm tracking-wide uppercase flex-1 sm:flex-none">
+                            <a href="#contact">Получить PDF-презентацию</a>
+                          </Button>
                         </div>
                       </div>
-
-                      <div className="mt-10 grid grid-cols-2 sm:grid-cols-3 gap-6">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
-                            <Calendar className="w-4 h-4 text-primary/60" />
-                          </div>
-                          <div>
-                            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Год</div>
-                            <div className="text-sm font-medium">2024</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
-                            <Gauge className="w-4 h-4 text-primary/60" />
-                          </div>
-                          <div>
-                            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Пробег</div>
-                            <div className="text-sm font-medium">0 км</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
-                            <Fuel className="w-4 h-4 text-primary/60" />
-                          </div>
-                          <div>
-                            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Двигатель</div>
-                            <div className="text-sm font-medium">Дизель</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
-                            <Zap className="w-4 h-4 text-primary/60" />
-                          </div>
-                          <div>
-                            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Мощность</div>
-                            <div className="text-sm font-medium">298 л.с.</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
-                            <Palette className="w-4 h-4 text-primary/60" />
-                          </div>
-                          <div>
-                            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Цвет</div>
-                            <div className="text-sm font-medium">Черный</div>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 flex items-center justify-center bg-white/5 border border-white/10 rounded-sm">
-                            <Info className="w-4 h-4 text-primary/60" />
-                          </div>
-                          <div>
-                            <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Статус</div>
-                            <div className="text-sm font-medium">В наличии</div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="mt-10 p-6 bg-white/5 border border-white/10 rounded-sm">
-                        <div className="text-xs uppercase tracking-widest text-muted-foreground mb-3 font-medium">Комплектация</div>
-                        <p className="text-sm text-muted-foreground leading-relaxed">
-                          M-Sport пакет, панорамная крыша, акустика Harman/Kardon, доводчики дверей, 
-                          вентиляция сидений, адаптивная пневмоподвеска, лазерная оптика. Полный пакет ассистентов.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="mt-12 flex flex-wrap gap-4">
-                      <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase flex-1 sm:flex-none">
-                        <a href="#contact">
-                          Забронировать <ArrowUpRight className="ml-2 w-4 h-4" />
-                        </a>
-                      </Button>
-                      <Button variant="outline" size="lg" className="h-14 px-8 rounded-sm border-border hover:border-primary transition-smooth text-sm tracking-wide uppercase flex-1 sm:flex-none">
-                        <a href="#contact">Получить PDF-презентацию</a>
-                      </Button>
                     </div>
                   </div>
+                </Reveal>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-40 border border-dashed border-border/60">
+              <Reveal>
+                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-8">
+                  <ShieldCheck className="w-10 h-10 text-primary" />
                 </div>
-              </div>
-            </Reveal>
-          </div>
+                <h2 className="font-display text-3xl text-gradient-soft">Раздел наполняется</h2>
+                <p className="mt-4 text-muted-foreground max-w-md mx-auto">
+                  В данный момент мы обновляем каталог доступных автомобилей. 
+                  Оставьте заявку, чтобы получить актуальный список в PDF.
+                </p>
+              </Reveal>
+            </div>
+          )}
         </div>
       </section>
 
