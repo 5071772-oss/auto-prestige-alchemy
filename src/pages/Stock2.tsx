@@ -281,7 +281,8 @@ function Nav() {
         </a>
         <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
           <a href="/" className="hover:text-foreground transition-smooth">Главная</a>
-          <a href="/stock" className="text-foreground transition-smooth">В наличии</a>
+          <a href="/stock" className="hover:text-foreground transition-smooth">В наличии</a>
+          <a href="/stock2" className="text-foreground transition-smooth">Сток 2</a>
           <a href="/#services" className="hover:text-foreground transition-smooth">Услуги</a>
           <a href="/#contact" className="hover:text-foreground transition-smooth">Контакты</a>
         </nav>
@@ -360,7 +361,7 @@ export default function Stock2() {
         {`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            Смотри, раз не получается ничего сделать, давай сделай ещё одну страницу, назови её «Сток 2», э-э-э, соответственно, и сделай её чётко пооо, э-э-э, аналогии с страницей «Сток». То есть просто сделай дубль страницы`}
+                                            Добавлю ссылку на страницу «Сток 2» в навигацию сайта.`}
       </div>
       <Nav />
       
