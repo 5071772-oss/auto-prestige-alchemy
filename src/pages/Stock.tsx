@@ -355,7 +355,7 @@ export default function Stock() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-primary/20" style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.5s ease-in-out' }}>
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
       <Nav />
       
       {/* Hero Section */}
