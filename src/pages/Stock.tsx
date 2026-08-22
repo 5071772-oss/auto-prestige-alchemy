@@ -352,10 +352,9 @@ export default function Stock() {
           </Reveal>
           <Reveal delay={120}>
             <h1 className="font-display mt-8 text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-4xl text-gradient-soft">
-              '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
-                                        
-                                            
-                                            I have approved the plan
+              Премиальный парк,
+              <br />
+              <span className="italic text-gradient-gold">готовый к выдаче.</span>
             </h1>
           </Reveal>
           <Reveal delay={240}>
