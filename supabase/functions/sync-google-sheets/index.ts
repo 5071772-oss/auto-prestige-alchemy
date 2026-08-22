@@ -23,7 +23,7 @@ serve(async (req) => {
 
     // Fetch data from Google Sheets via Gateway
     const response = await fetch(
-      `https://connector-gateway.lovable.dev/google_sheets/v4/spreadsheets/${spreadsheetId}/values/Stock!A:T`,
+      `https://connector-gateway.lovable.dev/google_sheets/v4/spreadsheets/${spreadsheetId}/values/Stock!A:U`,
       {
         headers: {
           "Authorization": `Bearer ${lovableApiKey}`,
@@ -62,6 +62,7 @@ serve(async (req) => {
           mileage: parseInt(row[5]?.toString().replace(/\D/g, '')) || null,
           specs: row[6],
           description: row[7],
+          status: row[20] || 'available',
           images: images
         }
       })

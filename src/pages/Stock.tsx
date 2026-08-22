@@ -133,7 +133,7 @@ function CarCard({ car }: { car: any }) {
           <div className="flex items-start gap-2 p-3 bg-background/50 border border-border rounded-sm">
             <Landmark className="w-4 h-4 text-primary shrink-0 mt-0.5" />
             <div className="text-[10px] leading-tight text-muted-foreground uppercase tracking-wider">
-              Статус: <span className="block text-foreground mt-0.5">В наличии</span>
+              Статус: <span className={`block mt-0.5 ${car.status?.toLowerCase().includes('заказ') ? 'text-primary italic' : 'text-foreground'}`}>{car.status || 'В наличии'}</span>
             </div>
           </div>
         </div>
