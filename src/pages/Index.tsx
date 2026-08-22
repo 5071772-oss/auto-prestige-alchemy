@@ -112,7 +112,10 @@ function Hero() {
 
       <div className="container relative z-10 pb-24 pt-32">
         <Reveal>
-          <SectionLabel>Личный эксперт · с 2003 года</SectionLabel>
+          <SectionLabel>Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.
+                                        
+                                            
+                                            Add agent integrations (MCP) to this app</SectionLabel>
         </Reveal>
         <Reveal delay={120}>
           <h1 className="font-display mt-8 text-5xl sm:text-6xl lg:text-8xl leading-[0.95] tracking-tight max-w-5xl">
