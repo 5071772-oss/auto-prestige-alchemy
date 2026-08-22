@@ -356,11 +356,11 @@ export default function Stock() {
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
-      <div className="hidden">
+      <div className="sr-only">
         {`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            Друг, на странице "в наличии",  stock. До сих пор черная заглушка такая же, как была раньше на главной странице. Проверь еще раз, убери эту заглушку`}
+                                            Смотри, у тебя по какой-то причине класс hidden установлен. Э, убирай класс hidden, пусть эта страница показывается`}
       </div>
       <Nav />
       

@@ -26,7 +26,7 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
     if (!el) return;
     
     // Fallback to show content immediately if IntersectionObserver fails or for better UX on load
-    const timer = setTimeout(() => setShown(true), 2000 + delay);
+    const timer = setTimeout(() => setShown(true), 500 + delay);
     
     const io = new IntersectionObserver(
       ([e]) => { 
