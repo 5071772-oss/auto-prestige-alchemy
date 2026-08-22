@@ -1,9 +1,8 @@
 import AmoForm from "@/components/AmoForm";
 import { useEffect, useState, useRef, type ReactNode } from "react";
-import { 
-  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown, 
+import {
+  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown,
   ChevronLeft, ChevronRight, Calendar, Gauge, FileText, Landmark,
-  RefreshCcw
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,7 +13,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
-import { syncCarsFromGoogleSheet } from "@/utils/syncStock";
 import { syncCarsFromGoogleSheetsConnector } from "@/utils/googleSheetsSync";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -474,10 +472,10 @@ export default function Stock() {
               <div className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">Premium Automotive Expert</div>
             </div>
             <div className="flex flex-wrap gap-x-12 gap-y-6 text-sm text-muted-foreground">
-              <a href="/" className="hover:text-primary transition-smooth">Главная</a>
-              <a href="/stock" className="text-foreground">В наличии</a>
-              <a href="/#about" className="hover:text-primary transition-smooth">Об эксперте</a>
-              <a href="/#services" className="hover:text-primary transition-smooth">Услуги</a>
+              <a href="#/" className="hover:text-primary transition-smooth">Главная</a>
+              <a href="#/stock" className="text-foreground">В наличии</a>
+              <a href="#/" className="hover:text-primary transition-smooth">Об эксперте</a>
+              <a href="#/" className="hover:text-primary transition-smooth">Услуги</a>
             </div>
             <div className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Все права защищены
