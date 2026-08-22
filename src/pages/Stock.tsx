@@ -139,7 +139,22 @@ function CarCard({ car }: { car: any }) {
         </div>
 
         <Button asChild className="w-full bg-primary hover:bg-primary-glow text-primary-foreground rounded-sm transition-smooth group/btn">
-          <a href={`#contact?car=${encodeURIComponent(`${car.make} ${car.model}`)}`} className="flex items-center justify-center gap-2">
+          <a 
+            href="#contact" 
+            onClick={(e) => {
+              const carInfo = `${car.make} ${car.model}`;
+              window.history.pushState(null, '', `#contact?car=${encodeURIComponent(carInfo)}`);
+              // Trigger a hashchange event manually since pushState doesn't do it
+              window.dispatchEvent(new HashChangeEvent('hashchange'));
+              
+              const contactSection = document.getElementById('contact');
+              if (contactSection) {
+                e.preventDefault();
+                contactSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            className="flex items-center justify-center gap-2"
+          >
             Забронировать <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
           </a>
         </Button>
