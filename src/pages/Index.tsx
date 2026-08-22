@@ -78,7 +78,7 @@ function Nav() {
         <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
           <a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a>
           <a href="#services" className="hover:text-foreground transition-smooth">Услуги</a>
-          <a href="./stock" className="hover:text-foreground transition-smooth font-medium text-primary/90">В наличии</a>
+          <a href="/stock" className="hover:text-foreground transition-smooth font-medium text-primary/90">В наличии</a>
           <a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a>
           <a href="#process" className="hover:text-foreground transition-smooth">Процесс</a>
           <a href="#contact" className="hover:text-foreground transition-smooth">Контакты</a>
@@ -112,10 +112,7 @@ function Hero() {
 
       <div className="container relative z-10 pb-24 pt-32">
         <Reveal>
-          <SectionLabel>Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.
-                                        
-                                            
-                                            Add agent integrations (MCP) to this app</SectionLabel>
+          <SectionLabel>Личный эксперт · с 2003 года</SectionLabel>
         </Reveal>
         <Reveal delay={120}>
           <h1 className="font-display mt-8 text-5xl sm:text-6xl lg:text-8xl leading-[0.95] tracking-tight max-w-5xl">

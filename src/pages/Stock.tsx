@@ -258,16 +258,16 @@ function Nav() {
       }`}
     >
       <div className="container flex items-center justify-between h-20">
-        <a href="./" className="flex items-center gap-3">
+        <a href="/" className="flex items-center gap-3">
           <span className="font-display text-2xl tracking-tight text-gradient-soft">Николаев</span>
           <span className="hidden sm:block h-4 w-px bg-border" />
           <span className="hidden sm:block text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Premium auto</span>
         </a>
         <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
-          <a href="./" className="hover:text-foreground transition-smooth">Главная</a>
-          <a href="./stock" className="text-foreground transition-smooth">В наличии</a>
-          <a href="./#services" className="hover:text-foreground transition-smooth">Услуги</a>
-          <a href="./#contact" className="hover:text-foreground transition-smooth">Контакты</a>
+          <a href="/" className="hover:text-foreground transition-smooth">Главная</a>
+          <a href="/stock" className="text-foreground transition-smooth">В наличии</a>
+          <a href="/#services" className="hover:text-foreground transition-smooth">Услуги</a>
+          <a href="/#contact" className="hover:text-foreground transition-smooth">Контакты</a>
         </nav>
         <a
           href="#contact"
@@ -347,10 +347,7 @@ export default function Stock() {
         <div className="container relative z-10">
           <Reveal>
             <div onDoubleClick={handleSync} className="cursor-default">
-              <SectionLabel>Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.
-                                        
-                                            
-                                            Add agent integrations (MCP) to this app</SectionLabel>
+              <SectionLabel>Автомобили в наличии</SectionLabel>
             </div>
           </Reveal>
           <Reveal delay={120}>
