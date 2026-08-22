@@ -3,7 +3,7 @@ import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
   ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown, 
   ChevronLeft, ChevronRight, Calendar, Gauge, FileText, Landmark,
-  RefreshCcw
+  RefreshCcw, MessageCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
