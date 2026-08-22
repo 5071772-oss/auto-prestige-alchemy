@@ -359,7 +359,7 @@ export default function Stock2() {
         {`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            Честно говоря, меня так бесит эта подзагрузка в начале, э-э-э, вот на каждой странице вот этот вот значок загрузки. Можно как-то от него избавиться? Он просто бесит реально. Вот. И загрузка очень долгая`}
+                                            Проверьте указаны ли где-то переменные в проекте тип VITE_SUPABASE_URL или SUPABASE_URL`}
       </div>
       <Nav />
       
