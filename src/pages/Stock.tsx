@@ -268,11 +268,6 @@ export default function Stock() {
             </p>
           </Reveal>
           
-          <Reveal delay={360} className="mt-10">
-            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/30 select-none pointer-events-none">
-              Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.
-            </p>
-          </Reveal>
         </div>
       </section>
 
