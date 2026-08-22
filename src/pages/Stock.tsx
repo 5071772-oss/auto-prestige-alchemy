@@ -418,7 +418,7 @@ export default function Stock() {
               </h2>
               <p className="mt-8 text-muted-foreground text-lg leading-relaxed max-w-lg">
                 Оставьте заявку, и я подберу идеальный вариант под ваши критерии 
-                из закрытых дилерских баз Европы и ОАЭ.
+                из закрытых дилерских баз Европы, Америки, Китая, Кореи, Японии и ОАЭ.
               </p>
               
               <div className="mt-12 space-y-8">
