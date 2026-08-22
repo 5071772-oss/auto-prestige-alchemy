@@ -26,7 +26,7 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
     const el = ref.current;
     if (!el) return;
     
-    const timer = setTimeout(() => setShown(true), 500 + delay);
+    setShown(true);
     
     const io = new IntersectionObserver(
       ([e]) => { 
@@ -361,7 +361,7 @@ export default function Stock2() {
         {`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            Добавлю ссылку на страницу «Сток 2» в навигацию сайта.`}
+                                            Честно говоря, меня так бесит эта подзагрузка в начале, э-э-э, вот на каждой странице вот этот вот значок загрузки. Можно как-то от него избавиться? Он просто бесит реально. Вот. И загрузка очень долгая`}
       </div>
       <Nav />
       

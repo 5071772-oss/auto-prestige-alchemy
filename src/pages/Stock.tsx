@@ -26,7 +26,7 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
     const el = ref.current;
     if (!el) return;
     
-    const timer = setTimeout(() => setShown(true), 500 + delay);
+    setShown(true);
     
     const io = new IntersectionObserver(
       ([e]) => { 
