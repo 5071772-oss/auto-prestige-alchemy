@@ -1,8 +1,9 @@
 import AmoForm from "@/components/AmoForm";
 import { useEffect, useState, useRef, type ReactNode } from "react";
-import {
-  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown,
+import { 
+  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown, 
   ChevronLeft, ChevronRight, Calendar, Gauge, FileText, Landmark,
+  RefreshCcw
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
+import { syncCarsFromGoogleSheet } from "@/utils/syncStock";
 import { syncCarsFromGoogleSheetsConnector } from "@/utils/googleSheetsSync";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -256,16 +258,16 @@ function Nav() {
       }`}
     >
       <div className="container flex items-center justify-between h-20">
-        <a href="#/" className="flex items-center gap-3">
+        <a href="./" className="flex items-center gap-3">
           <span className="font-display text-2xl tracking-tight text-gradient-soft">Николаев</span>
           <span className="hidden sm:block h-4 w-px bg-border" />
           <span className="hidden sm:block text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Premium auto</span>
         </a>
         <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
-          <a href="#/" className="hover:text-foreground transition-smooth">Главная</a>
-          <a href="#/stock" className="text-foreground transition-smooth">В наличии</a>
-          <a href="#/#services" className="hover:text-foreground transition-smooth">Услуги</a>
-          <a href="#/#contact" className="hover:text-foreground transition-smooth">Контакты</a>
+          <a href="./" className="hover:text-foreground transition-smooth">Главная</a>
+          <a href="./stock" className="text-foreground transition-smooth">В наличии</a>
+          <a href="./#services" className="hover:text-foreground transition-smooth">Услуги</a>
+          <a href="./#contact" className="hover:text-foreground transition-smooth">Контакты</a>
         </nav>
         <a
           href="#contact"
@@ -387,11 +389,9 @@ export default function Stock() {
                   <ShieldCheck className="w-10 h-10 text-primary" />
                 </div>
                 <h2 className="font-display text-3xl text-gradient-soft">Раздел наполняется</h2>
-                <p className="mt-4 text-muted-foreground max-w-md mx-auto whitespace-pre-wrap">
-                  '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
-                                        
-                                            
-                                            Enable AI for this project.
+                <p className="mt-4 text-muted-foreground max-w-md mx-auto">
+                  В данный момент мы обновляем каталог доступных автомобилей. 
+                  Оставьте заявку, чтобы получить актуальный список в PDF.
                 </p>
                 <div className="mt-10">
                    <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase">
@@ -418,7 +418,7 @@ export default function Stock() {
               </h2>
               <p className="mt-8 text-muted-foreground text-lg leading-relaxed max-w-lg">
                 Оставьте заявку, и я подберу идеальный вариант под ваши критерии 
-                из закрытых дилерских баз Европы, Америки, Китая, Кореи, Японии и ОАЭ.
+                из закрытых дилерских баз Европы и ОАЭ.
               </p>
               
               <div className="mt-12 space-y-8">
@@ -474,10 +474,10 @@ export default function Stock() {
               <div className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">Premium Automotive Expert</div>
             </div>
             <div className="flex flex-wrap gap-x-12 gap-y-6 text-sm text-muted-foreground">
-              <a href="#/" className="hover:text-primary transition-smooth">Главная</a>
-              <a href="#/stock" className="text-foreground">В наличии</a>
-              <a href="#/" className="hover:text-primary transition-smooth">Об эксперте</a>
-              <a href="#/" className="hover:text-primary transition-smooth">Услуги</a>
+              <a href="/" className="hover:text-primary transition-smooth">Главная</a>
+              <a href="/stock" className="text-foreground">В наличии</a>
+              <a href="/#about" className="hover:text-primary transition-smooth">Об эксперте</a>
+              <a href="/#services" className="hover:text-primary transition-smooth">Услуги</a>
             </div>
             <div className="text-sm text-muted-foreground">
               © {new Date().getFullYear()} Все права защищены
