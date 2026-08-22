@@ -119,7 +119,7 @@ function Hero() {
             <span className="text-gradient-soft">Николаев Алексей</span>
             <span className="block text-muted-foreground text-2xl sm:text-3xl lg:text-4xl font-light mt-6 max-w-3xl">
               эксперт по премиальным автомобилям —{" "}
-              <span className="text-gradient-gold">Audi, BMW, Mercedes-Benz</span> и выше — {"'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''\n                                        \n                                            \n                                            I have approved the plan"}
+              <span className="text-gradient-gold">Audi, BMW, Mercedes-Benz</span> и выше
             </span>
           </h1>
         </Reveal>
