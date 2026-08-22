@@ -347,7 +347,10 @@ export default function Stock() {
         <div className="container relative z-10">
           <Reveal>
             <div onDoubleClick={handleSync} className="cursor-default">
-              <SectionLabel>Автомобили в наличии</SectionLabel>
+              <SectionLabel>Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.
+                                        
+                                            
+                                            Add agent integrations (MCP) to this app</SectionLabel>
             </div>
           </Reveal>
           <Reveal delay={120}>
