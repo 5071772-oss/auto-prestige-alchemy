@@ -57,6 +57,7 @@ function SectionLabel({ children }: { children: ReactNode }) {
 
 function CarCard({ car }: { car: any }) {
   const [currentImage, setCurrentImage] = useState(0);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const images = car.images?.length > 0 ? car.images : ["https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80"];
 
   const nextImage = (e: React.MouseEvent) => {
@@ -71,7 +72,7 @@ function CarCard({ car }: { car: any }) {
 
   return (
     <Reveal className="group bg-graphite-deep border border-border overflow-hidden rounded-sm hover:border-primary/40 transition-smooth">
-      <Dialog>
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogTrigger asChild>
           <div className="cursor-pointer">
             <div className="relative aspect-[16/10] overflow-hidden">
@@ -220,11 +221,14 @@ function CarCard({ car }: { car: any }) {
                 <Button 
                   onClick={() => {
                     const carInfo = `${car.make} ${car.model}`;
+                    setIsDialogOpen(false);
                     window.history.pushState(null, '', `#contact?car=${encodeURIComponent(carInfo)}`);
                     window.dispatchEvent(new HashChangeEvent('hashchange'));
                     const contactSection = document.getElementById('contact');
                     if (contactSection) {
-                      contactSection.scrollIntoView({ behavior: 'smooth' });
+                      setTimeout(() => {
+                        contactSection.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
                     }
                   }}
                   className="w-full h-14 bg-primary hover:bg-primary-glow text-primary-foreground rounded-sm transition-smooth group/btn text-sm tracking-widest uppercase"
