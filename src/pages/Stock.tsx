@@ -391,7 +391,7 @@ export default function Stock() {
                   '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            I have approved the plan
+                                            Послушай, при деплое все равно черный экран. Найди проблему. В чем проблема?
                 </p>
                 <div className="mt-10">
                    <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase">
