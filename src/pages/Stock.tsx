@@ -397,7 +397,7 @@ export default function Stock() {
                 <CarCard key={car.id} car={car} />
               ))}
             </div>
-          ) : (
+          ) : !loading && (
             <div className="text-center py-40 border border-dashed border-border/60">
               <Reveal>
                 <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-8">
