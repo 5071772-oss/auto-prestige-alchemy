@@ -371,9 +371,9 @@ export default function Stock() {
       <section className="py-20 bg-graphite-deep/30">
         <div className="container">
           {loading ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 opacity-50">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="aspect-[16/20] bg-graphite-deep animate-pulse border border-border rounded-sm" />
+                <div key={i} className="aspect-[16/20] bg-graphite border border-border rounded-sm" />
               ))}
             </div>
           ) : cars.length > 0 ? (
