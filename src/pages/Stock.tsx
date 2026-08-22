@@ -148,7 +148,7 @@ function CarCard({ car }: { car: any }) {
           </div>
         </DialogTrigger>
 
-        <DialogContent className="max-w-4xl bg-graphite-deep border-border p-0 overflow-hidden sm:rounded-sm">
+        <DialogContent className="max-w-4xl bg-graphite-deep border-border p-0 overflow-hidden sm:rounded-sm custom-scrollbar">
           <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
             <div className="md:w-1/2 relative bg-black">
               <div className="h-full min-h-[300px]">
@@ -173,7 +173,7 @@ function CarCard({ car }: { car: any }) {
               </div>
             </div>
             
-            <div className="md:w-1/2 p-8 overflow-y-auto">
+            <div className="md:w-1/2 p-8 overflow-y-auto custom-scrollbar">
               <DialogHeader className="text-left mb-8">
                 <div className="text-xs text-primary uppercase tracking-[0.3em] mb-2">{car.status || 'В наличии'}</div>
                 <DialogTitle className="text-3xl font-display text-gradient-soft mb-2">{car.make} {car.model}</DialogTitle>
