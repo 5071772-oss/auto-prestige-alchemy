@@ -256,10 +256,9 @@ export default function Stock() {
           </Reveal>
           <Reveal delay={120}>
             <h1 className="font-display mt-8 text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-4xl text-gradient-soft">
-              '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
-                                        
-                                            
-                                            Так, я добавил, а-а-а, в файл "Автомобили в наличии", а-а-а, одну машину. Соответственно, загрузи ее на страницу "Автомобили в наличии". И плюсом ко всему убери кнопку "Проверить импорт".
+              Премиальный парк,
+              <br />
+              <span className="italic text-gradient-gold">готовый к выдаче.</span>
             </h1>
           </Reveal>
           <Reveal delay={240}>
@@ -269,6 +268,16 @@ export default function Stock() {
             </p>
           </Reveal>
           
+          <Reveal delay={360} className="mt-10">
+            <Button 
+              onClick={handleSync}
+              variant="outline"
+              className="border-primary/30 hover:border-primary/60 text-primary hover:bg-primary/5 rounded-sm transition-smooth gap-2"
+            >
+              <RefreshCcw className="w-4 h-4" />
+              Проверить импорт
+            </Button>
+          </Reveal>
         </div>
       </section>
 
