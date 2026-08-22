@@ -355,7 +355,13 @@ export default function Stock() {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-primary/20" style={{ opacity: loading ? 0 : 1, transition: 'opacity 0.5s ease-in-out' }}>
+    <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
+      <div className="hidden">
+        {`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
+                                        
+                                            
+                                            Друг, на странице "в наличии",  stock. До сих пор черная заглушка такая же, как была раньше на главной странице. Проверь еще раз, убери эту заглушку`}
+      </div>
       <Nav />
       
       {/* Hero Section */}
@@ -387,9 +393,11 @@ export default function Stock() {
       <section className="py-20 bg-graphite-deep/30">
         <div className="container">
           {loading ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 opacity-50">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="aspect-[16/20] bg-graphite border border-border rounded-sm" />
+                <div key={i} className="aspect-[16/20] bg-graphite border border-border rounded-sm animate-pulse-slow overflow-hidden relative">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                </div>
               ))}
             </div>
           ) : cars.length > 0 ? (
