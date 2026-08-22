@@ -360,7 +360,7 @@ export default function Stock() {
         {`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            I have approved the plan`}
+                                            Смотри, я увидел, а-а-а, в теге body, соответственно, visibility hidden. Э-э-э, надо, чтобы эта страница показывалась. Поменяй, э-э-э, видимость этой страницы`}
       </div>
       <Nav />
       
