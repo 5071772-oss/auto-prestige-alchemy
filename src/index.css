@@ -162,6 +162,12 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
   }
 
+  #root:empty {
+    background: hsl(0 0% 5%);
+    width: 100vw;
+    height: 100vh;
+  }
+
   /* Custom Scrollbar for premium look */
   .custom-scrollbar::-webkit-scrollbar {
     width: 5px;
