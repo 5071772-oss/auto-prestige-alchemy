@@ -32,7 +32,6 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
       ([e]) => { 
         if (e.isIntersecting) { 
           setShown(true); 
-          clearTimeout(timer);
           io.disconnect(); 
         } 
       },
@@ -42,7 +41,6 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
     io.observe(el);
     return () => {
       io.disconnect();
-      clearTimeout(timer);
     };
   }, [delay]);
 
