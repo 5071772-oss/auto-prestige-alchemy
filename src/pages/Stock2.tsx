@@ -391,15 +391,7 @@ export default function Stock2() {
       {/* Stock Grid */}
       <section className="py-20 bg-graphite-deep/30">
         <div className="container">
-          {loading ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="aspect-[16/20] bg-graphite border border-border rounded-sm animate-pulse-slow overflow-hidden relative">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                </div>
-              ))}
-            </div>
-          ) : cars.length > 0 ? (
+          {cars.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {cars.map((car) => (
                 <CarCard key={car.id} car={car} />
