@@ -268,16 +268,6 @@ export default function Stock() {
             </p>
           </Reveal>
           
-          <Reveal delay={360} className="mt-10">
-            <Button 
-              onClick={handleSync}
-              variant="outline"
-              className="border-primary/30 hover:border-primary/60 text-primary hover:bg-primary/5 rounded-sm transition-smooth gap-2"
-            >
-              <RefreshCcw className="w-4 h-4" />
-              Проверить импорт
-            </Button>
-          </Reveal>
         </div>
       </section>
 
