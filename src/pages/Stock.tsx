@@ -6,6 +6,13 @@ import {
   RefreshCcw
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { syncCarsFromGoogleSheet } from "@/utils/syncStock";
 import { syncCarsFromGoogleSheetsConnector } from "@/utils/googleSheetsSync";
@@ -64,101 +71,171 @@ function CarCard({ car }: { car: any }) {
 
   return (
     <Reveal className="group bg-graphite-deep border border-border overflow-hidden rounded-sm hover:border-primary/40 transition-smooth">
-      <div className="relative aspect-[16/10] overflow-hidden">
-        <img 
-          src={images[currentImage]} 
-          alt={`${car.make} ${car.model}`}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
-        
-        {images.length > 1 && (
-          <>
-            <button 
-              onClick={prevImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-smooth hover:bg-primary hover:text-primary-foreground"
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <button 
-              onClick={nextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-smooth hover:bg-primary hover:text-primary-foreground"
-            >
-              <ChevronRight className="w-4 h-4" />
-            </button>
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
-              {images.map((_: any, idx: number) => (
-                <div 
-                  key={idx}
-                  className={`h-1 rounded-full transition-all duration-300 ${idx === currentImage ? "w-4 bg-primary" : "w-1 bg-white/40"}`}
-                />
-              ))}
-            </div>
-          </>
-        )}
-      </div>
-
-      <div className="p-6">
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <h3 className="text-xl font-display text-gradient-soft">{car.make} {car.model}</h3>
-            <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground uppercase tracking-widest">
-              <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {car.year}</span>
-              <span className="w-1 h-1 rounded-full bg-border" />
-              <span className="flex items-center gap-1"><Gauge className="w-3 h-3" /> {car.mileage?.toLocaleString()} км</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="space-y-4 mb-6">
-          <div className="flex justify-between items-end">
-            <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Наличные</div>
-            <div className="text-xl font-medium text-foreground">{car.price_cash}</div>
-          </div>
-          {car.price_vat && (
-            <div className="flex justify-between items-end border-t border-border pt-2">
-              <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">С НДС</div>
-              <div className="text-sm text-primary font-medium">{car.price_vat}</div>
-            </div>
-          )}
-        </div>
-
-        <div className="grid grid-cols-2 gap-3 mb-6">
-          <div className="flex items-start gap-2 p-3 bg-background/50 border border-border rounded-sm">
-            <FileText className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-            <div className="text-[10px] leading-tight text-muted-foreground uppercase tracking-wider">
-              Комплектация: <span className="block text-foreground mt-0.5">{car.specs || 'Premium'}</span>
-            </div>
-          </div>
-          <div className="flex items-start gap-2 p-3 bg-background/50 border border-border rounded-sm">
-            <Landmark className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-            <div className="text-[10px] leading-tight text-muted-foreground uppercase tracking-wider">
-              Статус: <span className={`block mt-0.5 ${car.status?.toLowerCase().includes('заказ') ? 'text-primary italic' : 'text-foreground'}`}>{car.status || 'В наличии'}</span>
-            </div>
-          </div>
-        </div>
-
-        <Button asChild className="w-full bg-primary hover:bg-primary-glow text-primary-foreground rounded-sm transition-smooth group/btn">
-          <a 
-            href="#contact" 
-            onClick={(e) => {
-              const carInfo = `${car.make} ${car.model}`;
-              window.history.pushState(null, '', `#contact?car=${encodeURIComponent(carInfo)}`);
-              // Trigger a hashchange event manually since pushState doesn't do it
-              window.dispatchEvent(new HashChangeEvent('hashchange'));
+      <Dialog>
+        <DialogTrigger asChild>
+          <div className="cursor-pointer">
+            <div className="relative aspect-[16/10] overflow-hidden">
+              <img 
+                src={images[currentImage]} 
+                alt={`${car.make} ${car.model}`}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
               
-              const contactSection = document.getElementById('contact');
-              if (contactSection) {
-                e.preventDefault();
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-              }
-            }}
-            className="flex items-center justify-center gap-2"
-          >
-            Забронировать <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-          </a>
-        </Button>
-      </div>
+              {images.length > 1 && (
+                <>
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); prevImage(e); }}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-smooth hover:bg-primary hover:text-primary-foreground"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); nextImage(e); }}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-smooth hover:bg-primary hover:text-primary-foreground"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
+                    {images.map((_: any, idx: number) => (
+                      <div 
+                        key={idx}
+                        className={`h-1 rounded-full transition-all duration-300 ${idx === currentImage ? "w-4 bg-primary" : "w-1 bg-white/40"}`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="p-6">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <h3 className="text-xl font-display text-gradient-soft">{car.make} {car.model}</h3>
+                  <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground uppercase tracking-widest">
+                    <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {car.year}</span>
+                    <span className="w-1 h-1 rounded-full bg-border" />
+                    <span className="flex items-center gap-1"><Gauge className="w-3 h-3" /> {car.mileage?.toLocaleString()} км</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between items-end">
+                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Наличные</div>
+                  <div className="text-xl font-medium text-foreground">{car.price_cash}</div>
+                </div>
+                {car.price_vat && (
+                  <div className="flex justify-between items-end border-t border-border pt-2">
+                    <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">С НДС</div>
+                    <div className="text-sm text-primary font-medium">{car.price_vat}</div>
+                  </div>
+                )}
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 mb-6 text-[10px] leading-tight text-muted-foreground uppercase tracking-wider">
+                <div className="flex items-start gap-2 p-3 bg-background/50 border border-border rounded-sm">
+                  <Landmark className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    Статус: <span className={`block mt-0.5 ${car.status?.toLowerCase().includes('заказ') ? 'text-primary italic' : 'text-foreground'}`}>{car.status || 'В наличии'}</span>
+                  </div>
+                </div>
+                <div className="flex items-center justify-center p-3 bg-primary/5 border border-primary/20 rounded-sm group-hover:bg-primary/10 transition-smooth">
+                  <span className="text-primary font-medium tracking-[0.2em]">Подробнее</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </DialogTrigger>
+
+        <DialogContent className="max-w-4xl bg-graphite-deep border-border p-0 overflow-hidden sm:rounded-sm">
+          <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
+            <div className="md:w-1/2 relative bg-black">
+              <div className="h-full min-h-[300px]">
+                <img 
+                  src={images[currentImage]} 
+                  alt={`${car.make} ${car.model}`}
+                  className="w-full h-full object-cover"
+                />
+                {images.length > 1 && (
+                  <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2 px-4 overflow-x-auto py-2 bg-black/40 backdrop-blur-md">
+                    {images.map((img: string, idx: number) => (
+                      <button 
+                        key={idx}
+                        onClick={() => setCurrentImage(idx)}
+                        className={`w-12 h-12 rounded-sm border-2 overflow-hidden shrink-0 transition-all ${idx === currentImage ? 'border-primary' : 'border-transparent opacity-50 hover:opacity-100'}`}
+                      >
+                        <img src={img} className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+            
+            <div className="md:w-1/2 p-8 overflow-y-auto">
+              <DialogHeader className="text-left mb-8">
+                <div className="text-xs text-primary uppercase tracking-[0.3em] mb-2">{car.status || 'В наличии'}</div>
+                <DialogTitle className="text-3xl font-display text-gradient-soft mb-2">{car.make} {car.model}</DialogTitle>
+                <div className="flex items-center gap-4 text-sm text-muted-foreground uppercase tracking-widest">
+                  <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> {car.year} год</span>
+                  <span className="flex items-center gap-1"><Gauge className="w-4 h-4" /> {car.mileage?.toLocaleString()} км</span>
+                </div>
+              </DialogHeader>
+
+              <div className="space-y-8">
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-4 bg-background/50 border border-border rounded-sm">
+                    <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-1">Наличные</div>
+                    <div className="text-xl font-medium text-foreground">{car.price_cash}</div>
+                  </div>
+                  {car.price_vat && (
+                    <div className="p-4 bg-background/50 border border-border rounded-sm">
+                      <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-1">С НДС</div>
+                      <div className="text-xl font-medium text-primary">{car.price_vat}</div>
+                    </div>
+                  )}
+                </div>
+
+                {car.specs && (
+                  <div>
+                    <h4 className="text-[11px] uppercase tracking-[0.3em] text-primary mb-3 flex items-center gap-2">
+                      <FileText className="w-4 h-4" /> Комплектация
+                    </h4>
+                    <div className="text-sm text-foreground/90 leading-relaxed whitespace-pre-wrap bg-background/30 p-4 border border-border rounded-sm italic">
+                      {car.specs}
+                    </div>
+                  </div>
+                )}
+
+                {car.description && (
+                  <div>
+                    <h4 className="text-[11px] uppercase tracking-[0.3em] text-primary mb-3">Описание</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      {car.description}
+                    </p>
+                  </div>
+                )}
+
+                <Button 
+                  onClick={() => {
+                    const carInfo = `${car.make} ${car.model}`;
+                    window.history.pushState(null, '', `#contact?car=${encodeURIComponent(carInfo)}`);
+                    window.dispatchEvent(new HashChangeEvent('hashchange'));
+                    const contactSection = document.getElementById('contact');
+                    if (contactSection) {
+                      contactSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                  className="w-full h-14 bg-primary hover:bg-primary-glow text-primary-foreground rounded-sm transition-smooth group/btn text-sm tracking-widest uppercase"
+                >
+                  Забронировать <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Reveal>
   );
 }
