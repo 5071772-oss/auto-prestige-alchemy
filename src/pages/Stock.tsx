@@ -443,6 +443,15 @@ export default function Stock() {
                         <div className="text-sm font-medium">@nixon_motors</div>
                       </div>
                     </a>
+                    <a href="https://max.ru/u/f9LHodD0cOJqTlPe8YcscWYxH0dzcj7TZq5Q0XOZpxuMXD-qpbOgHkOkLso" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-4 bg-graphite-deep border border-border hover:border-primary transition-smooth rounded-sm">
+                      <div className="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-smooth">
+                        <MessageCircle className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Max</div>
+                        <div className="text-sm font-medium">Messenger</div>
+                      </div>
+                    </a>
                   </div>
                 </div>
               </div>
