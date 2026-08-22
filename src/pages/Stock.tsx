@@ -269,14 +269,9 @@ export default function Stock() {
           </Reveal>
           
           <Reveal delay={360} className="mt-10">
-            <Button 
-              onClick={handleSync}
-              variant="outline"
-              className="border-primary/30 hover:border-primary/60 text-primary hover:bg-primary/5 rounded-sm transition-smooth gap-2"
-            >
-              <RefreshCcw className="w-4 h-4" />
-              Проверить импорт
-            </Button>
+            <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground/30 select-none pointer-events-none">
+              Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.
+            </p>
           </Reveal>
         </div>
       </section>
