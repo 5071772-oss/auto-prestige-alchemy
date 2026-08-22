@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { useLocation } from "react-router-dom";
 
 const FORM_ID = "1737982";
 const FORM_HASH = "020f189ecc866669de0391b48066c721";
@@ -18,8 +19,18 @@ const FIELD = {
 
 export default function AmoForm() {
   const [sending, setSending] = useState(false);
+  const [note, setNote] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
   const originRef = useRef<HTMLInputElement>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.hash.split('?')[1] || window.location.search);
+    const car = searchParams.get('car');
+    if (car) {
+      setNote(`Меня заинтересовал автомобиль: ${car}`);
+    }
+  }, [location]);
 
   const onSubmit = () => {
     setSending(true);
@@ -76,7 +87,15 @@ export default function AmoForm() {
         </div>
         <div className="space-y-2">
           <label htmlFor="amo-note" className={labelClass}>Комментарий</label>
-          <Textarea id="amo-note" name={FIELD.note} rows={4} placeholder="Какой автомобиль вы рассматриваете, бюджет, сроки" className="rounded-none bg-card border-border resize-none" />
+          <Textarea 
+            id="amo-note" 
+            name={FIELD.note} 
+            rows={4} 
+            placeholder="Какой автомобиль вы рассматриваете, бюджет, сроки" 
+            className="rounded-none bg-card border-border resize-none"
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+          />
         </div>
         <Button type="submit" disabled={sending} className="w-full h-12 rounded-none tracking-[0.2em] uppercase text-xs">
           {sending ? "Отправляю…" : "Отправить заявку"}

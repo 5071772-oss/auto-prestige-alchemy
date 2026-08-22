@@ -139,7 +139,7 @@ function CarCard({ car }: { car: any }) {
         </div>
 
         <Button asChild className="w-full bg-primary hover:bg-primary-glow text-primary-foreground rounded-sm transition-smooth group/btn">
-          <a href="#contact" className="flex items-center justify-center gap-2">
+          <a href={`#contact?car=${encodeURIComponent(`${car.make} ${car.model}`)}`} className="flex items-center justify-center gap-2">
             Забронировать <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
           </a>
         </Button>
