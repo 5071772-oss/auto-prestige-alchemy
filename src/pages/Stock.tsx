@@ -26,13 +26,12 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
     const el = ref.current;
     if (!el) return;
     
-    const timer = setTimeout(() => setShown(true), 500 + delay);
+    setShown(true);
     
     const io = new IntersectionObserver(
       ([e]) => { 
         if (e.isIntersecting) { 
           setShown(true); 
-          clearTimeout(timer);
           io.disconnect(); 
         } 
       },
@@ -42,7 +41,6 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
     io.observe(el);
     return () => {
       io.disconnect();
-      clearTimeout(timer);
     };
   }, [delay]);
 
@@ -361,7 +359,7 @@ export default function Stock() {
         {`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            Смотри, я увидел, а-а-а, в теге body, соответственно, visibility hidden. Э-э-э, надо, чтобы эта страница показывалась. Поменяй, э-э-э, видимость этой страницы`}
+                                            Честно говоря, меня так бесит эта подзагрузка в начале, э-э-э, вот на каждой странице вот этот вот значок загрузки. Можно как-то от него избавиться? Он просто бесит реально. Вот. И загрузка очень долгая`}
       </div>
       <Nav />
       
@@ -393,21 +391,13 @@ export default function Stock() {
       {/* Stock Grid */}
       <section className="py-20 bg-graphite-deep/30">
         <div className="container">
-          {loading ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="aspect-[16/20] bg-graphite border border-border rounded-sm animate-pulse-slow overflow-hidden relative">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-                </div>
-              ))}
-            </div>
-          ) : cars.length > 0 ? (
+          {cars.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {cars.map((car) => (
                 <CarCard key={car.id} car={car} />
               ))}
             </div>
-          ) : (
+          ) : !loading && (
             <div className="text-center py-40 border border-dashed border-border/60">
               <Reveal>
                 <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-8">
