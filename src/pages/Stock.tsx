@@ -266,8 +266,8 @@ function Nav() {
         <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
           <a href="./" className="hover:text-foreground transition-smooth">Главная</a>
           <a href="./stock" className="text-foreground transition-smooth">В наличии</a>
-          <a href="/#services" className="hover:text-foreground transition-smooth">Услуги</a>
-          <a href="/#contact" className="hover:text-foreground transition-smooth">Контакты</a>
+          <a href="./#services" className="hover:text-foreground transition-smooth">Услуги</a>
+          <a href="./#contact" className="hover:text-foreground transition-smooth">Контакты</a>
         </nav>
         <a
           href="#contact"
