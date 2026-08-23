@@ -96,33 +96,13 @@ export default function PrivacyPolicy() {
               '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            17. Меры по обеспечению безопасности персональных данных
+                                            22. Уведомление уполномоченного органа
 
-Оператор принимает необходимые правовые, организационные и технические меры для защиты персональных данных от неправомерного или случайного доступа, уничтожения, изменения, блокирования, копирования, предоставления, распространения и иных неправомерных действий.
+22.1. Оператор осуществляет оценку обязанности по направлению уведомления об обработке персональных данных до начала обработки персональных данных в соответствии со статьей 22 Федерального закона № 152-ФЗ.
 
-К таким мерам относятся:
+22.2. В случаях, когда направление уведомления является обязательным, Оператор направляет уведомление в уполномоченный орган по защите прав субъектов персональных данных в установленном порядке.
 
-17.1. Назначение лица, организующего обработку персональных данных, в рамках организационной структуры деятельности Оператора.
-
-17.2. Принятие локальных документов по вопросам обработки и защиты персональных данных.
-
-17.3. Определение целей обработки и состава обрабатываемых персональных данных.
-
-17.4. Ограничение доступа к персональным данным.
-
-17.5. Использование средств защиты учетных записей, включая пароли и иные доступные механизмы защиты.
-
-17.6. Принение актуальных программных средств и обновлений безопасности.
-
-17.7. Контроль используемых информационных систем и сервисов.
-
-17.8. Оценка рисков при подключении новых цифровых сервисов.
-
-17.9. Принятие мер по обнаружению и устранению нарушений законодательства о персональных данных.
-
-17.10. Учет и анализ инцидентов, связанных с неправомерным или случайным доступом к персональным данным.
-
-17.11. Уничтожение или обезличивание персональных данных при достижении целей обработки или возникновении иных предусмотренных законодательством оснований.
+22.3. Трансграничная передача персональных данных, если она планируется, рассматривается отдельно с учетом требований статьи 12 Федерального закона № 152-ФЗ и требований к направлению отдельного уведомления о намерении осуществлять трансграничную передачу персональных данных.
             </div>
 
             <Accordion type="single" collapsible className="w-full space-y-4">
@@ -458,6 +438,83 @@ export default function PrivacyPolicy() {
                     <li>Оценка рисков новых сервисов и анализ инцидентов безопасности;</li>
                     <li>Своевременное уничтожение или обезличивание данных.</li>
                   </ul>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="section-18" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
+                    <span className="text-lg font-display text-foreground">18. Права субъекта персональных данных</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>Субъект персональных данных имеет права, предусмотренные законодательством РФ:</p>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>Право на получение информации об обработке данных;</li>
+                    <li>Требование уточнения, блокирования или уничтожения данных;</li>
+                    <li>Отзыв согласия на обработку и получение рекламы;</li>
+                    <li>Требование прекращения обработки при наличии оснований;</li>
+                    <li>Обжалование действий Оператора в уполномоченный орган или суд.</li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="section-19" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
+                    <span className="text-lg font-display text-foreground">19. Порядок направления обращений</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>19.1. По вопросам обработки данных обращайтесь на email: <strong>5071772@gmail.com</strong></p>
+                  <p>19.2. Письменное обращение: <strong>143909, Московская область, г. Балашиха, Московский б-р, д. 1/13, кв. 215.</strong></p>
+                  <p>19.3. Обращение должно содержать сведения для идентификации заявителя и суть запроса.</p>
+                  <p>19.4. Ответы направляются в сроки, установленные законодательством РФ.</p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="section-20" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
+                    <span className="text-lg font-display text-foreground">20. Отзыв согласия</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>20.1–20.2. Субъект вправе отозвать согласие через email: <strong>5071772@gmail.com</strong> или почтовый адрес.</p>
+                  <p>20.3. После отзыва Оператор прекращает обработку, если нет иных законных оснований для ее продолжения.</p>
+                  <p>20.4. Уничтожение данных проводится в установленные законом сроки.</p>
+                  <p>20.5. Отказ от рекламы не отменяет обработку данных для исполнения договоров или требований закона.</p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="section-21" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
+                    <span className="text-lg font-display text-foreground">21. Уточнение, блокирование и уничтожение</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>21.1. Оператор уточняет данные при их неполноте или неточности.</p>
+                  <p>21.2. При выявлении неправомерной обработки данные блокируются на время проверки.</p>
+                  <p>21.3. При достижении целей данные уничтожаются или обезличиваются, если законом не предусмотрено иное.</p>
+                  <p>21.4. Уничтожение подтверждается в установленном законом порядке.</p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="section-22" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
+                    <span className="text-lg font-display text-foreground">22. Уведомление уполномоченного органа</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>22.1–22.2. Оператор оценивает обязанность и направляет уведомление об обработке данных в Роскомнадзор в соответствии со ст. 22 ФЗ-152, когда это обязательно.</p>
+                  <p>22.3. Трансграничная передача рассматривается отдельно с соблюдением требований ст. 12 ФЗ-152 и уведомлением регулятора.</p>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
