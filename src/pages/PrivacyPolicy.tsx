@@ -511,6 +511,21 @@ export default function PrivacyPolicy() {
                   <p>20.5. Отказ от рекламы не отменяет обработку данных для исполнения договоров или требований закона.</p>
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem value="section-21" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-lg font-display text-foreground">21. Уточнение, блокирование и уничтожение</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>21.1. Оператор уточняет данные при их неполноте или неточности.</p>
+                  <p>21.2. При выявлении неправомерной обработки данные блокируются на время проверки.</p>
+                  <p>21.3. При достижении целей данные уничтожаются или обезличиваются, если законом не предусмотрено иное.</p>
+                  <p>21.4. Уничтожение подтверждается в установленном законом порядке.</p>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
 
             <div className="mt-16 pt-8 border-t border-border flex justify-center">
