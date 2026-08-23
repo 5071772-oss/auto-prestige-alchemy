@@ -1,32 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { 
-  ArrowLeft, Phone, Send, MessageCircle, ShieldCheck, ChevronDown
-} from "lucide-react";
+import { ArrowLeft, Phone, Send, MessageCircle, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, } from "@/components/ui/accordion";
 function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-smooth ${
-        scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"
-      }`}
-    >
+    const [scrolled, setScrolled] = useState(false);
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 30);
+        window.addEventListener("scroll", onScroll);
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+    return (<header className={`fixed top-0 inset-x-0 z-50 transition-smooth ${scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"}`}>
       <div className="container flex items-center justify-between h-20">
         <a href="/" className="flex items-center gap-3">
           <span className="font-display text-2xl tracking-tight text-gradient-soft">Николаев</span>
-          <span className="hidden sm:block h-4 w-px bg-border" />
+          <span className="hidden sm:block h-4 w-px bg-border"/>
           <span className="hidden sm:block text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Premium auto</span>
         </a>
         <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
@@ -38,17 +25,14 @@ function Nav() {
         </nav>
         <Button asChild variant="outline" size="sm" className="rounded-sm border-border hover:border-primary transition-smooth">
           <a href="/">
-            <ArrowLeft className="w-4 h-4 mr-2" /> На главную
+            <ArrowLeft className="w-4 h-4 mr-2"/> На главную
           </a>
         </Button>
       </div>
-    </header>
-  );
+    </header>);
 }
-
 function Footer() {
-  return (
-    <footer className="border-t border-border bg-background py-16">
+    return (<footer className="border-t border-border bg-background py-16">
       <div className="container grid md:grid-cols-3 gap-12 text-left">
         <div>
           <div className="font-display text-2xl text-gradient-soft">Николаев Алексей</div>
@@ -73,9 +57,9 @@ function Footer() {
             <li><a href="tel:+79778468567" className="hover:text-foreground transition-smooth">+7 (977) 846-85-67</a></li>
             <li><a href="https://t.me/nixon_motors" className="hover:text-foreground transition-smooth">Telegram · @nixon_motors</a></li>
             <li className="flex gap-4 pt-2">
-              <a href="https://t.me/nixon_motors" aria-label="Telegram" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Send className="w-4 h-4" /></a>
-              <a href="https://max.ru/u/f9LHodD0cOJqTlPe8YcscWYxH0dzcj7TZq5Q0XOZpxuMXD-qpbOgHkOkLso" target="_blank" rel="noopener noreferrer" aria-label="Max" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><MessageCircle className="w-4 h-4" /></a>
-              <a href="tel:+79778468567" aria-label="Phone" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Phone className="w-4 h-4" /></a>
+              <a href="https://t.me/nixon_motors" aria-label="Telegram" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Send className="w-4 h-4"/></a>
+              <a href="https://max.ru/u/f9LHodD0cOJqTlPe8YcscWYxH0dzcj7TZq5Q0XOZpxuMXD-qpbOgHkOkLso" target="_blank" rel="noopener noreferrer" aria-label="Max" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><MessageCircle className="w-4 h-4"/></a>
+              <a href="tel:+79778468567" aria-label="Phone" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Phone className="w-4 h-4"/></a>
             </li>
           </ul>
         </div>
@@ -86,23 +70,19 @@ function Footer() {
           <a href="/privacy-policy" className="hover:text-primary transition-smooth">Политика обработки персональных данных</a>
         </div>
       </div>
-    </footer>
-  );
+    </footer>);
 }
-
 export default function PrivacyPolicy() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  return (
-    <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+    return (<div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
       <Nav />
       
       <main className="pt-40 pb-24">
         <div className="container max-w-4xl">
           <div className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-primary mb-8">
-            <span className="h-px w-8 bg-primary/60" />
+            <span className="h-px w-8 bg-primary/60"/>
             Юридическая информация
           </div>
           
@@ -147,7 +127,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-1" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">1. Общие положения</span>
                   </div>
                 </AccordionTrigger>
@@ -181,7 +161,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-2" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">2. Сведения об операторе</span>
                   </div>
                 </AccordionTrigger>
@@ -200,7 +180,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-3" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">3. Основные понятия</span>
                   </div>
                 </AccordionTrigger>
@@ -221,7 +201,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-4" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">4. Категории субъектов персональных данных</span>
                   </div>
                 </AccordionTrigger>
@@ -237,7 +217,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-5" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">5. Цели обработки персональных данных</span>
                   </div>
                 </AccordionTrigger>
@@ -274,7 +254,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-6" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">6. Состав обрабатываемых персональных данных</span>
                   </div>
                 </AccordionTrigger>
@@ -298,7 +278,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-7" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">7. Правовые основания обработки персональных данных</span>
                   </div>
                 </AccordionTrigger>
@@ -318,7 +298,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-8" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">8. Принципы обработки персональных данных</span>
                   </div>
                 </AccordionTrigger>
@@ -340,7 +320,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-9" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">9. Способы и действия с персональными данными</span>
                   </div>
                 </AccordionTrigger>
@@ -354,7 +334,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-10" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">10. Получение персональных данных через сайт</span>
                   </div>
                 </AccordionTrigger>
@@ -369,7 +349,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-11" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">11. Сроки обработки и хранения персональных данных</span>
                   </div>
                 </AccordionTrigger>
@@ -384,7 +364,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-12" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">12. Передача персональных данных третьим лицам</span>
                   </div>
                 </AccordionTrigger>
@@ -405,7 +385,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-13" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">13. Трансграничная передача персональных данных</span>
                   </div>
                 </AccordionTrigger>
@@ -420,7 +400,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-14" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">14. Локализация персональных данных</span>
                   </div>
                 </AccordionTrigger>
@@ -433,7 +413,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-15" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">15. Файлы cookie и технические данные</span>
                   </div>
                 </AccordionTrigger>
@@ -447,7 +427,7 @@ export default function PrivacyPolicy() {
               <AccordionItem value="section-16" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
                 <AccordionTrigger className="hover:no-underline py-6">
                   <div className="flex items-center gap-3 text-left">
-                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0"/>
                     <span className="text-lg font-display text-foreground">16. Использование ИИ и цифровых технологий</span>
                   </div>
                 </AccordionTrigger>
@@ -470,6 +450,5 @@ export default function PrivacyPolicy() {
       </main>
 
       <Footer />
-    </div>
-  );
+    </div>);
 }
