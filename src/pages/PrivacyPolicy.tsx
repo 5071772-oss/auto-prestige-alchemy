@@ -116,30 +116,73 @@ export default function PrivacyPolicy() {
               '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            Смотри, давай помоги мне оптимизировать и вставить текст политики безопа-- политики обработки персональных данных на сайт, потому что размер политики большой. Э-э-э, давай посмотрим, каким образом оптимизировать текст
+                                            Разбей полный текст политики на секции и реализуй раскрывающиеся аккордеоны, чтобы документ было удобно читать.
             </div>
 
             <div className="p-8 border border-border bg-graphite-deep/50 rounded-sm">
               <p className="text-sm italic">
-                Для вашего удобства текст политики структурирован по разделам. Ниже представлен полный текст документа, регламентирующий порядок обработки данных при использовании данного ресурса.
+                Для вашего удобства текст политики структурирован по разделам. Нажмите на заголовок раздела, чтобы раскрыть его содержание. Документ регламентирует порядок обработки данных при использовании данного ресурса.
               </p>
             </div>
             
-            <section className="space-y-6">
-              <h2 className="text-2xl font-display text-foreground mt-12 border-b border-border pb-4 flex items-center gap-3">
-                <ShieldCheck className="w-6 h-6 text-primary" />
-                1. Общие положения
-              </h2>
-              <p>
-                Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных, предпринимаемые Николаевым Алексеем (далее – Оператор).
-              </p>
-              <p>
-                1.1. Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.
-              </p>
-              <p>
-                1.2. Настоящая политика Оператора в отношении обработки персональных данных (далее – Политика) применяется ко всей информации, которую Оператор может получить о посетителях веб-сайта.
-              </p>
-            </section>
+            <Accordion type="single" collapsible className="w-full space-y-4">
+              <AccordionItem value="section-1" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-lg font-display text-foreground">1. Общие положения</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>
+                    Настоящая политика обработки персональных данных составлена в соответствии с требованиями Федерального закона от 27.07.2006. №152-ФЗ «О персональных данных» и определяет порядок обработки персональных данных и меры по обеспечению безопасности персональных данных, предпринимаемые Николаевым Алексеем (далее – Оператор).
+                  </p>
+                  <p>
+                    1.1. Оператор ставит своей важнейшей целью и условием осуществления своей деятельности соблюдение прав и свобод человека и гражданина при обработке его персональных данных, в том числе защиты прав на неприкосновенность частной жизни, личную и семейную тайну.
+                  </p>
+                  <p>
+                    1.2. Настоящая политика Оператора в отношении обработки персональных данных (далее – Политика) применяется ко всей информации, которую Оператор может получить о посетителях веб-сайта.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="section-2" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-lg font-display text-foreground">2. Основные понятия, используемые в Политике</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>
+                    2.1. Автоматизированная обработка персональных данных – обработка персональных данных с помощью средств вычислительной техники.
+                  </p>
+                  <p>
+                    2.2. Блокирование персональных данных – временное прекращение обработки персональных данных (за исключением случаев, если обработка необходима для уточнения персональных данных).
+                  </p>
+                  <p>
+                    2.3. Веб-сайт – совокупность графических и информационных материалов, а также программ для ЭВМ и баз данных, обеспечивающих их доступность в сети интернет по сетевому адресу Оператора.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+              
+              <AccordionItem value="section-3" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-lg font-display text-foreground">3. Основные права и обязанности Оператора</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>
+                    3.1. Оператор имеет право самостоятельно определять состав и перечень мер, необходимых и достаточных для обеспечения выполнения обязанностей, предусмотренных Законом о персональных данных.
+                  </p>
+                  <p>
+                    3.2. Оператор обязан предоставлять субъекту персональных данных по его просьбе информацию, касающуюся обработки его персональных данных.
+                  </p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
 
             <div className="mt-16 pt-8 border-t border-border flex justify-center">
               <Button asChild variant="link" className="text-primary hover:text-primary-glow uppercase tracking-widest text-xs transition-smooth">
