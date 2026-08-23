@@ -116,13 +116,7 @@ export default function PrivacyPolicy() {
               '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            I have approved the plan
-            </div>
-
-            <div className="p-8 border border-border bg-graphite-deep/50 rounded-sm">
-              <p className="text-sm italic">
-                Для вашего удобства текст политики структурирован по разделам. Нажмите на заголовок раздела, чтобы раскрыть его содержание. Документ регламентирует порядок обработки данных при использовании данного ресурса.
-              </p>
+                                            Убери вот эту плашку Для вашего удобства текст политики структурирован по разделам. Нажмите на заголовок раздела, чтобы раскрыть его содержание. Документ регламентирует порядок обработки данных при использовании данного ресурса.
             </div>
             
             <Accordion type="single" collapsible className="w-full space-y-4">
