@@ -468,6 +468,25 @@ export default function PrivacyPolicy() {
                   </ul>
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem value="section-18" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-lg font-display text-foreground">18. Права субъекта персональных данных</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>Субъект персональных данных имеет права, предусмотренные законодательством РФ:</p>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>Право на получение информации об обработке данных;</li>
+                    <li>Требование уточнения, блокирования или уничтожения данных;</li>
+                    <li>Отзыв согласия на обработку и получение рекламы;</li>
+                    <li>Требование прекращения обработки при наличии оснований;</li>
+                    <li>Обжалование действий Оператора в уполномоченный орган или суд.</li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
 
             <div className="mt-16 pt-8 border-t border-border flex justify-center">
