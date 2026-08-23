@@ -1,8 +1,14 @@
-import React, { useEffect, useRef, useState, type ReactNode } from "react";
+import React, { useEffect, useState } from "react";
 import { 
-  ArrowLeft, Phone, Send, MessageCircle, ShieldCheck
+  ArrowLeft, Phone, Send, MessageCircle, ShieldCheck, ChevronDown
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
