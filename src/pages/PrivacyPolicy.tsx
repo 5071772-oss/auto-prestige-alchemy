@@ -116,19 +116,7 @@ export default function PrivacyPolicy() {
               '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            25. Заключительные положения
-
-25.1. Настоящая Политика действует бессрочно до ее замены новой редакцией.
-
-25.2. Во всем, что не урегулировано настоящей Политикой, Оператор руководствуется законодательством Российской Федерации.
-
-25.3. По вопросам, связанным с обработкой персональных данных, субъект персональных данных может обратиться к Оператору по адресу электронной почты:
-
-5071772@gmail.com
-
-или по почтовому адресу:
-
-143909, Московская область, г. Балашиха, Московский б-р, д. 1/13, кв. 215.
+                                            I have approved the plan
             </div>
 
             <Accordion type="single" collapsible className="w-full space-y-4">
