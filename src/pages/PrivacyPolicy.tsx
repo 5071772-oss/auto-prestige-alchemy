@@ -498,6 +498,21 @@ export default function PrivacyPolicy() {
                   <p>19.4. Ответы направляются в сроки, установленные законодательством РФ.</p>
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem value="section-20" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-lg font-display text-foreground">20. Отзыв согласия</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>20.1–20.2. Субъект вправе отозвать согласие через email: <strong>5071772@gmail.com</strong> или почтовый адрес.</p>
+                  <p>20.3. После отзыва Оператор прекращает обработку, если нет иных законных оснований для ее продолжения.</p>
+                  <p>20.4. Уничтожение данных проводится в установленные законом сроки.</p>
+                  <p>20.5. Отказ от рекламы не отменяет обработку данных для исполнения договоров или требований закона.</p>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
 
             <div className="mt-16 pt-8 border-t border-border flex justify-center">
