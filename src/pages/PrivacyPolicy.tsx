@@ -584,6 +584,7 @@ export default function PrivacyPolicy() {
                   <p>25.2. Во всем, что не урегулировано Политикой, Оператор руководствуется законодательством РФ.</p>
                   <p>25.3. Обращения принимаются по email: <strong>5071772@gmail.com</strong> или по адресу: 143909, Московская область, г. Балашиха, Московский б-р, д. 1/13, кв. 215.</p>
                 </AccordionContent>
+              </AccordionItem>
             </Accordion>
 
             <div className="mt-16 pt-8 border-t border-border flex justify-center">
