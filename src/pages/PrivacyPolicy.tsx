@@ -566,6 +566,7 @@ https://auto-prestige-alchemy.relaxdev.ru/
                   <p>24.2. Новая редакция вступает в силу с момента размещения на сайте, если иное не указано в документе.</p>
                   <p>24.3. Актуальная редакция всегда доступна по адресу: <a href="https://auto-prestige-alchemy.relaxdev.ru/" className="text-primary hover:underline">https://auto-prestige-alchemy.relaxdev.ru/</a></p>
                 </AccordionContent>
+              </AccordionItem>
             </Accordion>
 
             <div className="mt-16 pt-8 border-t border-border flex justify-center">
