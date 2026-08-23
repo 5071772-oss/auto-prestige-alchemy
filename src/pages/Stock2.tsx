@@ -359,7 +359,11 @@ export default function Stock2() {
         {`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            Привет! Найди мне, пожалуйста, точку подключения к базе данных, а-а-а, database URL`}
+                                            postgresql://u_cmt4dr7l80:Bu8WUGguQQogtbjz2aoOD8aKA0euSCs@db-team-cmrs0cdyj00e6o301lwrvch2o:5432/db_auto_prestige_alchemy
+
+
+
+Так, нам нужно подключить вот эту базу данных, э, вместо той, которая сейчас, э, есть, которая называется  VITE_SUPABASE_PROJECT_ID="bjhldgvzmbgskwxjyqog" . Значит, э-э-э, старую базу удаляем, отключаем и подключаем новую`}
       </div>
       <Nav />
       
