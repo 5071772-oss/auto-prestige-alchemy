@@ -524,6 +524,19 @@ export default function PrivacyPolicy() {
                   <p>21.4. Уничтожение подтверждается в установленном законом порядке.</p>
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem value="section-22" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-lg font-display text-foreground">22. Уведомление уполномоченного органа</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>22.1–22.2. Оператор оценивает обязанность и направляет уведомление об обработке данных в Роскомнадзор в соответствии со ст. 22 ФЗ-152, когда это обязательно.</p>
+                  <p>22.3. Трансграничная передача рассматривается отдельно с соблюдением требований ст. 12 ФЗ-152 и уведомлением регулятора.</p>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
 
             <div className="mt-16 pt-8 border-t border-border flex justify-center">
