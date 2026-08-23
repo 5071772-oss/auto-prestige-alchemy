@@ -94,7 +94,7 @@ function Nav() {
           <a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a>
           <a href="#services" className="hover:text-foreground transition-smooth">Услуги</a>
           <a href="/stock" className="hover:text-foreground transition-smooth">В наличии</a>
-          <a href="/stock2" className="hover:text-foreground transition-smooth font-medium text-primary/90">Сток 2</a>
+          <a href="/stock2" className="hover:text-foreground transition-smooth font-medium text-primary/90">Заказ</a>
           <a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a>
           <a href="#process" className="hover:text-foreground transition-smooth">Процесс</a>
           <a href="#contact" className="hover:text-foreground transition-smooth">Контакты</a>
