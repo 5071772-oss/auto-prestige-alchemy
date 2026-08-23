@@ -460,6 +460,26 @@ export default function PrivacyPolicy() {
                   <p>16.5. Порядок работы с ИИ-технологиями регулируется внутренним регламентом Оператора.</p>
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem value="section-17" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-lg font-display text-foreground">17. Меры по обеспечению безопасности</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>Оператор принимает правовые, организационные и технические меры для защиты данных от несанкционированного доступа, изменения или уничтожения.</p>
+                  <p>Ключевые меры включают:</p>
+                  <ul className="list-disc pl-5 space-y-2">
+                    <li>Назначение ответственного и принятие локальных регламентов;</li>
+                    <li>Ограничение доступа и защита учетных записей паролями;</li>
+                    <li>Использование актуального ПО и контроль информационных систем;</li>
+                    <li>Оценка рисков новых сервисов и анализ инцидентов безопасности;</li>
+                    <li>Своевременное уничтожение или обезличивание данных.</li>
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
 
             <div className="mt-16 pt-8 border-t border-border flex justify-center">
