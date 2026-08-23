@@ -448,6 +448,21 @@ export default function PrivacyPolicy() {
                   <p>15.5. Пользователь может управлять настройками cookie в браузере, однако их отключение может повлиять на работу сайта.</p>
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem value="section-16" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-lg font-display text-foreground">16. Использование ИИ и цифровых технологий</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>16.1–16.2. Оператор использует ИИ и цифровые сервисы для анализа, разработки и оптимизации деятельности. Само по себе это не является основанием для обработки персональных данных.</p>
+                  <p>16.3. Передача данных в ИИ-сервисы проводится только после оценки необходимости, объема данных, места их хранения и условий конфиденциальности.</p>
+                  <p>16.4. Оператор применяет принцип минимизации данных и использует обезличенную информацию, когда это возможно.</p>
+                  <p>16.5. Порядок работы с ИИ-технологиями регулируется внутренним регламентом Оператора.</p>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
 
             <div className="mt-16 pt-8 border-t border-border flex justify-center">
