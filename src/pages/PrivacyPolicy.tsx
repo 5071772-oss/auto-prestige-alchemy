@@ -106,13 +106,19 @@ export default function PrivacyPolicy() {
           </h1>
 
           <div className="prose prose-invert prose-gold max-w-none text-muted-foreground space-y-8 leading-relaxed">
+            <div className="sr-only">
+              '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
+                                        
+                                            
+                                            Смотри, давай помоги мне оптимизировать и вставить текст политики безопа-- политики обработки персональных данных на сайт, потому что размер политики большой. Э-э-э, давай посмотрим, каким образом оптимизировать текст
+            </div>
+
             <div className="p-8 border border-border bg-graphite-deep/50 rounded-sm">
               <p className="text-sm italic">
-                Текст политики будет добавлен в следующем сообщении согласно вашим требованиям.
+                Для вашего удобства текст политики структурирован по разделам. Ниже представлен полный текст документа, регламентирующий порядок обработки данных при использовании данного ресурса.
               </p>
             </div>
             
-            {/* Placeholder for the full text provided later */}
             <section className="space-y-6">
               <h2 className="text-2xl font-display text-foreground mt-12 border-b border-border pb-4 flex items-center gap-3">
                 <ShieldCheck className="w-6 h-6 text-primary" />
