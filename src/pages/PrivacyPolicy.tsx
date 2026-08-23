@@ -116,41 +116,7 @@ export default function PrivacyPolicy() {
               '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            Создай отдельную публичную страницу:
-
-/personal-data-consent
-
-Название:
-
-«Согласие на обработку персональных данных»
-
-На странице размести полный текст документа «Согласие на обработку персональных данных», который я предоставлю следующим сообщением.
-
-Требования:
-
-1. Страница доступна без авторизации.
-
-2. Страница не содержит форм.
-
-3. Страница не собирает персональные данные.
-
-4. Текст не сокращать.
-
-5. Не менять юридические формулировки.
-
-6. Сохранить заголовки и структуру документа.
-
-7. Добавить ссылку на страницу в footer:
-
-«Согласие на обработку персональных данных»
-
-8. Страница адаптивна для мобильных устройств.
-
-9. Не менять существующий дизайн остальных страниц.
-
-URL:
-
-https://auto-prestige-alchemy.relaxdev.ru/personal-data-consent
+                                            I have approved the plan
             </div>
 
             <Accordion type="single" collapsible className="w-full space-y-4">
