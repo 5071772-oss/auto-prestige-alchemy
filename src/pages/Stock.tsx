@@ -502,9 +502,11 @@ export default function Stock() {
               <a href="/#about" className="hover:text-primary transition-smooth">Об эксперте</a>
               <a href="/#services" className="hover:text-primary transition-smooth">Услуги</a>
             </div>
-            <div className="text-sm text-muted-foreground">
-              © {new Date().getFullYear()} Все права защищены
+            <div className="text-sm text-muted-foreground flex flex-wrap gap-x-8 gap-y-2 justify-end">
+              <a href="/privacy-policy" className="hover:text-primary transition-smooth">Политика обработки персональных данных</a>
+              <span>© {new Date().getFullYear()} Все права защищены</span>
             </div>
+
           </div>
         </div>
       </footer>

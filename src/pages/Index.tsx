@@ -782,8 +782,11 @@ function Footer() {
       </div>
       <div className="container mt-12 pt-8 border-t border-border flex flex-wrap justify-between gap-4 text-xs text-muted-foreground">
         <div>© {new Date().getFullYear()} Николаев Алексей. Все права защищены.</div>
-        <div className="uppercase tracking-[0.3em]">Premium automotive consulting</div>
+        <div className="flex gap-6 uppercase tracking-[0.3em]">
+          <a href="/privacy-policy" className="hover:text-primary transition-smooth">Политика обработки персональных данных</a>
+        </div>
       </div>
+
     </footer>
   );
 }
