@@ -116,7 +116,7 @@ export default function PrivacyPolicy() {
               '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            Разбей полный текст политики на секции и реализуй раскрывающиеся аккордеоны, чтобы документ было удобно читать.
+                                            I have approved the plan
             </div>
 
             <div className="p-8 border border-border bg-graphite-deep/50 rounded-sm">
