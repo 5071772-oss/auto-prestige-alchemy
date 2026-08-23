@@ -116,15 +116,19 @@ export default function PrivacyPolicy() {
               '''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
                                         
                                             
-                                            24. Изменение настоящей Политики
+                                            25. Заключительные положения
 
-24.1. Оператор вправе вносить изменения в настоящую Политику в связи с изменением законодательства Российской Федерации, изменением деятельности Оператора, используемых сервисов, технологий обработки персональных данных или по иным причинам.
+25.1. Настоящая Политика действует бессрочно до ее замены новой редакцией.
 
-24.2. Новая редакция Политики вступает в силу с момента ее размещения на сайте Оператора, если иной срок не установлен новой редакцией Политики.
+25.2. Во всем, что не урегулировано настоящей Политикой, Оператор руководствуется законодательством Российской Федерации.
 
-24.3. Актуальная редакция Политики размещается по адресу сайта:
+25.3. По вопросам, связанным с обработкой персональных данных, субъект персональных данных может обратиться к Оператору по адресу электронной почты:
 
-https://auto-prestige-alchemy.relaxdev.ru/
+5071772@gmail.com
+
+или по почтовому адресу:
+
+143909, Московская область, г. Балашиха, Московский б-р, д. 1/13, кв. 215.
             </div>
 
             <Accordion type="single" collapsible className="w-full space-y-4">
@@ -567,6 +571,19 @@ https://auto-prestige-alchemy.relaxdev.ru/
                   <p>24.3. Актуальная редакция всегда доступна по адресу: <a href="https://auto-prestige-alchemy.relaxdev.ru/" className="text-primary hover:underline">https://auto-prestige-alchemy.relaxdev.ru/</a></p>
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem value="section-25" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-lg font-display text-foreground">25. Заключительные положения</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>25.1. Настоящая Политика действует бессрочно до ее замены новой редакцией.</p>
+                  <p>25.2. Во всем, что не урегулировано Политикой, Оператор руководствуется законодательством РФ.</p>
+                  <p>25.3. Обращения принимаются по email: <strong>5071772@gmail.com</strong> или по адресу: 143909, Московская область, г. Балашиха, Московский б-р, д. 1/13, кв. 215.</p>
+                </AccordionContent>
             </Accordion>
 
             <div className="mt-16 pt-8 border-t border-border flex justify-center">
