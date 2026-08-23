@@ -566,6 +566,7 @@ export default function PrivacyPolicy() {
                   <p>23.2. Контроль включает проверку соответствия целей обработки, достаточности данных, наличия законных оснований, соблюдения сроков, правил передачи (в т.ч. трансграничной), использования ИИ и мер защиты.</p>
                   <p>23.3. При выявлении нарушений Оператор принимает меры по их устранению.</p>
                 </AccordionContent>
+              </AccordionItem>
             </Accordion>
 
             <div className="mt-16 pt-8 border-t border-border flex justify-center">
