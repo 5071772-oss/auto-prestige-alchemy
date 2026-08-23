@@ -485,6 +485,21 @@ export default function PrivacyPolicy() {
                   </ul>
                 </AccordionContent>
               </AccordionItem>
+
+              <AccordionItem value="section-19" className="border border-border bg-graphite-deep/30 px-6 rounded-sm">
+                <AccordionTrigger className="hover:no-underline py-6">
+                  <div className="flex items-center gap-3 text-left">
+                    <ShieldCheck className="w-5 h-5 text-primary shrink-0" />
+                    <span className="text-lg font-display text-foreground">19. Порядок направления обращений</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="text-muted-foreground space-y-4 pb-6">
+                  <p>19.1. По вопросам обработки данных обращайтесь на email: <strong>5071772@gmail.com</strong></p>
+                  <p>19.2. Письменное обращение: <strong>143909, Московская область, г. Балашиха, Московский б-р, д. 1/13, кв. 215.</strong></p>
+                  <p>19.3. Обращение должно содержать сведения для идентификации заявителя и суть запроса.</p>
+                  <p>19.4. Ответы направляются в сроки, установленные законодательством РФ.</p>
+                </AccordionContent>
+              </AccordionItem>
             </Accordion>
 
             <div className="mt-16 pt-8 border-t border-border flex justify-center">
