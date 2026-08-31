@@ -275,8 +275,8 @@ function CarCard({ car }: { car: Car }) {
                   onClick={() => {
                     const carInfo = `${car.make} ${car.model}`;
                     setIsDialogOpen(false);
-                    window.history.pushState(null, '', `#contact?car=${encodeURIComponent(carInfo)}`);
-                    window.dispatchEvent(new HashChangeEvent('hashchange'));
+                    window.history.pushState(null, '', '#contact');
+                    window.dispatchEvent(new CustomEvent('car-selected', { detail: { car: carInfo } }));
                     const contactSection = document.getElementById('contact');
                     if (contactSection) {
                       setTimeout(() => {
