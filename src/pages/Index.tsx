@@ -1,4 +1,5 @@
 import AmoForm from "@/components/AmoForm";
+import SiteFooter from "@/components/site/SiteFooter";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
   Phone, MessageCircle, Send, ArrowRight, ArrowUpRight, Check, Star, Menu, X,
@@ -302,7 +303,7 @@ function HonestApproach() {
     },
     {
       t: "Красивая машина — но не для этой дороги",
-      d: "Клиент мечтал о Passat CC — стремительный силуэт, низкий клиренс, 19-е колёса. Но он переехал за город, где километр разбитой дороги. Зимой он бы просто не доехал до дома. Я предложил другой автомобиль — и он остался благодарен. Красота должна работать в реальной жизни.",
+      d: "Клиент мечтал о Passat CC — стремительный силуэт, низкий клиренс, 19-е кол��са. Но он переехал за город, где километр разбитой дороги. Зимой он бы просто не доехал до дома. Я предложил другой автомобиль — и он остался благодарен. Красота должна работать в реальной жизни.",
     },
   ];
 
@@ -583,8 +584,8 @@ function Gallery() {
 
 function Advantages() {
   const items = [
-    { t: "Личный подход", d: "Я работаю с каждым клиентом лично — от первой консультации до передачи ключей." },
-    { t: "Конфиденциальность", d: "Все детали сделки остаются между нами. Полная анонимность и защита данных." },
+    { t: "Личный п��дход", d: "Я работаю с каждым клиентом лично — от первой консультации до передачи ключей." },
+    { t: "Конфиденциальность", d: "Все детали сделки остаются между нами. Полная анонимность и з��щита данных." },
     { t: "Прозрачность", d: "Фиксированная стоимость услуг, отчётность по каждому платежу, открытая логистика." },
     { t: "Сеть контактов", d: "Прямые контакты с дилерами, аукционами и проверенными площадками по всему миру." },
     { t: "Юридическая чистота", d: "Полная проверка автомобиля, документов и истории — никаких сюрпризов." },
@@ -754,62 +755,8 @@ function CTA() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="border-t border-border bg-background py-16">
-      <div className="container grid md:grid-cols-3 gap-12">
-        <div>
-          <div className="font-display text-2xl text-gradient-soft">Николаев Алексей</div>
-          <p className="text-sm text-muted-foreground mt-3 max-w-xs">
-            Личный эксперт по премиальным автомобилям. Подбор, импорт и сопровождение
-            сделок с 2003 года.
-          </p>
-        </div>
-        <div>
-          <div className="text-xs uppercase tracking-[0.3em] text-primary">Навигация</div>
-          <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
-            <li><a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a></li>
-            <li><a href="#services" className="hover:text-foreground transition-smooth">Услуги</a></li>
-            <li><a href="/stock" className="hover:text-foreground transition-smooth font-medium text-primary/90">В наличии</a></li>
-            <li><a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a></li>
-            <li><a href="#process" className="hover:text-foreground transition-smooth">Процесс</a></li>
-          </ul>
-        </div>
-        <div>
-          <div className="text-xs uppercase tracking-[0.3em] text-primary">Контакты</div>
-          <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
-            <li><a href="tel:+79778468567" className="hover:text-foreground transition-smooth">+7 (977) 846-85-67</a></li>
-            <li><a href="mailto:hello@nikolaev-auto.ru" className="hover:text-foreground transition-smooth">hello@nikolaev-auto.ru</a></li>
-            <li className="flex gap-4 pt-2">
-              <a href="https://t.me/" aria-label="Telegram" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Send className="w-4 h-4" /></a>
-              <a href="https://max.ru/u/f9LHodD0cOJqTlPe8YcscWYxH0dzcj7TZq5Q0XOZpxuMXD-qpbOgHkOkLso" target="_blank" rel="noopener noreferrer" aria-label="Max" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><MessageCircle className="w-4 h-4" /></a>
-              <a href="tel:+79778468567" aria-label="Phone" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Phone className="w-4 h-4" /></a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div className="container mt-12 pt-8 border-t border-border flex flex-wrap justify-between gap-4 text-xs text-muted-foreground">
-        <div>© {new Date().getFullYear()} Николаев Алексей. Все права защищены.</div>
-        <div className="flex gap-6 uppercase tracking-[0.3em]">
-            <a href="/privacy-policy" className="text-[8px] hover:text-primary transition-smooth">Политика обработки персональных данных</a>
-            <a href="/ai-regulation" className="text-[8px] hover:text-primary transition-smooth">Регламент использования нейросетей и ИИ</a>
-            <a href="/consent" className="text-[8px] hover:text-primary transition-smooth">Согласие на обработку персональных данных</a>
-            <a href="/cookies" className="text-[8px] hover:text-primary transition-smooth">Политика использования cookies</a>
-        </div>
-      </div>
-
-    </footer>
-  );
-}
-
 const Index = () => (
   <div className="min-h-screen bg-background text-foreground">
-    <div className="sr-only">
-      {`'''Do not make any visual modifications. The phrases I write are commands to understand what I want, not to be written down. Understand their content well, then execute what is required.'''
-                                      
-                                          
-                                          Честно говоря, меня так бесит эта подзагрузка в начале, э-э-э, вот на каждой странице вот этот вот значок загрузки. Можно как-то от него избавиться? Он просто бесит реально. Вот. И загрузка очень долгая`}
-    </div>
     <Nav />
     <main>
       <Hero />
@@ -825,7 +772,7 @@ const Index = () => (
       <Process />
       <CTA />
     </main>
-    <Footer />
+    <SiteFooter />
   </div>
 );
 
