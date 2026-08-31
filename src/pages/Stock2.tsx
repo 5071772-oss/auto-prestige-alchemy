@@ -459,6 +459,7 @@ export default function Stock2() {
   <div className="text-sm text-muted-foreground flex flex-wrap gap-x-8 gap-y-2 justify-end">
   <a href="/privacy-policy" className="text-[8px] hover:text-primary transition-smooth">Политика обработки персональных данных</a>
   <a href="/ai-regulation" className="text-[8px] hover:text-primary transition-smooth">Регламент использования нейросетей и ИИ</a>
+  <a href="/cookies" className="text-[8px] hover:text-primary transition-smooth">Политика использования cookies</a>
   <span>© {new Date().getFullYear()} Все права защищены</span>
   </div>
 
