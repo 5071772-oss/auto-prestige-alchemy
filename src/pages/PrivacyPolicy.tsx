@@ -66,6 +66,7 @@ function Footer() {
             <li><a href="/stock2" className="hover:text-foreground transition-smooth">Заказ</a></li>
             <li><a href="/privacy-policy" className="hover:text-foreground transition-smooth text-primary/90">Политика обработки персональных данных</a></li>
             <li><a href="/ai-regulation" className="hover:text-foreground transition-smooth">Регламент использования нейросетей и ИИ</a></li>
+            <li><a href="/consent" className="hover:text-foreground transition-smooth">Согласие на обработку персональных данных</a></li>
           </ul>
         </div>
         <div>
@@ -243,7 +244,7 @@ export default function PrivacyPolicy() {
                     </div>
                     <div>
                       <h4 className="font-display text-foreground mb-2">5.6. Обеспечение работы сайта</h4>
-                      <p>Технические данные могут обрабатываться для: обеспечения функционирования и безопасности сайта; предотвращения неправомерных действий; диагностики ошибок; защиты сайта и пользователей.</p>
+                      <p>Технические данные могут обрабатываться для: обеспечения функционирования и безопасности сайта; предотвращения непр��вомерных действий; диагностики ошибок; защиты сайта и пользователей.</p>
                     </div>
                   </div>
                 </AccordionContent>
@@ -416,7 +417,7 @@ export default function PrivacyPolicy() {
                   </div>
                 </AccordionTrigger>
                 <AccordionContent className="text-muted-foreground space-y-4 pb-6">
-                  <p>15.1–15.3. Сайт использует cookie для корректной работы, безопасности и удобства пользователя. Конкретный состав данных зависит от используемых технологий.</p>
+                  <p>15.1–15.3. Сайт использует cookie для корректной работы, безопасности и удобства по��ьзователя. Конкретный состав данных зависит от используемых технологий.</p>
                   <p>15.4. При использовании аналитических и рекламных cookie Оператор обеспечивает информирование пользователя в соответствии с законом.</p>
                   <p>15.5. Пользователь может управлять настройками cookie в браузере, однако их отключение может повлиять на работу сайта.</p>
                 </AccordionContent>
