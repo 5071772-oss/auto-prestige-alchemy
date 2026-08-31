@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
-import { useLocation } from "react-router-dom";
 
 const FORM_ID = "1737982";
 const FORM_HASH = "020f189ecc866669de0391b48066c721";
@@ -27,15 +26,22 @@ export default function AmoForm() {
   const originRef = useRef<HTMLInputElement>(null);
   const iframeLoadedRef = useRef(false);
   const confirmationTimeoutRef = useRef<number | null>(null);
-  const location = useLocation();
-
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.hash.split('?')[1] || window.location.search);
-    const car = searchParams.get('car');
-    if (car) {
-      setNote(`Меня заинтересовал автомобиль: ${car}`);
-    }
-  }, [location]);
+    const setCarNote = (car?: string | null) => {
+      if (car) setNote(`Меня заинтересовал автомобиль: ${car}`);
+    };
+
+    const searchParams = new URLSearchParams(window.location.search);
+    setCarNote(searchParams.get('car'));
+
+    const handleCarSelected = (event: Event) => {
+      const customEvent = event as CustomEvent<{ car?: string }>;
+      setCarNote(customEvent.detail?.car);
+    };
+
+    window.addEventListener('car-selected', handleCarSelected);
+    return () => window.removeEventListener('car-selected', handleCarSelected);
+  }, []);
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (!personalDataConsent) {

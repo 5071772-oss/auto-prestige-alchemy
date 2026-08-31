@@ -34,7 +34,7 @@ function Footer() {
           <ul className="mt-5 flex flex-col gap-3 text-xs text-muted-foreground">
             <li><a href="/#about" className="hover:text-foreground transition-smooth">Обо мне</a></li>
             <li><a href="/stock" className="hover:text-foreground transition-smooth">В наличии</a></li>
-            <li><a href="/stock2" className="hover:text-foreground transition-smooth">Заказ</a></li>
+            <li><a href="/order" className="hover:text-foreground transition-smooth">Заказ</a></li>
             <li><a href="/privacy-policy" className="hover:text-foreground transition-smooth">Политика обработки персональных данных</a></li>
             <li><a href="/ai-regulation" className="text-primary/90 hover:text-primary transition-smooth">Регламент использования ИИ</a></li>
           </ul>

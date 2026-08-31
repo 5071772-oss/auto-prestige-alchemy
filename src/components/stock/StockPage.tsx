@@ -1,10 +1,11 @@
 import AmoForm from "@/components/AmoForm";
 import SiteHeader from "@/components/site/SiteHeader";
+import { stockCars, type StockCar } from "@/data/stock";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
-  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown, 
+  ArrowRight, Phone, Send, Crown,
   ChevronLeft, ChevronRight, Calendar, Gauge, FileText, Landmark,
-  RefreshCcw, MessageCircle
+  MessageCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +13,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
@@ -57,19 +57,7 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
   );
 }
 
-type Car = {
-  id: string | number;
-  make: string;
-  model: string;
-  year: number | string;
-  mileage?: number;
-  price_cash?: string;
-  price_vat?: string;
-  status?: string;
-  specs?: string;
-  description?: string;
-  images?: string[];
-};
+type Car = StockCar;
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
@@ -85,21 +73,33 @@ function CarCard({ car }: { car: Car }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const images = car.images?.length > 0 ? car.images : ["https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80"];
 
-  const nextImage = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const nextImage = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     setCurrentImage((prev) => (prev + 1) % images.length);
   };
 
-  const prevImage = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const prevImage = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
   };
 
   return (
     <Reveal className="group bg-graphite-deep border border-border overflow-hidden rounded-sm hover:border-primary/40 transition-smooth">
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogTrigger asChild>
-          <div className="cursor-pointer">
+        <div
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          onClick={() => setIsDialogOpen(true)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              setIsDialogOpen(true);
+            }
+          }}
+        >
             <div className="relative aspect-[16/10] overflow-hidden">
               <img 
                 src={images[currentImage]} 
@@ -176,26 +176,50 @@ function CarCard({ car }: { car: Car }) {
               </div>
             </div>
           </div>
-        </DialogTrigger>
 
         <DialogContent className="max-w-4xl bg-graphite-deep border-border p-0 overflow-hidden sm:rounded-sm custom-scrollbar">
           <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
             <div className="md:w-1/2 relative bg-black">
               <div className="h-full min-h-[300px]">
-                <img 
-                  src={images[currentImage]} 
-                  alt={`${car.make} ${car.model}`}
+                <img
+                  src={images[currentImage]}
+                  alt={`${car.make} ${car.model} — фотография ${currentImage + 1} из ${images.length}`}
                   className="w-full h-full object-cover"
                 />
+                {images.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      aria-label={`Предыдущее фото ${car.make} ${car.model}`}
+                      onClick={prevImage}
+                      className="absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-md transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    >
+                      <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label={`Следующее фото ${car.make} ${car.model}`}
+                      onClick={nextImage}
+                      className="absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-md transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    >
+                      <ChevronRight className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                    <div className="absolute left-1/2 top-4 -translate-x-1/2 rounded-full bg-black/45 px-3 py-1 text-xs text-white/90 backdrop-blur-md" aria-live="polite">
+                      {currentImage + 1} / {images.length}
+                    </div>
+                  </>
+                )}
                 {images.length > 1 && (
                   <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2 px-4 overflow-x-auto py-2 bg-black/40 backdrop-blur-md">
                     {images.map((img: string, idx: number) => (
                       <button 
                         key={idx}
+                        type="button"
+                        aria-label={`Показать фото ${idx + 1} автомобиля ${car.make} ${car.model}`}
+                        aria-current={idx === currentImage ? "true" : undefined}
                         onClick={() => setCurrentImage(idx)}
-                        className={`w-12 h-12 rounded-sm border-2 overflow-hidden shrink-0 transition-all ${idx === currentImage ? 'border-primary' : 'border-transparent opacity-50 hover:opacity-100'}`}
-                      >
-                        <img src={img} className="w-full h-full object-cover" />
+                        className={`w-12 h-12 rounded-sm border-2 overflow-hidden shrink-0 transition-all ${idx === currentImage ? 'border-primary' : 'border-transparent opacity-50 hover:opacity-100'}`}>
+                        <img src={img} alt="" className="w-full h-full object-cover" />
                       </button>
                     ))}
                   </div>
@@ -251,8 +275,8 @@ function CarCard({ car }: { car: Car }) {
                   onClick={() => {
                     const carInfo = `${car.make} ${car.model}`;
                     setIsDialogOpen(false);
-                    window.history.pushState(null, '', `#contact?car=${encodeURIComponent(carInfo)}`);
-                    window.dispatchEvent(new HashChangeEvent('hashchange'));
+                    window.history.pushState(null, '', '#contact');
+                    window.dispatchEvent(new CustomEvent('car-selected', { detail: { car: carInfo } }));
                     const contactSection = document.getElementById('contact');
                     if (contactSection) {
                       setTimeout(() => {
@@ -273,25 +297,14 @@ function CarCard({ car }: { car: Car }) {
   );
 }
 
-export default function StockPage() {
-  const [cars, setCars] = useState<Car[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order" | "catalog" }) {
+  const isOrder = mode === "order";
+  const isCatalog = mode === "catalog";
+  const [cars] = useState<Car[]>(stockCars.filter((car) => isCatalog || (isOrder ? car.status === "В поставке" : car.status === "В наличии")));
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchCars();
   }, []);
-
-  const fetchCars = async () => {
-    try {
-      setLoading(true);
-      setCars([]);
-    } catch (error) {
-      console.error("Fetch error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
@@ -302,20 +315,17 @@ export default function StockPage() {
         <div className="container relative z-10">
           <Reveal>
             <div>
-              <SectionLabel>Автомобили в наличии</SectionLabel>
+              <SectionLabel>{isCatalog ? "Полный каталог" : isOrder ? "Автомобили в поставке" : "Автомобили в наличии"}</SectionLabel>
             </div>
           </Reveal>
           <Reveal delay={120}>
             <h1 className="font-display mt-8 text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-4xl text-gradient-soft">
-              Премиальный парк,
-              <br />
-              <span className="italic text-gradient-gold">готовый к выдаче.</span>
+              {isCatalog ? <>Полный каталог<br /><span className="italic text-gradient-gold">премиальных автомобилей.</span></> : isOrder ? <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовящиеся к выдаче.</span></> : <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовый к выдаче.</span></>}
             </h1>
           </Reveal>
           <Reveal delay={240}>
             <p className="mt-8 max-w-2xl text-lg text-muted-foreground leading-relaxed">
-              Все представленные автомобили прошли комплексную техническую проверку, 
-              юридическую очистку и готовы к оформлению в день обращения.
+              {isCatalog ? "Весь актуальный каталог: автомобили в наличии, в поставке и доступные под индивидуальный заказ." : isOrder ? "Автомобили в этом разделе находятся в поставке и готовятся к передаче. Я контролирую каждый этап — от покупки до выдачи." : "Все представленные автомобили прошли комплексную техническую проверку, юридическую очистку и готовы к оформлению в день обращения."}
             </p>
           </Reveal>
           
@@ -325,33 +335,11 @@ export default function StockPage() {
       {/* Stock Grid */}
       <section className="py-20 bg-graphite-deep/30">
         <div className="container">
-          {cars.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {cars.map((car) => (
-                <CarCard key={car.id} car={car} />
-              ))}
-            </div>
-          ) : !loading && (
-            <div className="text-center py-40 border border-dashed border-border/60">
-              <Reveal>
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-8">
-                  <ShieldCheck className="w-10 h-10 text-primary" />
-                </div>
-                <h2 className="font-display text-3xl text-gradient-soft">Раздел наполняется</h2>
-                <p className="mt-4 text-muted-foreground max-w-md mx-auto">
-                  В данный момент мы обновляем каталог доступных автомобилей. 
-                  Оставьте заявку, чтобы получить актуальный список в PDF.
-                </p>
-                <div className="mt-10">
-                   <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase">
-                    <a href="#contact">
-                      Получить список в PDF <ArrowRight className="ml-2 w-4 h-4" />
-                    </a>
-                  </Button>
-                </div>
-              </Reveal>
-            </div>
-          )}
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {cars.map((car) => (
+              <CarCard key={car.id} car={car} />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -360,7 +348,7 @@ export default function StockPage() {
         <div className="container relative z-10">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <Reveal>
-              <SectionLabel>Персональный запрос</SectionLabel>
+              <SectionLabel>Персональный запр��с</SectionLabel>
               <h2 className="font-display text-4xl sm:text-5xl mt-8 text-gradient-soft leading-[1.1]">
                 Не нашли нужный <br />
                 <span className="italic text-gradient-gold">автомобиль в наличии?</span>

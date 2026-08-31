@@ -32,7 +32,7 @@ function Nav() {
         <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
           <a href="/" className="hover:text-foreground transition-smooth">Главная</a>
           <a href="/stock" className="hover:text-foreground transition-smooth">В наличии</a>
-          <a href="/stock2" className="hover:text-foreground transition-smooth">Заказ</a>
+          <a href="/order" className="hover:text-foreground transition-smooth">Заказ</a>
           <a href="/#services" className="hover:text-foreground transition-smooth">Услуги</a>
           <a href="/#contact" className="hover:text-foreground transition-smooth">Контакты</a>
         </nav>
@@ -63,7 +63,7 @@ function Footer() {
             <li><a href="/#about" className="hover:text-foreground transition-smooth">Обо мне</a></li>
             <li><a href="/#services" className="hover:text-foreground transition-smooth">Услуги</a></li>
             <li><a href="/stock" className="hover:text-foreground transition-smooth">В наличии</a></li>
-            <li><a href="/stock2" className="hover:text-foreground transition-smooth">Заказ</a></li>
+            <li><a href="/order" className="hover:text-foreground transition-smooth">Заказ</a></li>
             <li><a href="/privacy-policy" className="hover:text-foreground transition-smooth text-primary/90">Политика обработки персональных данных</a></li>
             <li><a href="/ai-regulation" className="hover:text-foreground transition-smooth">Регламент использования нейросетей и ИИ</a></li>
             <li><a href="/consent" className="hover:text-foreground transition-smooth">Согласие на обработку персональных данных</a></li>
@@ -188,7 +188,7 @@ export default function PrivacyPolicy() {
                   <p>3.1. Персональные данные — любая информация, относящаяся прямо или косвенно к определенному или определяемому физическому лицу.</p>
                   <p>3.2. Субъект персональных данных — физическое лицо, к которому относятся персональные данные.</p>
                   <p>3.3. Обработка персональных данных — любое действие или совокупность действий, совершаемых с использованием средств автоматизации или без использования таких средств с персональными данными.</p>
-                  <p>3.4. Оператор персональных данных — лицо, самостоятельно или совместно с другими лицами организующее и осуществляющее обработку персональных данных, а также определяющее цели обработки персональных данных, состав персональных данных, подлежащих обработке, и действия, совершаемые с персональными данными.</p>
+                  <p>3.4. Оператор персональных данных — лицо, самостоятельно или совместно с другими лицами организующее и осуществляющее обработку персональных данных, а также определяющее цели обработки перс��нальных данных, состав персональных данных, подлежащих обработке, и действия, совершаемые с персональными данными.</p>
                   <p>3.5. Автоматизированная обработка персональных данных — обработка персональных данных с помощью средств вычислительной техники.</p>
                   <p>3.6. Предоставление персональных данных — действия, направленные на раскрытие персональных данных определенному лицу или определенному кругу лиц.</p>
                   <p>3.7. Распространение персональных данных — действия, направленные на раскрытие персональных данных неопределенному кругу лиц.</p>

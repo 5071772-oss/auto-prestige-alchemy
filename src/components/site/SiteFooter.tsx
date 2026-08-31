@@ -4,6 +4,8 @@ const navigation = [
   ["#about", "Обо мне"],
   ["#services", "Услуги"],
   ["/stock", "В наличии"],
+  ["/order", "Заказ"],
+  ["/catalog", "Каталог"],
   ["#gallery", "Гараж"],
   ["#process", "Процесс"],
 ] as const;
