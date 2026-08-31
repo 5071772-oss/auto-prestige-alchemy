@@ -1,8 +1,11 @@
 import AmoForm from "@/components/AmoForm";
 import SiteFooter from "@/components/site/SiteFooter";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import SiteHeader from "@/components/site/SiteHeader";
+import { Reveal } from "@/components/site/Reveal";
+import { SectionLabel } from "@/components/site/SectionLabel";
+import { useState } from "react";
 import {
-  Phone, MessageCircle, Send, ArrowRight, ArrowUpRight, Check, Star, Menu, X,
+  Phone, MessageCircle, Send, ArrowRight, Check, Star,
   Search, KeyRound, Globe2, ShieldCheck, Truck, Award, Users, Clock, Crown,
   ChevronRight, Landmark, FileText, CreditCard,
 } from "lucide-react";
@@ -16,115 +19,11 @@ import carMercedes from "@/assets/car-mercedes.jpg";
 import carPorsche from "@/assets/car-porsche.jpg";
 import carRange from "@/assets/car-range.jpg";
 
-/* ---------- helpers ---------- */
-
-function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [shown, setShown] = useState(false);
-  
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    
-    // Show content immediately for better UX
-    setShown(true);
-    
-    const io = new IntersectionObserver(
-      ([e]) => { 
-        if (e.isIntersecting) { 
-          setShown(true); 
-          io.disconnect(); 
-        } 
-      },
-      { threshold: 0.1 }
-    );
-    
-    io.observe(el);
-    return () => {
-      io.disconnect();
-    };
-  }, [delay]);
-
-  return (
-    <div
-      ref={ref}
-      className={className}
-      style={{
-        opacity: shown ? 1 : 0,
-        transform: shown ? "translateY(0)" : "translateY(20px)",
-        transition: `opacity 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.8s cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
-        willChange: "opacity, transform",
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-function SectionLabel({ children }: { children: ReactNode }) {
-  return (
-    <div className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-primary">
-      <span className="h-px w-8 bg-primary/60" />
-      {children}
-    </div>
-  );
-}
-
-/* ---------- navbar ---------- */
-
-function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-smooth ${
-        scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"
-      }`}
-    >
-      <div className="container flex items-center justify-between h-20">
-        <a href="#top" className="flex items-center gap-3">
-          <span className="font-display text-2xl tracking-tight text-gradient-soft">Николаев</span>
-          <span className="hidden sm:block h-4 w-px bg-border" />
-          <span className="hidden sm:block text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Premium auto</span>
-        </a>
-        <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
-          <a href="#about" className="hover:text-foreground transition-smooth">Обо мне</a>
-          <a href="#services" className="hover:text-foreground transition-smooth">Услуги</a>
-          <a href="/stock" className="hover:text-foreground transition-smooth">В наличии</a>
-          <a href="/stock2" className="hover:text-foreground transition-smooth font-medium text-primary/90">Заказ</a>
-          <a href="#gallery" className="hover:text-foreground transition-smooth">Гараж</a>
-          <a href="#process" className="hover:text-foreground transition-smooth">Процесс</a>
-          <a href="#contact" className="hover:text-foreground transition-smooth">Контакты</a>
-        </nav>
-        <div className="flex items-center gap-3">
-          <a href="#contact" className="hidden sm:inline-flex group items-center gap-2 text-sm border border-border hover:border-primary px-5 h-11 rounded-sm transition-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-            Связаться
-            <ArrowUpRight aria-hidden="true" className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-          </a>
-          <button type="button" aria-expanded={menuOpen} aria-controls="mobile-navigation" aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((open) => !open)} className="lg:hidden inline-flex h-11 w-11 items-center justify-center border border-border rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
-            {menuOpen ? <X aria-hidden="true" className="h-5 w-5" /> : <Menu aria-hidden="true" className="h-5 w-5" />}
-          </button>
-        </div>
-      </div>
-      {menuOpen && <nav id="mobile-navigation" aria-label="Мобильная навигация" className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl px-6 py-5">
-        <div className="container flex flex-col gap-1 text-sm">
-          {[['#about', 'Обо мне'], ['#services', 'Услуги'], ['/stock', 'В наличии'], ['/stock2', 'Заказ'], ['#gallery', 'Гараж'], ['#process', 'Процесс'], ['#contact', 'Контакты']].map(([href, label]) => <a key={href} href={href} onClick={() => setMenuOpen(false)} className="flex min-h-11 items-center border-b border-border/60 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:text-foreground">{label}</a>)}
-        </div>
-      </nav>}
-    </header>
-  );
-}
-
 /* ---------- sections ---------- */
 
 function Hero() {
   return (
-    <section id="top" className="relative min-h-screen flex items-end overflow-hidden">
+    <section id="top" className="relative flex min-h-[680px] items-end overflow-hidden sm:min-h-screen">
       <img
         src={heroCar}
         alt="Премиальный Mercedes-Benz S-класса в студии"
@@ -137,12 +36,12 @@ function Hero() {
       <div className="absolute inset-0" style={{ background: "var(--gradient-hero)" }} />
       <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
 
-      <div className="container relative z-10 pb-24 pt-32">
+      <div className="container relative z-10 pb-16 pt-28 sm:pb-24 sm:pt-32">
         <Reveal>
           <SectionLabel>Личный эксперт · с 2003 года</SectionLabel>
         </Reveal>
         <Reveal delay={120}>
-          <h1 className="font-display mt-8 text-5xl sm:text-6xl lg:text-8xl leading-[0.95] tracking-tight max-w-5xl">
+          <h1 className="font-display mt-6 max-w-5xl text-4xl leading-[0.98] tracking-tight text-balance sm:mt-8 sm:text-6xl lg:text-8xl">
             <span className="text-gradient-soft">Николаев Алексей</span>
             <span className="block text-muted-foreground text-2xl sm:text-3xl lg:text-4xl font-light mt-6 max-w-3xl">
               эксперт по премиальным автомобилям —{" "}
@@ -160,7 +59,7 @@ function Hero() {
           <div className="mt-12 flex flex-wrap items-center gap-4">
             <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase">
               <a href="#contact">
-                Получить консультацию <ArrowRight className="ml-2 w-4 h-4" />
+                Обсудить автомобиль <ArrowRight className="ml-2 w-4 h-4" />
               </a>
             </Button>
           </div>
@@ -303,7 +202,7 @@ function HonestApproach() {
     },
     {
       t: "Красивая машина — но не для этой дороги",
-      d: "Клиент мечтал о Passat CC — стремительный силуэт, низкий клиренс, 19-е кол��са. Но он переехал за город, где километр разбитой дороги. Зимой он бы просто не доехал до дома. Я предложил другой автомобиль — и он остался благодарен. Красота должна работать в реальной жизни.",
+      d: "Клиент мечтал о Passat CC — стремительный силуэт, низкий клиренс, 19-е колёса. Но он переехал за город, где километр разбитой дороги. Зимой он бы просто не доехал до дома. Я предложил другой автомобиль — и он остался благодарен. Красота должна работать в реальной жизни.",
     },
   ];
 
@@ -480,7 +379,7 @@ function Achievements() {
 function Services() {
   const services = [
     { icon: Search, t: "Подбор автомобиля", d: "Анализ рынка, поиск идеального экземпляра по вашим требованиям, бюджету и ожиданиям. Без компромиссов." },
-    { icon: KeyRound, t: "Покупка под ключ", d: "Беру на себя весь процес��������: переговоры, проверку, оплату, оформление документов. Вы получаете готовый автомобиль." },
+    { icon: KeyRound, t: "Покупка под ключ", d: "Беру на себя весь процесс: переговоры, проверку, оплату, оформление документов. Вы получаете готовый автомобиль." },
     { icon: Globe2, t: "Импорт автомобилей", d: "Прямые поставки из Германии, Японии, ОАЭ, Кореи и США. Только проверенные источники и прозрачная история." },
     { icon: ShieldCheck, t: "Проверка и сопровождение", d: "Технический и юридический аудит, проверка истории, диагностика, полное сопровождение сделки." },
     { icon: Truck, t: "Логистика и таможня", d: "Международная логистика, экспедирование, страхование, таможенное оформление под ключ." },
@@ -584,8 +483,8 @@ function Gallery() {
 
 function Advantages() {
   const items = [
-    { t: "Личный п��дход", d: "Я работаю с каждым клиентом лично — от первой консультации до передачи ключей." },
-    { t: "Конфиденциальность", d: "Все детали сделки остаются между нами. Полная анонимность и з��щита данных." },
+    { t: "Личный подход", d: "Я работаю с каждым клиентом лично — от первой консультации до передачи ключей." },
+    { t: "Конфиденциальность", d: "Все детали сделки остаются между нами. Полная анонимность и защита данных." },
     { t: "Прозрачность", d: "Фиксированная стоимость услуг, отчётность по каждому платежу, открытая логистика." },
     { t: "Сеть контактов", d: "Прямые контакты с дилерами, аукционами и проверенными площадками по всему миру." },
     { t: "Юридическая чистота", d: "Полная проверка автомобиля, документов и истории — никаких сюрпризов." },
@@ -757,7 +656,7 @@ function CTA() {
 
 const Index = () => (
   <div className="min-h-screen bg-background text-foreground">
-    <Nav />
+      <SiteHeader />
     <main>
       <Hero />
       <Marquee />

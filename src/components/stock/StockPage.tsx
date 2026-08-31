@@ -1,4 +1,5 @@
 import AmoForm from "@/components/AmoForm";
+import SiteHeader from "@/components/site/SiteHeader";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
   ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown, 
@@ -109,13 +110,17 @@ function CarCard({ car }: { car: Car }) {
               
               {images.length > 1 && (
                 <>
-                  <button 
+                  <button
+                    type="button"
+                    aria-label={`Предыдущее изображение ${car.make} ${car.model}`}
                     onClick={(e) => { e.stopPropagation(); prevImage(e); }}
                     className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-smooth hover:bg-primary hover:text-primary-foreground"
                   >
                     <ChevronLeft className="w-4 h-4" />
                   </button>
-                  <button 
+                  <button
+                    type="button"
+                    aria-label={`Следующее изображение ${car.make} ${car.model}`}
                     onClick={(e) => { e.stopPropagation(); nextImage(e); }}
                     className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-smooth hover:bg-primary hover:text-primary-foreground"
                   >
@@ -268,44 +273,6 @@ function CarCard({ car }: { car: Car }) {
   );
 }
 
-function Nav() {
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 30);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-  return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-smooth ${
-        scrolled ? "bg-background/80 backdrop-blur-xl border-b border-border" : "bg-transparent"
-      }`}
-    >
-      <div className="container flex items-center justify-between h-20">
-        <a href="/" className="flex items-center gap-3">
-          <span className="font-display text-2xl tracking-tight text-gradient-soft">Николаев</span>
-          <span className="hidden sm:block h-4 w-px bg-border" />
-          <span className="hidden sm:block text-[11px] uppercase tracking-[0.3em] text-muted-foreground">Premium auto</span>
-        </a>
-        <nav className="hidden lg:flex items-center gap-10 text-sm text-muted-foreground">
-          <a href="/" className="hover:text-foreground transition-smooth">Главная</a>
-          <a href="/stock" className="text-foreground transition-smooth">В наличии</a>
-          <a href="/stock2" className="hover:text-foreground transition-smooth">Заказ</a>
-          <a href="/#services" className="hover:text-foreground transition-smooth">Услуги</a>
-          <a href="/#contact" className="hover:text-foreground transition-smooth">Контакты</a>
-        </nav>
-        <a
-          href="#contact"
-          className="group inline-flex items-center gap-2 text-sm border border-border hover:border-primary px-5 h-11 rounded-sm transition-smooth"
-        >
-          Связаться
-          <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </a>
-      </div>
-    </header>
-  );
-}
-
 export default function StockPage() {
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
@@ -328,14 +295,14 @@ export default function StockPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
-      <Nav />
+      <SiteHeader />
       
       {/* Hero Section */}
       <section className="relative pt-40 pb-20 overflow-hidden">
         <div className="container relative z-10">
           <Reveal>
             <div>
-              <SectionLabel>Автомобили ������ наличии</SectionLabel>
+              <SectionLabel>Автомобили в наличии</SectionLabel>
             </div>
           </Reveal>
           <Reveal delay={120}>
