@@ -274,7 +274,7 @@ function CarCard({ car }: { car: Car }) {
 
 export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order" }) {
   const isOrder = mode === "order";
-  const [cars] = useState<Car[]>(stockCars);
+  const [cars] = useState<Car[]>(stockCars.filter((car) => isOrder ? car.status === "В поставке" : car.status === "В наличии"));
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -289,12 +289,12 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
         <div className="container relative z-10">
           <Reveal>
             <div>
-              <SectionLabel>{isOrder ? "Премиальный парк · заказ" : "Автомобили в наличии"}</SectionLabel>
+              <SectionLabel>{isOrder ? "Автомобили в поставке" : "Автомобили в наличии"}</SectionLabel>
             </div>
           </Reveal>
           <Reveal delay={120}>
             <h1 className="font-display mt-8 text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-4xl text-gradient-soft">
-              {isOrder ? <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовящийся к выдаче.</span></> : <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовый к выдаче.</span></>}
+              {isOrder ? <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовящиеся к выдаче.</span></> : <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовый к выдаче.</span></>}
             </h1>
           </Reveal>
           <Reveal delay={240}>
@@ -322,7 +322,7 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
         <div className="container relative z-10">
           <div className="grid lg:grid-cols-2 gap-20 items-center">
             <Reveal>
-              <SectionLabel>Персональный запрос</SectionLabel>
+              <SectionLabel>Персональный запр��с</SectionLabel>
               <h2 className="font-display text-4xl sm:text-5xl mt-8 text-gradient-soft leading-[1.1]">
                 Не нашли нужный <br />
                 <span className="italic text-gradient-gold">автомобиль в наличии?</span>
