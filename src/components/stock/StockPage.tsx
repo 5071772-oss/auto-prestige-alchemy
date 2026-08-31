@@ -273,7 +273,8 @@ function CarCard({ car }: { car: Car }) {
   );
 }
 
-export default function StockPage() {
+export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order" }) {
+  const isOrder = mode === "order";
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -302,20 +303,17 @@ export default function StockPage() {
         <div className="container relative z-10">
           <Reveal>
             <div>
-              <SectionLabel>Автомобили в наличии</SectionLabel>
+              <SectionLabel>{isOrder ? "Премиальный парк · заказ" : "Автомобили в наличии"}</SectionLabel>
             </div>
           </Reveal>
           <Reveal delay={120}>
             <h1 className="font-display mt-8 text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-4xl text-gradient-soft">
-              Премиальный парк,
-              <br />
-              <span className="italic text-gradient-gold">готовый к выдаче.</span>
+              {isOrder ? <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовящийся к выдаче.</span></> : <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовый к выдаче.</span></>}
             </h1>
           </Reveal>
           <Reveal delay={240}>
             <p className="mt-8 max-w-2xl text-lg text-muted-foreground leading-relaxed">
-              Все представленные автомобили прошли комплексную техническую проверку, 
-              юридическую очистку и готовы к оформлению в день обращения.
+              {isOrder ? "Автомобили в этом разделе находятся в процессе заказа, доставки или подготовки к передаче. Я контролирую каждый этап — от покупки до выдачи." : "Все представленные автомобили прошли комплексную техническую проверку, юридическую очистку и готовы к оформлению в день обращения."}
             </p>
           </Reveal>
           
