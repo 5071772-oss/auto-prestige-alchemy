@@ -97,7 +97,7 @@ export default function AiRegulation() {
     <main className="container px-4 pb-24 pt-36 md:px-6">
       <div className="mx-auto max-w-4xl">
         <div className="mb-8 flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-primary"><ShieldCheck className="h-4 w-4" /> Юридическая информация</div>
-        <h1 className="max-w-4xl font-display text-4xl leading-tight tracking-tight md:text-6xl"><span className="text-gradient-soft">{document.title}</span></h1>
+        <h1 className="max-w-5xl font-display text-[3.25rem] leading-[0.94] tracking-[-0.045em] text-balance sm:text-6xl lg:text-[5.5rem]"><span className="text-gradient-soft">Регламент использования</span><br /><span className="italic text-gradient-gold">нейросетей и ИИ</span></h1>
         <p className="mt-6 max-w-2xl text-sm leading-7 text-muted-foreground">Локальный регламент использования нейросетей и сервисов искусственного интеллекта.</p>
         <Accordion type="multiple" className="mt-14">
           {document.sections.map((section, index) => <AccordionItem key={`${section.heading}-${index}`} value={`section-${index}`} className="border-border">
