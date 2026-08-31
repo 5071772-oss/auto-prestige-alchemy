@@ -2,7 +2,7 @@ import React, { useEffect, useMemo } from "react";
 import { ArrowLeft, MessageCircle, Phone, Send, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import regulationText from "../../.v0/ai-regulation-source.txt?raw";
+import regulationText from "../data/ai-regulation-source.txt?raw";
 
 function Nav() {
   return (
@@ -27,11 +27,11 @@ function Footer() {
       <div className="container grid gap-12 text-left md:grid-cols-3">
         <div>
           <div className="font-display text-2xl text-gradient-soft">Николаев Алексей</div>
-          <p className="mt-3 max-w-xs text-sm text-muted-foreground">Личный эксперт по премиальным автомобилям. Подбор, импорт и сопровождение сделок с 2003 года.</p>
+          <p className="mt-3 max-w-xs text-xs text-muted-foreground">Личный эксперт по премиальным автомобилям. Подбор, импорт и сопровождение сделок с 2003 года.</p>
         </div>
         <div>
           <div className="text-xs uppercase tracking-[0.3em] text-primary">Навигация</div>
-          <ul className="mt-5 flex flex-col gap-3 text-sm text-muted-foreground">
+          <ul className="mt-5 flex flex-col gap-3 text-xs text-muted-foreground">
             <li><a href="/#about" className="hover:text-foreground transition-smooth">Обо мне</a></li>
             <li><a href="/stock" className="hover:text-foreground transition-smooth">В наличии</a></li>
             <li><a href="/stock2" className="hover:text-foreground transition-smooth">Заказ</a></li>
@@ -41,7 +41,7 @@ function Footer() {
         </div>
         <div>
           <div className="text-xs uppercase tracking-[0.3em] text-primary">Контакты</div>
-          <ul className="mt-5 flex flex-col gap-3 text-sm text-muted-foreground">
+          <ul className="mt-5 flex flex-col gap-3 text-xs text-muted-foreground">
             <li><a href="tel:+79778468567" className="hover:text-foreground transition-smooth">+7 (977) 846-85-67</a></li>
             <li><a href="https://t.me/nixon_motors" className="hover:text-foreground transition-smooth">Telegram · @nixon_motors</a></li>
             <li className="flex gap-4 pt-2">
