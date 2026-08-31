@@ -10,6 +10,8 @@ const Stock = React.lazy(() => import("./pages/Stock.tsx"));
 const Stock2 = React.lazy(() => import("./pages/Stock2.tsx"));
 const PrivacyPolicy = React.lazy(() => import("./pages/PrivacyPolicy.tsx"));
 const AiRegulation = React.lazy(() => import("./pages/AiRegulation.tsx"));
+const PersonalDataConsent = React.lazy(() => import("./pages/PersonalDataConsent.tsx"));
+const CookiePolicy = React.lazy(() => import("./pages/CookiePolicy.tsx"));
 
 
 
@@ -28,6 +30,9 @@ const App = () => (
             <Route path="/stock2" element={<Stock2 />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/ai-regulation" element={<AiRegulation />} />
+            <Route path="/consent" element={<PersonalDataConsent />} />
+            <Route path="/personal-data-consent" element={<PersonalDataConsent />} />
+            <Route path="/cookies" element={<CookiePolicy />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />

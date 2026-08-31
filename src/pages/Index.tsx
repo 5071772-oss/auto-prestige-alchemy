@@ -471,7 +471,7 @@ function Achievements() {
 function Services() {
   const services = [
     { icon: Search, t: "Подбор автомобиля", d: "Анализ рынка, поиск идеального экземпляра по вашим требованиям, бюджету и ожиданиям. Без компромиссов." },
-    { icon: KeyRound, t: "Покупка под ключ", d: "Беру на себя весь процес��: переговоры, проверку, оплату, оформление документов. Вы получаете готовый автомобиль." },
+    { icon: KeyRound, t: "Покупка под ключ", d: "Беру на себя весь процес������: переговоры, проверку, оплату, оформление документов. Вы получаете готовый автомобиль." },
     { icon: Globe2, t: "Импорт автомобилей", d: "Прямые поставки из Германии, Японии, ОАЭ, Кореи и США. Только проверенные источники и прозрачная история." },
     { icon: ShieldCheck, t: "Проверка и сопровождение", d: "Технический и юридический аудит, проверка истории, диагностика, полное сопровождение сделки." },
     { icon: Truck, t: "Логистика и таможня", d: "Международная логистика, экспедирование, страхование, таможенное оформление под ключ." },
@@ -783,8 +783,10 @@ function Footer() {
       <div className="container mt-12 pt-8 border-t border-border flex flex-wrap justify-between gap-4 text-xs text-muted-foreground">
         <div>© {new Date().getFullYear()} Николаев Алексей. Все права защищены.</div>
         <div className="flex gap-6 uppercase tracking-[0.3em]">
-            <a href="/privacy-policy" className="hover:text-primary transition-smooth">Политика обработки персональных данных</a>
-            <a href="/ai-regulation" className="hover:text-primary transition-smooth">Регламент использования нейросетей и ИИ</a>
+            <a href="/privacy-policy" className="text-[8px] hover:text-primary transition-smooth">Политика обработки персональных данных</a>
+            <a href="/ai-regulation" className="text-[8px] hover:text-primary transition-smooth">Регламент использования нейросетей и ИИ</a>
+            <a href="/consent" className="text-[8px] hover:text-primary transition-smooth">Согласие на обработку персональных данных</a>
+            <a href="/cookies" className="text-[8px] hover:text-primary transition-smooth">Политика использования cookies</a>
         </div>
       </div>
 
