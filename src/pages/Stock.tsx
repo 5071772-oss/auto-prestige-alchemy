@@ -56,6 +56,20 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
   );
 }
 
+type Car = {
+  id: string | number;
+  make: string;
+  model: string;
+  year: number | string;
+  mileage?: number;
+  price_cash?: string;
+  price_vat?: string;
+  status?: string;
+  specs?: string;
+  description?: string;
+  images?: string[];
+};
+
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
     <div className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.35em] text-primary">
@@ -65,7 +79,7 @@ function SectionLabel({ children }: { children: ReactNode }) {
   );
 }
 
-function CarCard({ car }: { car: any }) {
+function CarCard({ car }: { car: Car }) {
   const [currentImage, setCurrentImage] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const images = car.images?.length > 0 ? car.images : ["https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80"];
@@ -108,7 +122,7 @@ function CarCard({ car }: { car: any }) {
                     <ChevronRight className="w-4 h-4" />
                   </button>
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
-                    {images.map((_: any, idx: number) => (
+                    {images.map((_: string, idx: number) => (
                       <div 
                         key={idx}
                         className={`h-1 rounded-full transition-all duration-300 ${idx === currentImage ? "w-4 bg-primary" : "w-1 bg-white/40"}`}
@@ -293,7 +307,7 @@ function Nav() {
 }
 
 export default function Stock() {
-  const [cars, setCars] = useState<any[]>([]);
+  const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -327,7 +341,7 @@ export default function Stock() {
         <div className="container relative z-10">
           <Reveal>
             <div>
-              <SectionLabel>Автомобили ���� наличии</SectionLabel>
+              <SectionLabel>Автомобили ������ наличии</SectionLabel>
             </div>
           </Reveal>
           <Reveal delay={120}>
