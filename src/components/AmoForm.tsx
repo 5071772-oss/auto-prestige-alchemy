@@ -22,6 +22,7 @@ export default function AmoForm() {
   const [sending, setSending] = useState(false);
   const [note, setNote] = useState("");
   const [personalDataConsent, setPersonalDataConsent] = useState(false);
+  const [consentError, setConsentError] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
   const originRef = useRef<HTMLInputElement>(null);
   const iframeLoadedRef = useRef(false);
@@ -39,7 +40,7 @@ export default function AmoForm() {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (!personalDataConsent) {
       event.preventDefault();
-      window.alert("Для отправки заявки необходимо дать согласие на обработку персональных данных.");
+      setConsentError("Для отправки заявки необходимо дать согласие на обработку персональных данных.");
       return;
     }
 
@@ -133,7 +134,7 @@ export default function AmoForm() {
             id="personal-data-consent"
             name="personal_data_consent_checkbox"
             checked={personalDataConsent}
-            onCheckedChange={(checked) => setPersonalDataConsent(checked === true)}
+            onCheckedChange={(checked) => { setPersonalDataConsent(checked === true); setConsentError(""); }}
             required
             aria-describedby="personal-data-consent-description"
           />
@@ -144,6 +145,7 @@ export default function AmoForm() {
             </a>.
           </label>
         </div>
+        {consentError && <p role="alert" className="text-xs text-destructive">{consentError}</p>}
         <Button type="submit" disabled={sending} className="w-full h-12 rounded-none tracking-[0.2em] uppercase text-xs">
           {sending ? "Отправляю…" : "Отправить заявку"}
         </Button>

@@ -1,7 +1,7 @@
 import AmoForm from "@/components/AmoForm";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import {
-  Phone, MessageCircle, Send, ArrowRight, ArrowUpRight, Check, Star,
+  Phone, MessageCircle, Send, ArrowRight, ArrowUpRight, Check, Star, Menu, X,
   Search, KeyRound, Globe2, ShieldCheck, Truck, Award, Users, Clock, Crown,
   ChevronRight, Landmark, FileText, CreditCard,
 } from "lucide-react";
@@ -73,6 +73,7 @@ function SectionLabel({ children }: { children: ReactNode }) {
 
 function Nav() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 30);
     window.addEventListener("scroll", onScroll);
@@ -99,14 +100,21 @@ function Nav() {
           <a href="#process" className="hover:text-foreground transition-smooth">Процесс</a>
           <a href="#contact" className="hover:text-foreground transition-smooth">Контакты</a>
         </nav>
-        <a
-          href="#contact"
-          className="group inline-flex items-center gap-2 text-sm border border-border hover:border-primary px-5 h-11 rounded-sm transition-smooth"
-        >
-          Связаться
-          <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </a>
+        <div className="flex items-center gap-3">
+          <a href="#contact" className="hidden sm:inline-flex group items-center gap-2 text-sm border border-border hover:border-primary px-5 h-11 rounded-sm transition-smooth focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            Связаться
+            <ArrowUpRight aria-hidden="true" className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </a>
+          <button type="button" aria-expanded={menuOpen} aria-controls="mobile-navigation" aria-label={menuOpen ? "Закрыть меню" : "Открыть меню"} onClick={() => setMenuOpen((open) => !open)} className="lg:hidden inline-flex h-11 w-11 items-center justify-center border border-border rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            {menuOpen ? <X aria-hidden="true" className="h-5 w-5" /> : <Menu aria-hidden="true" className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
+      {menuOpen && <nav id="mobile-navigation" aria-label="Мобильная навигация" className="lg:hidden border-t border-border bg-background/95 backdrop-blur-xl px-6 py-5">
+        <div className="container flex flex-col gap-1 text-sm">
+          {[['#about', 'Обо мне'], ['#services', 'Услуги'], ['/stock', 'В наличии'], ['/stock2', 'Заказ'], ['#gallery', 'Гараж'], ['#process', 'Процесс'], ['#contact', 'Контакты']].map(([href, label]) => <a key={href} href={href} onClick={() => setMenuOpen(false)} className="flex min-h-11 items-center border-b border-border/60 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:text-foreground">{label}</a>)}
+        </div>
+      </nav>}
     </header>
   );
 }
@@ -471,7 +479,7 @@ function Achievements() {
 function Services() {
   const services = [
     { icon: Search, t: "Подбор автомобиля", d: "Анализ рынка, поиск идеального экземпляра по вашим требованиям, бюджету и ожиданиям. Без компромиссов." },
-    { icon: KeyRound, t: "Покупка под ключ", d: "Беру на себя весь процес������: переговоры, проверку, оплату, оформление документов. Вы получаете готовый автомобиль." },
+    { icon: KeyRound, t: "Покупка под ключ", d: "Беру на себя весь процес��������: переговоры, проверку, оплату, оформление документов. Вы получаете готовый автомобиль." },
     { icon: Globe2, t: "Импорт автомобилей", d: "Прямые поставки из Германии, Японии, ОАЭ, Кореи и США. Только проверенные источники и прозрачная история." },
     { icon: ShieldCheck, t: "Проверка и сопровождение", d: "Технический и юридический аудит, проверка истории, диагностика, полное сопровождение сделки." },
     { icon: Truck, t: "Логистика и таможня", d: "Международная логистика, экспедирование, страхование, таможенное оформление под ключ." },
