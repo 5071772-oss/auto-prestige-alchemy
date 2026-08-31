@@ -1,10 +1,11 @@
 import AmoForm from "@/components/AmoForm";
 import SiteHeader from "@/components/site/SiteHeader";
+import { stockCars, type StockCar } from "@/data/stock";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
-  ArrowRight, ArrowUpRight, Phone, Send, ShieldCheck, Crown, 
+  ArrowRight, Phone, Send, Crown,
   ChevronLeft, ChevronRight, Calendar, Gauge, FileText, Landmark,
-  RefreshCcw, MessageCircle
+  MessageCircle
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,7 +13,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 
 function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
@@ -57,19 +57,7 @@ function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; 
   );
 }
 
-type Car = {
-  id: string | number;
-  make: string;
-  model: string;
-  year: number | string;
-  mileage?: number;
-  price_cash?: string;
-  price_vat?: string;
-  status?: string;
-  specs?: string;
-  description?: string;
-  images?: string[];
-};
+type Car = StockCar;
 
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
@@ -98,8 +86,18 @@ function CarCard({ car }: { car: Car }) {
   return (
     <Reveal className="group bg-graphite-deep border border-border overflow-hidden rounded-sm hover:border-primary/40 transition-smooth">
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <DialogTrigger asChild>
-          <div className="cursor-pointer">
+        <div
+          className="cursor-pointer"
+          role="button"
+          tabIndex={0}
+          onClick={() => setIsDialogOpen(true)}
+          onKeyDown={(event) => {
+            if (event.key === "Enter" || event.key === " ") {
+              event.preventDefault();
+              setIsDialogOpen(true);
+            }
+          }}
+        >
             <div className="relative aspect-[16/10] overflow-hidden">
               <img 
                 src={images[currentImage]} 
@@ -176,7 +174,6 @@ function CarCard({ car }: { car: Car }) {
               </div>
             </div>
           </div>
-        </DialogTrigger>
 
         <DialogContent className="max-w-4xl bg-graphite-deep border-border p-0 overflow-hidden sm:rounded-sm custom-scrollbar">
           <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
@@ -192,10 +189,12 @@ function CarCard({ car }: { car: Car }) {
                     {images.map((img: string, idx: number) => (
                       <button 
                         key={idx}
+                        type="button"
+                        aria-label={`Показать фото ${idx + 1} автомобиля ${car.make} ${car.model}`}
+                        aria-current={idx === currentImage ? "true" : undefined}
                         onClick={() => setCurrentImage(idx)}
-                        className={`w-12 h-12 rounded-sm border-2 overflow-hidden shrink-0 transition-all ${idx === currentImage ? 'border-primary' : 'border-transparent opacity-50 hover:opacity-100'}`}
-                      >
-                        <img src={img} className="w-full h-full object-cover" />
+                        className={`w-12 h-12 rounded-sm border-2 overflow-hidden shrink-0 transition-all ${idx === currentImage ? 'border-primary' : 'border-transparent opacity-50 hover:opacity-100'}`}>
+                        <img src={img} alt="" className="w-full h-full object-cover" />
                       </button>
                     ))}
                   </div>
@@ -275,24 +274,11 @@ function CarCard({ car }: { car: Car }) {
 
 export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order" }) {
   const isOrder = mode === "order";
-  const [cars, setCars] = useState<Car[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [cars] = useState<Car[]>(stockCars);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchCars();
   }, []);
-
-  const fetchCars = async () => {
-    try {
-      setLoading(true);
-      setCars([]);
-    } catch (error) {
-      console.error("Fetch error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">
@@ -323,33 +309,11 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
       {/* Stock Grid */}
       <section className="py-20 bg-graphite-deep/30">
         <div className="container">
-          {cars.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {cars.map((car) => (
-                <CarCard key={car.id} car={car} />
-              ))}
-            </div>
-          ) : !loading && (
-            <div className="text-center py-40 border border-dashed border-border/60">
-              <Reveal>
-                <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-8">
-                  <ShieldCheck className="w-10 h-10 text-primary" />
-                </div>
-                <h2 className="font-display text-3xl text-gradient-soft">Раздел наполняется</h2>
-                <p className="mt-4 text-muted-foreground max-w-md mx-auto">
-                  В данный момент мы обновляем каталог доступных автомобилей. 
-                  Оставьте заявку, чтобы получить актуальный список в PDF.
-                </p>
-                <div className="mt-10">
-                   <Button asChild size="lg" className="h-14 px-8 rounded-sm bg-primary text-primary-foreground hover:bg-primary-glow transition-smooth text-sm tracking-wide uppercase">
-                    <a href="#contact">
-                      Получить список в PDF <ArrowRight className="ml-2 w-4 h-4" />
-                    </a>
-                  </Button>
-                </div>
-              </Reveal>
-            </div>
-          )}
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {cars.map((car) => (
+              <CarCard key={car.id} car={car} />
+            ))}
+          </div>
         </div>
       </section>
 
