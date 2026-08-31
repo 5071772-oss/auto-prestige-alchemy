@@ -73,13 +73,15 @@ function CarCard({ car }: { car: Car }) {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const images = car.images?.length > 0 ? car.images : ["https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80"];
 
-  const nextImage = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const nextImage = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     setCurrentImage((prev) => (prev + 1) % images.length);
   };
 
-  const prevImage = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const prevImage = (e?: React.MouseEvent) => {
+    e?.preventDefault();
+    e?.stopPropagation();
     setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
   };
 
@@ -179,11 +181,34 @@ function CarCard({ car }: { car: Car }) {
           <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
             <div className="md:w-1/2 relative bg-black">
               <div className="h-full min-h-[300px]">
-                <img 
-                  src={images[currentImage]} 
-                  alt={`${car.make} ${car.model}`}
+                <img
+                  src={images[currentImage]}
+                  alt={`${car.make} ${car.model} — фотография ${currentImage + 1} из ${images.length}`}
                   className="w-full h-full object-cover"
                 />
+                {images.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      aria-label={`Предыдущее фото ${car.make} ${car.model}`}
+                      onClick={prevImage}
+                      className="absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-md transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    >
+                      <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label={`Следующее фото ${car.make} ${car.model}`}
+                      onClick={nextImage}
+                      className="absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-md transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    >
+                      <ChevronRight className="h-5 w-5" aria-hidden="true" />
+                    </button>
+                    <div className="absolute left-1/2 top-4 -translate-x-1/2 rounded-full bg-black/45 px-3 py-1 text-xs text-white/90 backdrop-blur-md" aria-live="polite">
+                      {currentImage + 1} / {images.length}
+                    </div>
+                  </>
+                )}
                 {images.length > 1 && (
                   <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2 px-4 overflow-x-auto py-2 bg-black/40 backdrop-blur-md">
                     {images.map((img: string, idx: number) => (
