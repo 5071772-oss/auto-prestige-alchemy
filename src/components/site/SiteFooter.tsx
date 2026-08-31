@@ -42,11 +42,14 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
-      <div className="container mt-12 flex flex-wrap justify-between gap-4 border-t border-border pt-8 text-xs text-muted-foreground">
-        <div>© {new Date().getFullYear()} Николаев Алексей. Все права защищены.</div>
-        <nav aria-label="Юридическая информация" className="flex flex-wrap gap-x-6 gap-y-3 uppercase tracking-[0.2em]">
-          {legal.map(([href, label]) => <a key={href} href={href} className="text-[11px] transition-smooth hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{label}</a>)}
-        </nav>
+      <div className="container mt-12 grid gap-6 border-t border-border pt-8 text-xs text-muted-foreground md:grid-cols-[1fr_auto] md:items-start">
+        <div className="leading-relaxed">© {new Date().getFullYear()} Николаев Алексей. Все права защищены.</div>
+        <div className="md:max-w-xl">
+          <div className="mb-3 text-[10px] font-medium uppercase tracking-[0.22em] text-muted-foreground/70">Юридическая информация</div>
+          <nav aria-label="Юридическая информация" className="grid gap-x-8 gap-y-2 sm:grid-cols-2">
+            {legal.map(([href, label]) => <a key={href} href={href} className="text-xs leading-relaxed transition-smooth hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{label}</a>)}
+          </nav>
+        </div>
       </div>
     </footer>
   );
