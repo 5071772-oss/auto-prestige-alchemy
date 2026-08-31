@@ -272,9 +272,10 @@ function CarCard({ car }: { car: Car }) {
   );
 }
 
-export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order" }) {
+export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order" | "catalog" }) {
   const isOrder = mode === "order";
-  const [cars] = useState<Car[]>(stockCars.filter((car) => isOrder ? car.status === "В поставке" : car.status === "В наличии"));
+  const isCatalog = mode === "catalog";
+  const [cars] = useState<Car[]>(stockCars.filter((car) => isCatalog || (isOrder ? car.status === "В поставке" : car.status === "В наличии")));
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -289,17 +290,17 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
         <div className="container relative z-10">
           <Reveal>
             <div>
-              <SectionLabel>{isOrder ? "Автомобили в поставке" : "Автомобили в наличии"}</SectionLabel>
+              <SectionLabel>{isCatalog ? "Полный каталог" : isOrder ? "Автомобили в поставке" : "Автомобили в наличии"}</SectionLabel>
             </div>
           </Reveal>
           <Reveal delay={120}>
             <h1 className="font-display mt-8 text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-4xl text-gradient-soft">
-              {isOrder ? <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовящиеся к выдаче.</span></> : <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовый к выдаче.</span></>}
+              {isCatalog ? <>Полный каталог<br /><span className="italic text-gradient-gold">премиальных автомобилей.</span></> : isOrder ? <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовящиеся к выдаче.</span></> : <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовый к выдаче.</span></>}
             </h1>
           </Reveal>
           <Reveal delay={240}>
             <p className="mt-8 max-w-2xl text-lg text-muted-foreground leading-relaxed">
-              {isOrder ? "Автомобили в этом разделе находятся в поставке и готовятся к передаче. Я контролирую каждый этап — от покупки до выдачи." : "Все представленные автомобили прошли комплексную техническую проверку, юридическую очистку и готовы к оформлению в день обращения."}
+              {isCatalog ? "Весь актуальный каталог: автомобили в наличии, в поставке и доступные под индивидуальный заказ." : isOrder ? "Автомобили в этом разделе находятся в поставке и готовятся к передаче. Я контролирую каждый этап — от покупки до выдачи." : "Все представленные автомобили прошли комплексную техническую проверку, юридическую очистку и готовы к оформлению в день обращения."}
             </p>
           </Reveal>
           

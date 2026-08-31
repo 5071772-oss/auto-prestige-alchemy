@@ -8,6 +8,7 @@ const Index = React.lazy(() => import("./pages/Index.tsx"));
 const NotFound = React.lazy(() => import("./pages/NotFound.tsx"));
 const Stock = React.lazy(() => import("./pages/Stock.tsx"));
 const Stock2 = React.lazy(() => import("./pages/Stock2.tsx"));
+const Catalog = React.lazy(() => import("./pages/Catalog.tsx"));
 const PrivacyPolicy = React.lazy(() => import("./pages/PrivacyPolicy.tsx"));
 const AiRegulation = React.lazy(() => import("./pages/AiRegulation.tsx"));
 const PersonalDataConsent = React.lazy(() => import("./pages/PersonalDataConsent.tsx"));
@@ -27,6 +28,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/stock" element={<Stock />} />
+            <Route path="/catalog" element={<Catalog />} />
             <Route path="/order" element={<Stock2 />} />
             <Route path="/stock2" element={<Stock2 />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

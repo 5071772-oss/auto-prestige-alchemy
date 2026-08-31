@@ -3,7 +3,7 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 
 const links = [
   ["#about", "Обо мне"], ["#services", "Услуги"], ["/stock", "В наличии"],
-  ["/order", "Заказ"], ["#gallery", "Гараж"], ["#process", "Процесс"], ["#contact", "Контакты"],
+  ["/order", "Заказ"], ["/catalog", "Каталог"], ["#gallery", "Гараж"], ["#process", "Процесс"], ["#contact", "Контакты"],
 ];
 
 export default function SiteHeader() {
