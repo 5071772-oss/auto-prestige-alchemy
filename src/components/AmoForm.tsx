@@ -22,8 +22,11 @@ export default function AmoForm() {
   const [sending, setSending] = useState(false);
   const [note, setNote] = useState("");
   const [personalDataConsent, setPersonalDataConsent] = useState(false);
+  const [consentError, setConsentError] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
   const originRef = useRef<HTMLInputElement>(null);
+  const iframeLoadedRef = useRef(false);
+  const confirmationTimeoutRef = useRef<number | null>(null);
   const location = useLocation();
 
   useEffect(() => {
@@ -37,11 +40,19 @@ export default function AmoForm() {
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (!personalDataConsent) {
       event.preventDefault();
-      window.alert("Для отправки заявки необходимо дать согласие на обработку персональных данных.");
+      setConsentError("Для отправки заявки необходимо дать согласие на обработку персональных данных.");
       return;
     }
 
     setSending(true);
+    iframeLoadedRef.current = false;
+    if (confirmationTimeoutRef.current) {
+      window.clearTimeout(confirmationTimeoutRef.current);
+    }
+    confirmationTimeoutRef.current = window.setTimeout(() => {
+      setSending(false);
+      toast.error("Не удалось подтвердить отправку заявки. Попробуйте ещё раз.");
+    }, 15000);
     if (originRef.current) {
       originRef.current.value = JSON.stringify({
         datetime: new Date().toString(),
@@ -50,13 +61,23 @@ export default function AmoForm() {
         from: window.location.href,
       });
     }
-    // отправка уходит в скрытый iframe, страница не перезагружается
-    window.setTimeout(() => {
-      setSending(false);
-      formRef.current?.reset();
-      setPersonalDataConsent(false);
-      toast.success("Заявка отправлена — свяжусь с вами в течение часа");
-    }, 900);
+  };
+
+  const handleIframeLoad = () => {
+    if (!iframeLoadedRef.current) {
+      iframeLoadedRef.current = true;
+      return;
+    }
+    if (!sending) return;
+    if (confirmationTimeoutRef.current) {
+      window.clearTimeout(confirmationTimeoutRef.current);
+      confirmationTimeoutRef.current = null;
+    }
+    setSending(false);
+    formRef.current?.reset();
+    setNote("");
+    setPersonalDataConsent(false);
+    toast.success("Заявка отправлена — свяжусь с вами в течение часа");
   };
 
   const inputClass = "h-12 rounded-none bg-card border-border";
@@ -67,7 +88,7 @@ export default function AmoForm() {
       <div className="text-xs uppercase tracking-[0.3em] text-primary">Персональная заявка</div>
       <h3 className="font-display text-3xl mt-4 text-gradient-soft">Свяжусь лично</h3>
 
-      <iframe name="amo_target" title="amo" className="hidden" />
+      <iframe name="amo_target" title="Ответ AmoCRM" className="hidden" onLoad={handleIframeLoad} />
 
       <form
         ref={formRef}
@@ -113,7 +134,7 @@ export default function AmoForm() {
             id="personal-data-consent"
             name="personal_data_consent_checkbox"
             checked={personalDataConsent}
-            onCheckedChange={(checked) => setPersonalDataConsent(checked === true)}
+            onCheckedChange={(checked) => { setPersonalDataConsent(checked === true); setConsentError(""); }}
             required
             aria-describedby="personal-data-consent-description"
           />
@@ -124,6 +145,7 @@ export default function AmoForm() {
             </a>.
           </label>
         </div>
+        {consentError && <p role="alert" className="text-xs text-destructive">{consentError}</p>}
         <Button type="submit" disabled={sending} className="w-full h-12 rounded-none tracking-[0.2em] uppercase text-xs">
           {sending ? "Отправляю…" : "Отправить заявку"}
         </Button>
