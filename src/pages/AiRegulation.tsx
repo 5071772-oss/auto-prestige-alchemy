@@ -52,6 +52,13 @@ function Footer() {
           </ul>
         </div>
       </div>
+      <div className="container mt-12 pt-8 border-t border-border flex flex-wrap justify-between gap-4 text-xs text-muted-foreground">
+        <div>© {new Date().getFullYear()} Николаев Алексей. Все права защищены.</div>
+        <div className="flex gap-6 uppercase tracking-[0.3em]">
+          <a href="/privacy-policy" className="text-[8px] hover:text-primary transition-smooth">Политика обработки персональных данных</a>
+          <a href="/ai-regulation" className="text-[8px] hover:text-primary transition-smooth">Регламент использования нейросетей и ИИ</a>
+        </div>
+      </div>
     </footer>
   );
 }
