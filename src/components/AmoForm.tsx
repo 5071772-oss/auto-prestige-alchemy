@@ -1,7 +1,8 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { useLocation } from "react-router-dom";
 
@@ -20,6 +21,7 @@ const FIELD = {
 export default function AmoForm() {
   const [sending, setSending] = useState(false);
   const [note, setNote] = useState("");
+  const [personalDataConsent, setPersonalDataConsent] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const originRef = useRef<HTMLInputElement>(null);
   const location = useLocation();
@@ -32,7 +34,13 @@ export default function AmoForm() {
     }
   }, [location]);
 
-  const onSubmit = () => {
+  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    if (!personalDataConsent) {
+      event.preventDefault();
+      window.alert("Для отправки заявки необходимо дать согласие на обработку персональных данных.");
+      return;
+    }
+
     setSending(true);
     if (originRef.current) {
       originRef.current.value = JSON.stringify({
@@ -46,6 +54,7 @@ export default function AmoForm() {
     window.setTimeout(() => {
       setSending(false);
       formRef.current?.reset();
+      setPersonalDataConsent(false);
       toast.success("Заявка отправлена — свяжусь с вами в течение часа");
     }, 900);
   };
@@ -97,12 +106,27 @@ export default function AmoForm() {
             onChange={(e) => setNote(e.target.value)}
           />
         </div>
+        <input type="hidden" name="personal_data_consent" value={personalDataConsent ? "true" : "false"} />
+        <input type="hidden" name="personal_data_consent_version" value="1.0" />
+        <div className="flex items-start gap-3">
+          <Checkbox
+            id="personal-data-consent"
+            name="personal_data_consent_checkbox"
+            checked={personalDataConsent}
+            onCheckedChange={(checked) => setPersonalDataConsent(checked === true)}
+            required
+            aria-describedby="personal-data-consent-description"
+          />
+          <label id="personal-data-consent-description" htmlFor="personal-data-consent" className="text-xs text-muted-foreground leading-relaxed">
+            Я даю согласие на обработку моих персональных данных на условиях {" "}
+            <a href="/personal-data-consent" target="_blank" rel="noreferrer" className="underline underline-offset-2 hover:text-primary transition-smooth">
+              Согласия на обработку персональных данных
+            </a>.
+          </label>
+        </div>
         <Button type="submit" disabled={sending} className="w-full h-12 rounded-none tracking-[0.2em] uppercase text-xs">
           {sending ? "Отправляю…" : "Отправить заявку"}
         </Button>
-        <p className="text-xs text-muted-foreground leading-relaxed">
-          Нажимая кнопку, вы соглашаетесь на обработку персональных данных.
-        </p>
       </form>
     </div>
   );

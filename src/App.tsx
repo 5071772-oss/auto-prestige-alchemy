@@ -31,6 +31,7 @@ const App = () => (
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/ai-regulation" element={<AiRegulation />} />
             <Route path="/consent" element={<PersonalDataConsent />} />
+            <Route path="/personal-data-consent" element={<PersonalDataConsent />} />
             <Route path="/cookies" element={<CookiePolicy />} />
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
