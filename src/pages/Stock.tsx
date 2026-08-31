@@ -13,10 +13,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { supabase } from "@/integrations/supabase/client";
-import { syncCarsFromGoogleSheet } from "@/utils/syncStock";
-import { syncCarsFromGoogleSheetsConnector } from "@/utils/googleSheetsSync";
-import { useToast } from "@/components/ui/use-toast";
 
 function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -299,7 +295,6 @@ function Nav() {
 export default function Stock() {
   const [cars, setCars] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -309,47 +304,11 @@ export default function Stock() {
   const fetchCars = async () => {
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from("cars")
-        .select("*")
-        .order("created_at", { ascending: false });
-      
-      if (error) throw error;
-      setCars(data || []);
+      setCars([]);
     } catch (error) {
       console.error("Fetch error:", error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleSync = async () => {
-    const sheetId = prompt("Введите ID вашей Google Таблицы (из URL таблицы):\nНапример: 1NNC5Z3fDUYh8NLN_bJ8j5qgFfdTF3xcSE-j33NKr4H0");
-    if (!sheetId) return;
-
-    toast({
-      title: "Синхронизация через Connector...",
-      description: "Загружаем данные из таблицы с помощью Google Sheets Connector.",
-    });
-
-    try {
-      const result = await syncCarsFromGoogleSheetsConnector(sheetId);
-      if (result.success) {
-        toast({
-          title: "Успех!",
-          description: `Синхронизировано ${result.count} автомобилей.`,
-        });
-        fetchCars();
-      } else {
-        throw new Error(result.error || "Sync failed");
-      }
-    } catch (err: any) {
-      console.error("Sync error:", err);
-      toast({
-        title: "Ошибка",
-        description: err.message || "Не удалось синхронизировать данные через Connector.",
-        variant: "destructive",
-      });
     }
   };
 
@@ -367,7 +326,7 @@ export default function Stock() {
       <section className="relative pt-40 pb-20 overflow-hidden">
         <div className="container relative z-10">
           <Reveal>
-            <div onDoubleClick={handleSync} className="cursor-default">
+            <div>
               <SectionLabel>Автомобили в наличии</SectionLabel>
             </div>
           </Reveal>
