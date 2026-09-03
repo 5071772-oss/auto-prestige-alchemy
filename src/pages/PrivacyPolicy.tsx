@@ -143,7 +143,7 @@ export default function PrivacyPolicy() {
                   </p>
                   <p>
                     1.4. Настоящая Политика применяется ко всей информации, которую Оператор может получить о субъектах персональных данных при использовании сайта:<br />
-                    <a href="https://auto-prestige-alchemy.relaxdev.ru/" className="text-primary hover:underline">https://auto-prestige-alchemy.relaxdev.ru/</a><br />
+                    <a href="https://nixxon-auto.ru" className="text-primary hover:underline">https://nixxon-auto.ru</a><br />
                     а также при обращении к Оператору посредством телефонной связи, электронной почты, мессенджеров, социальных сетей и иных используемых Оператором каналов связи.
                   </p>
                   <p>
@@ -170,7 +170,7 @@ export default function PrivacyPolicy() {
                   <p><strong>Краткое наименование:</strong> СМЗ Николаев А. В.</p>
                   <p><strong>ИНН:</strong> 500101036007.</p>
                   <p><strong>Адрес Оператора:</strong> 143909, Московская область, г. Балашиха, Московский б-р, д. 1/13, кв. 215.</p>
-                  <p><strong>Адрес сайта:</strong> <a href="https://auto-prestige-alchemy.relaxdev.ru/" className="text-primary hover:underline">https://auto-prestige-alchemy.relaxdev.ru/</a></p>
+                  <p><strong>Адрес сайта:</strong> <a href="https://nixxon-auto.ru" className="text-primary hover:underline">https://nixxon-auto.ru</a></p>
                   <p><strong>Адрес электронной почты:</strong> <a href="mailto:5071772@gmail.com" className="text-primary hover:underline">5071772@gmail.com</a></p>
                   <p><strong>Оператор:</strong> Николаев Алексей Викторович.</p>
                   <p><strong>Ответственное лицо:</strong> Николаев Алексей Викторович, самостоятельно.</p>
@@ -560,7 +560,7 @@ export default function PrivacyPolicy() {
                 <AccordionContent className="text-muted-foreground space-y-4 pb-6">
                   <p>24.1. Оператор вправе вносить изменения в Политику при изменении законодательства, деятельности, сервисов или технологий обработки данных.</p>
                   <p>24.2. Новая редакция вступает в силу с момента размещения на сайте, если иное не указано в документе.</p>
-                  <p>24.3. Актуальная редакция всегда доступна по адресу: <a href="https://auto-prestige-alchemy.relaxdev.ru/" className="text-primary hover:underline">https://auto-prestige-alchemy.relaxdev.ru/</a></p>
+                  <p>24.3. Актуальная редакция всегда доступна по адресу: <a href="https://nixxon-auto.ru" className="text-primary hover:underline">https://nixxon-auto.ru</a></p>
                 </AccordionContent>
               </AccordionItem>
 
