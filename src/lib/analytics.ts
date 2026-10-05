@@ -44,15 +44,34 @@ declare global {
 
 const counterId = Number(METRIKA_COUNTER_ID);
 
-/** Событие цели: «отправил заявку», «позвонил», «открыл автомобиль». */
+/**
+ * Повтор того же события в течение секунды не отправляем: страница может
+ * перерисоваться, и цель ушла бы дважды. Осознанные повторы (человек ещё раз
+ * нажал категорию через минуту) считаются как обычно.
+ */
+const DEDUP_MS = 1000;
+const recentGoals = new Map<string, number>();
+
 export function reachGoal(goal: GoalName, params?: Record<string, unknown>): void {
   if (typeof window === "undefined" || !counterId) return;
+
+  const key = `${goal}:${JSON.stringify(params ?? {})}`;
+  const now = Date.now();
+  const previous = recentGoals.get(key);
+  if (previous !== undefined && now - previous < DEDUP_MS) return;
+  recentGoals.set(key, now);
+
   window.ym?.(counterId, "reachGoal", goal, params);
 }
+
+/** Последняя отправленная страница: повторный вызов с тем же адресом пропускаем. */
+let lastHitUrl: string | null = null;
 
 /** Просмотр страницы: у одностраничного сайта переходы не видны Метрике сами. */
 function trackPageView(url: string): void {
   if (typeof window === "undefined" || !counterId) return;
+  if (lastHitUrl === url) return;
+  lastHitUrl = url;
   window.ym?.(counterId, "hit", url, { title: document.title });
 }
 
