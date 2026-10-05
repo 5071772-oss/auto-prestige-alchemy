@@ -1,9 +1,10 @@
 import LeadForm from "@/components/LeadForm";
 import { MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
 import SiteHeader from "@/components/site/SiteHeader";
-import { stockCars, type StockCar } from "@/data/stock";
+import type { StockCar } from "@/data/stock";
 import { carClassById } from "@/data/car-classes";
 import { catalogFilterUrl, catalogFilters, filterFromSearch } from "@/data/catalog-filters";
+import { useCatalog } from "@/lib/chatium-catalog";
 import { Link, useSearchParams } from "react-router-dom";
 import { useHashScroll } from "@/lib/use-hash-scroll";
 import { useEffect, useState, useRef, type ReactNode } from "react";
@@ -77,6 +78,8 @@ function CarCard({ car }: { car: Car }) {
   const [currentImage, setCurrentImage] = useState(0);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const images = car.images?.length > 0 ? car.images : ["https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80"];
+  // В карточке фото небольшое, в просмотре во весь экран — крупное
+  const imagesFull = car.imagesFull?.length === images.length ? car.imagesFull : images;
 
   const nextImage = (e?: React.MouseEvent) => {
     e?.preventDefault();
@@ -187,7 +190,7 @@ function CarCard({ car }: { car: Car }) {
             <div className="md:w-1/2 relative bg-black">
               <div className="h-full min-h-[300px]">
                 <img
-                  src={images[currentImage]}
+                  src={imagesFull[currentImage]}
                   alt={`${car.make} ${car.model} — фотография ${currentImage + 1} из ${images.length}`}
                   className="w-full h-full object-cover"
                 />
@@ -307,8 +310,10 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
   const isOrder = mode === "order";
   const isCatalog = mode === "catalog";
 
+  const catalog = useCatalog();
+
   // Сначала машины по режиму страницы, затем — выбранная категория из адреса
-  const baseCars = stockCars.filter((car) =>
+  const baseCars = catalog.cars.filter((car) =>
     isCatalog || (isOrder ? car.status === "В поставке" : car.status === "В наличии"),
   );
   const activeClass = carClassById(searchParams.get("class"));
