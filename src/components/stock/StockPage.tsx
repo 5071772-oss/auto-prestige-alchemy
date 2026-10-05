@@ -3,7 +3,8 @@ import { MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_HANDLE, TELEGRAM_UR
 import SiteHeader from "@/components/site/SiteHeader";
 import { stockCars, type StockCar } from "@/data/stock";
 import { carClassById } from "@/data/car-classes";
-import { useLocation } from "react-router-dom";
+import { catalogFilterUrl, catalogFilters, filterFromSearch } from "@/data/catalog-filters";
+import { Link, useSearchParams } from "react-router-dom";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
   ArrowRight, Phone, Send, Crown,
@@ -301,15 +302,30 @@ function CarCard({ car }: { car: Car }) {
 }
 
 export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order" | "catalog" }) {
-  const location = useLocation();
-  const activeClass = carClassById(new URLSearchParams(location.search).get("class"));
+  const [searchParams] = useSearchParams();
   const isOrder = mode === "order";
   const isCatalog = mode === "catalog";
-  // Класс из адреса важнее режима страницы: пункты меню «Автомобили» ведут в каталог с классом
-  const cars: Car[] = stockCars.filter((car) => {
+
+  // Сначала машины по режиму страницы, затем — выбранная категория из адреса
+  const baseCars = stockCars.filter((car) =>
+    isCatalog || (isOrder ? car.status === "В поставке" : car.status === "В наличии"),
+  );
+  const activeClass = carClassById(searchParams.get("class"));
+  const activeBrand = searchParams.get("brand");
+  const cars = baseCars.filter((car) => {
     if (activeClass) return car.carClass === activeClass.id;
-    return isCatalog || (isOrder ? car.status === "В поставке" : car.status === "В наличии");
+    if (activeBrand) return car.make === activeBrand;
+    return true;
   });
+
+  // Категории фильтра собираются из самих автомобилей: новая марка появляется сама
+  const filters = catalogFilters(baseCars);
+  const activeFilter = filterFromSearch(filters, searchParams.get("class"), activeBrand);
+
+  const chipClass = (active: boolean) =>
+    `inline-flex h-11 items-center gap-2 border px-5 text-xs uppercase tracking-[0.18em] transition-smooth ${
+      active ? "border-primary bg-primary/10 text-foreground" : "border-border text-muted-foreground hover:border-primary/60 hover:text-foreground"
+    }`;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -324,19 +340,41 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
         <div className="container relative z-10">
           <Reveal>
             <div>
-              <SectionLabel>{activeClass ? `Автомобили · ${activeClass.label}` : isCatalog ? "Полный каталог" : isOrder ? "Автомобили в поставке" : "Автомобили в наличии"}</SectionLabel>
+              <SectionLabel>{isCatalog ? "Каталог" : isOrder ? "Автомобили в поставке" : "Автомобили в наличии"}</SectionLabel>
             </div>
           </Reveal>
           <Reveal delay={120}>
             <h1 className="font-display mt-8 text-5xl sm:text-6xl lg:text-7xl leading-[1.05] tracking-tight max-w-4xl text-gradient-soft">
-              {activeClass ? <>{activeClass.label}<br /><span className="italic text-gradient-gold">{activeClass.hint}</span></> : isCatalog ? <>Полный каталог<br /><span className="italic text-gradient-gold">премиальных автомобилей.</span></> : isOrder ? <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовящиеся к выдаче.</span></> : <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовый к выдаче.</span></>}
+              {isCatalog ? <>Автомобили в наличии,<br /><span className="italic text-gradient-gold">в поставке и под заказ.</span></> : isOrder ? <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовящиеся к выдаче.</span></> : <>Премиальный парк,<br /><span className="italic text-gradient-gold">готовый к выдаче.</span></>}
             </h1>
           </Reveal>
           <Reveal delay={240}>
             <p className="mt-8 max-w-2xl text-lg text-muted-foreground leading-relaxed">
-              {activeClass ? activeClass.description : isCatalog ? "Весь актуальный каталог: автомобили в наличии, в поставке и доступные под индивидуальный заказ." : isOrder ? "Автомобили в этом разделе находятся в поставке и готовятся к передаче. Я контролирую каждый этап — от покупки до выдачи." : "Все представленные автомобили прошли комплексную техническую проверку, юридическую очистку и готовы к оформлению в день обращения."}
+              {isCatalog ? "Выбирайте класс или марку — покажу, что есть сейчас и что уже в поставке. Если нужного автомобиля нет, подберу его под ваш запрос." : isOrder ? "Автомобили в этом разделе находятся в поставке и готовятся к передаче. Я контролирую каждый этап — от покупки до выдачи." : "Все представленные автомобили прошли комплексную техническую проверку, юридическую очистку и готовы к оформлению в день обращения."}
             </p>
           </Reveal>
+
+          {isCatalog && filters.length > 0 && (
+            <Reveal delay={320}>
+              <div className="mt-12 flex flex-wrap gap-3" role="group" aria-label="Категории автомобилей">
+                <Link to={catalogFilterUrl(null)} className={chipClass(!activeFilter)}>
+                  Все
+                  <span className="text-muted-foreground">{baseCars.length}</span>
+                </Link>
+                {filters.map((filter) => (
+                  <Link
+                    key={`${filter.kind}-${filter.value}`}
+                    to={catalogFilterUrl(filter)}
+                    className={chipClass(activeFilter?.value === filter.value && activeFilter?.kind === filter.kind)}
+                    aria-current={activeFilter?.value === filter.value && activeFilter?.kind === filter.kind ? "true" : undefined}
+                  >
+                    {filter.label}
+                    <span className="text-muted-foreground">{filter.count}</span>
+                  </Link>
+                ))}
+              </div>
+            </Reveal>
+          )}
           
         </div>
       </section>
@@ -344,6 +382,11 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
       {/* Stock Grid */}
       <section className="py-20 bg-graphite-deep/30">
         <div className="container">
+          {activeFilter && (
+            <p className="mb-10 text-xs uppercase tracking-[0.25em] text-muted-foreground">
+              {activeFilter.label} · {cars.length}
+            </p>
+          )}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {cars.map((car) => (
               <CarCard key={car.id} car={car} />
@@ -352,7 +395,9 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
 
           {cars.length === 0 && (
             <div className="border border-dashed border-border p-10 text-center sm:p-16">
-              <p className="font-display text-2xl text-gradient-soft">В этом классе сейчас нет автомобилей в наличии</p>
+              <p className="font-display text-2xl text-gradient-soft">
+                {activeFilter ? `В категории «${activeFilter.label}» пока нет автомобилей` : "Автомобилей пока нет"}
+              </p>
               <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-muted-foreground">
                 Подберу под ваш запрос из закрытых дилерских баз Европы, Америки, Китая, Кореи, Японии и ОАЭ —
                 расскажите, что ищете.
