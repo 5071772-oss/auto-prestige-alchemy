@@ -1,4 +1,5 @@
 import LeadForm from "@/components/LeadForm";
+import { MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
 import SiteHeader from "@/components/site/SiteHeader";
 import { stockCars, type StockCar } from "@/data/stock";
 import { useEffect, useState, useRef, type ReactNode } from "react";
@@ -361,25 +362,25 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
                 <div>
                   <div className="text-xs uppercase tracking-widest text-muted-foreground mb-4">Связь напрямую</div>
                   <div className="flex flex-wrap gap-4">
-                    <a href="tel:+79778468567" className="group flex items-center gap-3 p-4 bg-graphite-deep border border-border hover:border-primary transition-smooth rounded-sm">
+                    <a href={`tel:${PHONE}`} className="group flex items-center gap-3 p-4 bg-graphite-deep border border-border hover:border-primary transition-smooth rounded-sm">
                       <div className="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-smooth">
                         <Phone className="w-5 h-5" />
                       </div>
                       <div>
                         <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Звонок</div>
-                        <div className="text-sm font-medium">+7 (977) 846-85-67</div>
+                        <div className="text-sm font-medium">{PHONE_FORMATTED}</div>
                       </div>
                     </a>
-                    <a href="https://t.me/nixon_motors" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-4 bg-graphite-deep border border-border hover:border-primary transition-smooth rounded-sm">
+                    <a href={TELEGRAM_URL} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-4 bg-graphite-deep border border-border hover:border-primary transition-smooth rounded-sm">
                       <div className="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-smooth">
                         <Send className="w-5 h-5" />
                       </div>
                       <div>
                         <div className="text-[10px] uppercase tracking-wider text-muted-foreground">Telegram</div>
-                        <div className="text-sm font-medium">@nixon_motors</div>
+                        <div className="text-sm font-medium">{TELEGRAM_HANDLE}</div>
                       </div>
                     </a>
-                    <a href="https://max.ru/u/f9LHodD0cOJqTlPe8YcscWYxH0dzcj7TZq5Q0XOZpxuMXD-qpbOgHkOkLso" target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-4 bg-graphite-deep border border-border hover:border-primary transition-smooth rounded-sm">
+                    <a href={MESSENGER_MAX_URL} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 p-4 bg-graphite-deep border border-border hover:border-primary transition-smooth rounded-sm">
                       <div className="w-10 h-10 flex items-center justify-center bg-primary/10 text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-smooth">
                         <MessageCircle className="w-5 h-5" />
                       </div>

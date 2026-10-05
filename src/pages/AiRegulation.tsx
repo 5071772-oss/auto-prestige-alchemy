@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from "react";
+import { MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
 import { ArrowLeft, MessageCircle, Phone, Send, ShieldCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -42,12 +43,12 @@ function Footer() {
         <div>
           <div className="text-xs uppercase tracking-[0.3em] text-primary">Контакты</div>
           <ul className="mt-5 flex flex-col gap-3 text-xs text-muted-foreground">
-            <li><a href="tel:+79778468567" className="hover:text-foreground transition-smooth">+7 (977) 846-85-67</a></li>
-            <li><a href="https://t.me/nixon_motors" className="hover:text-foreground transition-smooth">Telegram · @nixon_motors</a></li>
+            <li><a href={`tel:${PHONE}`} className="hover:text-foreground transition-smooth">{PHONE_FORMATTED}</a></li>
+            <li><a href={TELEGRAM_URL} className="hover:text-foreground transition-smooth">Telegram · {TELEGRAM_HANDLE}</a></li>
             <li className="flex gap-4 pt-2">
-              <a href="https://t.me/nixon_motors" aria-label="Telegram" className="flex h-9 w-9 items-center justify-center border border-border hover:border-primary transition-smooth"><Send className="h-4 w-4" /></a>
-              <a href="tel:+79778468567" aria-label="Телефон" className="flex h-9 w-9 items-center justify-center border border-border hover:border-primary transition-smooth"><Phone className="h-4 w-4" /></a>
-              <a href="https://max.ru/u/f9LHodD0cOJqTlPe8YcscWYxH0dzcj7TZq5Q0XOZpxuMXD-qpbOgHkOkLso" target="_blank" rel="noopener noreferrer" aria-label="Max" className="flex h-9 w-9 items-center justify-center border border-border hover:border-primary transition-smooth"><MessageCircle className="h-4 w-4" /></a>
+              <a href={TELEGRAM_URL} aria-label="Telegram" className="flex h-9 w-9 items-center justify-center border border-border hover:border-primary transition-smooth"><Send className="h-4 w-4" /></a>
+              <a href={`tel:${PHONE}`} aria-label="Телефон" className="flex h-9 w-9 items-center justify-center border border-border hover:border-primary transition-smooth"><Phone className="h-4 w-4" /></a>
+              <a href={MESSENGER_MAX_URL} target="_blank" rel="noopener noreferrer" aria-label="Max" className="flex h-9 w-9 items-center justify-center border border-border hover:border-primary transition-smooth"><MessageCircle className="h-4 w-4" /></a>
             </li>
           </ul>
         </div>

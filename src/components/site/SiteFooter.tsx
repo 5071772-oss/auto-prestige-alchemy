@@ -1,4 +1,5 @@
 import { MessageCircle, Phone, Send } from "lucide-react";
+import { MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
 
 const navigation = [
   ["#about", "Обо мне"],
@@ -34,12 +35,12 @@ export function SiteFooter() {
         <div>
           <div className="text-xs uppercase tracking-[0.3em] text-primary">Контакты</div>
           <div className="mt-5 flex flex-col gap-3 text-sm text-muted-foreground">
-            <a href="tel:+79778468567" className="transition-smooth hover:text-foreground">+7 (977) 846-85-67</a>
+            <a href={`tel:${PHONE}`} className="transition-smooth hover:text-foreground">{PHONE_FORMATTED}</a>
             <a href="mailto:hello@nikolaev-auto.ru" className="transition-smooth hover:text-foreground">hello@nikolaev-auto.ru</a>
             <div className="flex gap-4 pt-2">
-              <a href="https://t.me/nixon_motors" aria-label="Telegram" className="flex size-9 items-center justify-center border border-border transition-smooth hover:border-primary"><Send aria-hidden="true" /></a>
-              <a href="https://max.ru/u/f9LHodD0cOJqTlPe8YcscWYxH0dzcj7TZq5Q0XOZpxuMXD-qpbOgHkOkLso" target="_blank" rel="noopener noreferrer" aria-label="Max" className="flex size-9 items-center justify-center border border-border transition-smooth hover:border-primary"><MessageCircle aria-hidden="true" /></a>
-              <a href="tel:+79778468567" aria-label="Телефон" className="flex size-9 items-center justify-center border border-border transition-smooth hover:border-primary"><Phone aria-hidden="true" /></a>
+              <a href={TELEGRAM_URL} aria-label="Telegram" className="flex size-9 items-center justify-center border border-border transition-smooth hover:border-primary"><Send aria-hidden="true" /></a>
+              <a href={MESSENGER_MAX_URL} target="_blank" rel="noopener noreferrer" aria-label="Max" className="flex size-9 items-center justify-center border border-border transition-smooth hover:border-primary"><MessageCircle aria-hidden="true" /></a>
+              <a href={`tel:${PHONE}`} aria-label="Телефон" className="flex size-9 items-center justify-center border border-border transition-smooth hover:border-primary"><Phone aria-hidden="true" /></a>
             </div>
           </div>
         </div>

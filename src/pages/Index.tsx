@@ -1,4 +1,5 @@
 import LeadForm from "@/components/LeadForm";
+import { MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import { Reveal } from "@/components/site/Reveal";
@@ -624,23 +625,23 @@ function CTA() {
           </Reveal>
           <Reveal delay={300}>
             <div className="mt-10 space-y-4 text-sm">
-              <a href="tel:+79778468567" className="flex items-center gap-4 group">
+              <a href={`tel:${PHONE}`} className="flex items-center gap-4 group">
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
                   <Phone className="w-4 h-4 text-primary" />
                 </span>
-                <span className="text-foreground/90 group-hover:text-foreground">+7 (977) 846-85-67</span>
+                <span className="text-foreground/90 group-hover:text-foreground">{PHONE_FORMATTED}</span>
               </a>
-              <a href="https://t.me/nixon_motors" className="flex items-center gap-4 group">
+              <a href={TELEGRAM_URL} className="flex items-center gap-4 group">
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
                   <Send className="w-4 h-4 text-primary" />
                 </span>
-                <span className="text-foreground/90 group-hover:text-foreground">Telegram · @nixon_motors</span>
+                <span className="text-foreground/90 group-hover:text-foreground">Telegram · {TELEGRAM_HANDLE}</span>
               </a>
-              <a href="https://max.ru/u/f9LHodD0cOJqTlPe8YcscWYxH0dzcj7TZq5Q0XOZpxuMXD-qpbOgHkOkLso" target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
+              <a href={MESSENGER_MAX_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 group">
                 <span className="w-10 h-10 border border-border flex items-center justify-center group-hover:border-primary transition-smooth">
                   <MessageCircle className="w-4 h-4 text-primary" />
                 </span>
-                <span className="text-foreground/90 group-hover:text-foreground">Max · +79778468567</span>
+                <span className="text-foreground/90 group-hover:text-foreground">Max · {PHONE_FORMATTED}</span>
               </a>
             </div>
           </Reveal>

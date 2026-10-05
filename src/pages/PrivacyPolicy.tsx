@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
 import { 
   ArrowLeft, Phone, Send, MessageCircle, ShieldCheck, ChevronDown
 } from "lucide-react";
@@ -73,12 +74,12 @@ function Footer() {
         <div>
           <div className="text-xs uppercase tracking-[0.3em] text-primary">Контакты</div>
           <ul className="mt-5 space-y-3 text-sm text-muted-foreground">
-            <li><a href="tel:+79778468567" className="hover:text-foreground transition-smooth">+7 (977) 846-85-67</a></li>
-            <li><a href="https://t.me/nixon_motors" className="hover:text-foreground transition-smooth">Telegram · @nixon_motors</a></li>
+            <li><a href={`tel:${PHONE}`} className="hover:text-foreground transition-smooth">{PHONE_FORMATTED}</a></li>
+            <li><a href={TELEGRAM_URL} className="hover:text-foreground transition-smooth">Telegram · {TELEGRAM_HANDLE}</a></li>
             <li className="flex gap-4 pt-2">
-              <a href="https://t.me/nixon_motors" aria-label="Telegram" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Send className="w-4 h-4" /></a>
-              <a href="https://max.ru/u/f9LHodD0cOJqTlPe8YcscWYxH0dzcj7TZq5Q0XOZpxuMXD-qpbOgHkOkLso" target="_blank" rel="noopener noreferrer" aria-label="Max" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><MessageCircle className="w-4 h-4" /></a>
-              <a href="tel:+79778468567" aria-label="Phone" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Phone className="w-4 h-4" /></a>
+              <a href={TELEGRAM_URL} aria-label="Telegram" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Send className="w-4 h-4" /></a>
+              <a href={MESSENGER_MAX_URL} target="_blank" rel="noopener noreferrer" aria-label="Max" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><MessageCircle className="w-4 h-4" /></a>
+              <a href={`tel:${PHONE}`} aria-label="Phone" className="w-9 h-9 border border-border hover:border-primary flex items-center justify-center transition-smooth"><Phone className="w-4 h-4" /></a>
             </li>
           </ul>
         </div>
