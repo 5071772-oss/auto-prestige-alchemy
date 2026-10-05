@@ -1,5 +1,9 @@
+import type { CarClassId } from "./car-classes"
+
 export type StockCar = {
   id: string
+  /** Класс автомобиля: по нему собрано меню «Автомобили». Пусто — машина видна только в полном каталоге. */
+  carClass?: CarClassId
   make: string
   model: string
   year: number
@@ -15,6 +19,7 @@ export type StockCar = {
 export const stockCars: StockCar[] = [
   {
     id: "bmw-x7-40d-2025",
+    carClass: "premium",
     make: "BMW",
     model: "X7 40D",
     year: 2025,
@@ -34,6 +39,7 @@ export const stockCars: StockCar[] = [
   },
   {
     id: "mercedes-amg-g63-2025-order",
+    carClass: "luxury",
     make: "Mercedes-AMG",
     model: "G 63",
     year: 2025,
@@ -50,6 +56,7 @@ export const stockCars: StockCar[] = [
   },
   {
     id: "mercedes-benz-s450-4matic-2026-order",
+    carClass: "premium",
     make: "Mercedes-Benz",
     model: "S-Class S450 4MATIC",
     year: 2026,

@@ -1,15 +1,15 @@
 import { MessageCircle, Phone, Send } from "lucide-react";
 import { MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
+import { CAR_CLASSES, carClassUrl } from "@/data/car-classes";
 
-const navigation = [
+const navigation: [string, string][] = [
   ["#about", "Обо мне"],
   ["#services", "Услуги"],
-  ["/stock", "В наличии"],
-  ["/order", "Заказ"],
-  ["/catalog", "Каталог"],
+  // Автомобили — те же классы, что и в меню шапки
+  ...CAR_CLASSES.map((item) => [carClassUrl(item.id), item.label] as [string, string]),
   ["#gallery", "Гараж"],
   ["#process", "Процесс"],
-] as const;
+];
 
 const legal = [
   ["/privacy-policy", "Политика обработки персональных данных"],
