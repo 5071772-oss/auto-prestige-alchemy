@@ -40,6 +40,7 @@ interface ApiCar {
   carClass: string;
   classLabel: string;
   description: string | null;
+  descriptionFull: string | null;
   specs: string[];
   photos: ApiPhoto[];
 }
@@ -80,6 +81,7 @@ function toStockCar(car: ApiCar): StockCar {
     status: car.statusLabel,
     specs: car.specs.join("\n"),
     description: car.description ?? "",
+    ...(car.descriptionFull ? { descriptionFull: car.descriptionFull } : {}),
     // Карточке хватает 560 px, крупному просмотру — 1600 px
     images: car.photos.map((photo) => photo.card),
     imagesFull: car.photos.map((photo) => photo.full),

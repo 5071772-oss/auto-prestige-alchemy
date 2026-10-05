@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import {
   ChevronLeft,
   ChevronRight,
+  ChevronDown,
   MessageCircle,
   Phone,
   Send,
@@ -31,9 +32,20 @@ export default function Car() {
   const car = useMemo(() => cars.find((item) => item.slug === slug), [cars, slug]);
 
   const [photo, setPhoto] = useState(0);
+  const [expanded, setExpanded] = useState(false);
   const photos = car?.images?.length ? car.images : [];
   const photosFull = car?.imagesFull?.length === photos.length ? car.imagesFull : photos;
   const title = car ? `${car.make} ${car.model}` : "Автомобиль";
+
+  /** Подробное описание разбито на абзацы пустой строкой. */
+  const fullParagraphs = useMemo(
+    () =>
+      (car?.descriptionFull ?? "")
+        .split(/\n\s*\n/)
+        .map((paragraph) => paragraph.trim())
+        .filter(Boolean),
+    [car],
+  );
 
   useSeo({
     title: car
@@ -53,7 +65,14 @@ export default function Car() {
 
   useEffect(() => {
     setPhoto(0);
+    setExpanded(false);
   }, [slug]);
+
+  const toggleDescription = () => {
+    const next = !expanded;
+    setExpanded(next);
+    if (next) reachGoal(GOALS.readMore, { car: title });
+  };
 
   const others = useMemo(
     () => cars.filter((item) => item.slug !== slug).slice(0, 3),
@@ -207,6 +226,58 @@ export default function Car() {
 
               {car.description ? (
                 <p className="mt-8 text-base leading-relaxed text-muted-foreground">{car.description}</p>
+              ) : null}
+
+              {/* Подробное описание: показывается по кнопке, чтобы страница не превращалась в полотно */}
+              {car.descriptionFull ? (
+                <div className="mt-6">
+                  <div
+                    id="full-description"
+                    className={`grid transition-all duration-500 ${
+                      expanded ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                    }`}
+                    aria-hidden={!expanded}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="space-y-4 border-l border-primary/30 pl-6">
+                        {fullParagraphs.map((paragraph) => (
+                          <p key={paragraph.slice(0, 24)} className="text-base leading-relaxed text-foreground/85">
+                            {paragraph}
+                          </p>
+                        ))}
+                        <div className="flex flex-wrap gap-3 pt-2">
+                          <a
+                            href="#contact"
+                            className="inline-flex h-12 items-center border border-primary bg-primary/10 px-6 text-xs uppercase tracking-[0.2em] text-primary transition-smooth hover:bg-primary hover:text-primary-foreground"
+                          >
+                            Оставить заявку
+                          </a>
+                          <a
+                            href={`tel:${PHONE}`}
+                            className="inline-flex h-12 items-center gap-3 border border-border px-6 text-sm transition-smooth hover:border-primary"
+                          >
+                            <Phone className="h-4 w-4 text-primary" aria-hidden="true" />
+                            {PHONE_FORMATTED}
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    aria-expanded={expanded}
+                    aria-controls="full-description"
+                    onClick={toggleDescription}
+                    className="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-primary transition-smooth hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  >
+                    {expanded ? "Свернуть" : "Читать дальше"}
+                    <ChevronDown
+                      aria-hidden="true"
+                      className={`h-4 w-4 transition-transform ${expanded ? "rotate-180" : ""}`}
+                    />
+                  </button>
+                </div>
               ) : null}
 
               <div className="mt-8 flex flex-wrap gap-3">

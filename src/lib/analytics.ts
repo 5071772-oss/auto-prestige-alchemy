@@ -21,6 +21,8 @@ export const GOALS = {
   phone: "phone_click",
   /** Открыта страница автомобиля */
   carView: "car_view",
+  /** Нажали «Читать дальше» — читают подробное описание */
+  readMore: "read_more",
   /** Выбрана категория в фильтре каталога */
   filterClick: "filter_click",
 } as const;

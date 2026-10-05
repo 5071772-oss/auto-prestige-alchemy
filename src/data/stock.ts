@@ -15,6 +15,8 @@ export type StockCar = {
   status: string
   specs: string
   description: string
+  /** Развёрнутый текст для кнопки «Читать дальше»: абзацы разделены пустой строкой. */
+  descriptionFull?: string
   images: string[]
   /** Те же фотографии крупнее — для просмотра карточки во весь экран. */
   imagesFull?: string[]
