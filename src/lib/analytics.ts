@@ -29,7 +29,12 @@ export const GOALS = {
 
 export type GoalName = (typeof GOALS)[keyof typeof GOALS];
 
-type YandexMetrika = (counterId: number, action: string, ...args: unknown[]) => void;
+type YandexMetrika = {
+  (counterId: number, action: string, ...args: unknown[]): void;
+  /** Очередь вызовов до загрузки счётчика. */
+  a?: unknown[][];
+  l?: number;
+};
 
 declare global {
   interface Window {
@@ -53,25 +58,48 @@ function trackPageView(url: string): void {
 
 /**
  * Счётчик подключается один раз при первом открытии сайта.
- * Код счётчика — стандартный, с картой кликов и вебвизором.
+ *
+ * Порядок как в коде, который выдаёт сама Метрика: сначала заглушка, потом
+ * загрузка tag.js с номером счётчика в адресе, потом инициализация. Вызовы,
+ * сделанные до загрузки, копятся в очереди и выполняются, когда счётчик готов —
+ * без заглушки инициализация просто терялась.
+ *
+ * `ssr: true` отключает автоматический просмотр: у одностраничного сайта
+ * просмотры отправляет сам код (см. useAnalytics), иначе первый экран
+ * посчитался бы дважды.
  */
 function installCounter(): void {
   if (typeof document === "undefined" || !counterId) return;
   if (document.getElementById("ya-metrika")) return;
 
+  installStub();
+
   const script = document.createElement("script");
   script.id = "ya-metrika";
   script.async = true;
-  script.src = "https://mc.yandex.ru/metrika/tag.js";
-  script.onload = () => {
-    window.ym?.(counterId, "init", {
-      clickmap: true,
-      trackLinks: true,
-      accurateTrackBounce: true,
-      webvisor: true,
-    });
-  };
+  script.src = `https://mc.yandex.ru/metrika/tag.js?id=${counterId}`;
   document.head.appendChild(script);
+
+  window.ym?.(counterId, "init", {
+    ssr: true,
+    clickmap: true,
+    trackLinks: true,
+    accurateTrackBounce: true,
+    webvisor: true,
+  });
+}
+
+/** Заглушка из стандартного кода счётчика: собирает вызовы до загрузки tag.js. */
+function installStub(): void {
+  const w = window;
+  if (w.ym) return;
+
+  const stub = function (...args: unknown[]) {
+    stub.a = stub.a ?? [];
+    stub.a.push(args);
+  } as YandexMetrika;
+  stub.l = Date.now();
+  w.ym = stub;
 }
 
 /**
