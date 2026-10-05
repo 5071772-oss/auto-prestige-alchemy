@@ -2,11 +2,11 @@ import { MessageCircle, Phone, Send } from "lucide-react";
 import { MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_URL } from "@/lib/brand";
 
 const navigation: [string, string][] = [
-  ["#about", "Обо мне"],
-  ["#services", "Услуги"],
+  ["/#about", "Обо мне"],
+  ["/#services", "Услуги"],
   ["/catalog", "Автомобили"],
-  ["#gallery", "Гараж"],
-  ["#process", "Процесс"],
+  ["/#gallery", "Гараж"],
+  ["/#process", "Процесс"],
 ];
 
 const legal = [

@@ -97,6 +97,8 @@ All colors MUST be HSL.
 
 @layer base {
   html { scroll-behavior: smooth; }
+  /* Липкая шапка не должна накрывать раздел, к которому ведёт якорь */
+  section[id] { scroll-margin-top: 6rem; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }

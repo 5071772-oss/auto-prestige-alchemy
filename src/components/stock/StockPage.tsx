@@ -5,6 +5,7 @@ import { stockCars, type StockCar } from "@/data/stock";
 import { carClassById } from "@/data/car-classes";
 import { catalogFilterUrl, catalogFilters, filterFromSearch } from "@/data/catalog-filters";
 import { Link, useSearchParams } from "react-router-dom";
+import { useHashScroll } from "@/lib/use-hash-scroll";
 import { useEffect, useState, useRef, type ReactNode } from "react";
 import { 
   ArrowRight, Phone, Send, Crown,
@@ -330,6 +331,9 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // Если страницу открыли с якорем (#contact), прокручиваем к разделу после отрисовки
+  useHashScroll();
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary/20">

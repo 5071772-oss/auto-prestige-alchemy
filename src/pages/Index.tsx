@@ -1,5 +1,6 @@
 import LeadForm from "@/components/LeadForm";
 import { MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
+import { useHashScroll } from "@/lib/use-hash-scroll";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import { Reveal } from "@/components/site/Reveal";
@@ -655,25 +656,30 @@ function CTA() {
   );
 }
 
-const Index = () => (
-  <div className="min-h-screen bg-background text-foreground">
+const Index = () => {
+  // Адрес вида «/#process» открывается сразу на нужном разделе
+  useHashScroll();
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
       <SiteHeader />
-    <main>
-      <Hero />
-      <Marquee />
-      <About />
-      <HonestApproach />
-      <Achievements />
-      <Services />
-      <Security />
-      <Gallery />
-      <Advantages />
-      <Testimonials />
-      <Process />
-      <CTA />
-    </main>
-    <SiteFooter />
-  </div>
-);
+      <main>
+        <Hero />
+        <Marquee />
+        <About />
+        <HonestApproach />
+        <Achievements />
+        <Services />
+        <Security />
+        <Gallery />
+        <Advantages />
+        <Testimonials />
+        <Process />
+        <CTA />
+      </main>
+      <SiteFooter />
+    </div>
+  );
+};
 
 export default Index;
