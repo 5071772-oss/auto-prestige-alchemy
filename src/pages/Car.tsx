@@ -179,6 +179,28 @@ export default function Car() {
                   ))}
                 </div>
               )}
+
+              {/* Характеристики — столбиком под галереей: когда раскрывают описание,
+                  они остаются на месте, а не уезжают вниз страницы */}
+              {car.specs ? (
+                <div className="mt-10">
+                  <h2 className="text-[10px] uppercase tracking-[0.3em] text-primary">Характеристики</h2>
+                  <ul className="mt-4 border-t border-border/70">
+                    {car.specs
+                      .split("\n")
+                      .map((line) => line.trim())
+                      .filter(Boolean)
+                      .map((line) => (
+                        <li
+                          key={line}
+                          className="border-b border-border/70 py-2 text-xs leading-snug text-muted-foreground"
+                        >
+                          {line}
+                        </li>
+                      ))}
+                  </ul>
+                </div>
+              ) : null}
             </div>
 
             {/* О автомобиле */}
@@ -310,24 +332,6 @@ export default function Car() {
             </div>
           </div>
         </div>
-
-        {/* Характеристики */}
-        {car.specs ? (
-          <section className="container mt-24">
-            <SectionLabel>Характеристики</SectionLabel>
-            <ul className="mt-8 grid gap-x-12 gap-y-4 sm:grid-cols-2">
-              {car.specs
-                .split("\n")
-                .map((line) => line.trim())
-                .filter(Boolean)
-                .map((line) => (
-                  <li key={line} className="border-b border-border pb-3 text-sm text-foreground/90">
-                    {line}
-                  </li>
-                ))}
-            </ul>
-          </section>
-        ) : null}
 
         {/* Заявка */}
         <section id="contact" className="mt-28 border-t border-border bg-graphite-deep/40 py-24">
