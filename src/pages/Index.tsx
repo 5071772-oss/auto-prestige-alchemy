@@ -1,4 +1,4 @@
-import AmoForm from "@/components/AmoForm";
+import LeadForm from "@/components/LeadForm";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import { Reveal } from "@/components/site/Reveal";
@@ -647,7 +647,7 @@ function CTA() {
         </div>
 
         <Reveal delay={200}>
-          <AmoForm />
+          <LeadForm />
         </Reveal>
       </div>
     </section>

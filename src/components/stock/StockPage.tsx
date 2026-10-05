@@ -1,4 +1,4 @@
-import AmoForm from "@/components/AmoForm";
+import LeadForm from "@/components/LeadForm";
 import SiteHeader from "@/components/site/SiteHeader";
 import { stockCars, type StockCar } from "@/data/stock";
 import { useEffect, useState, useRef, type ReactNode } from "react";
@@ -399,7 +399,7 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
                   <Crown className="w-24 h-24 text-primary" />
                 </div>
                 <h3 className="font-display text-2xl mb-8 text-gradient-soft">Оставить заявку</h3>
-                <AmoForm />
+                <LeadForm />
                 <p className="mt-8 text-[11px] text-muted-foreground leading-relaxed text-center">
                   Нажимая кнопку, вы соглашаетесь с политикой конфиденциальности <br />
                   и обработки персональных данных.
