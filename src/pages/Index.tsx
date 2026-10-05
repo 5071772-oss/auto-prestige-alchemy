@@ -1,6 +1,7 @@
 import LeadForm from "@/components/LeadForm";
 import { MESSENGER_MAX_URL, PHONE, PHONE_FORMATTED, TELEGRAM_HANDLE, TELEGRAM_URL } from "@/lib/brand";
 import { useHashScroll } from "@/lib/use-hash-scroll";
+import { useSeo } from "@/lib/seo";
 import SiteFooter from "@/components/site/SiteFooter";
 import SiteHeader from "@/components/site/SiteHeader";
 import { Reveal } from "@/components/site/Reveal";
@@ -659,6 +660,15 @@ function CTA() {
 const Index = () => {
   // Адрес вида «/#process» открывается сразу на нужном разделе
   useHashScroll();
+
+  // Заголовок и описание главной — те же, что записаны в index.html:
+  // нужны, когда человек возвращается сюда с других страниц сайта
+  useSeo({
+    title: "Николаев Алексей — эксперт по премиальным автомобилям",
+    description:
+      "Подбор, покупка и импорт автомобилей премиум-класса. 20+ лет опыта, 1000+ довольных клиентов. Audi, BMW, Mercedes-Benz и выше.",
+    path: "/",
+  });
 
   return (
     <div className="min-h-screen bg-background text-foreground">

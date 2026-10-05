@@ -26,6 +26,7 @@ interface ApiPhoto {
 
 interface ApiCar {
   id: string;
+  slug: string;
   brand: string;
   model: string;
   title: string;
@@ -56,10 +57,19 @@ export function isCarClassId(value: unknown): value is CarClassId {
   return typeof value === "string" && (CLASS_IDS as string[]).includes(value);
 }
 
+/** Адрес страницы автомобиля: кириллица и пробелы в ссылке не нужны. */
+function slugify(value: string): string {
+  return value
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
 /** Данные Chatium → то, что рисует страница. */
 function toStockCar(car: ApiCar): StockCar {
   return {
     id: car.id,
+    slug: car.slug || slugify(car.title),
     carClass: isCarClassId(car.carClass) ? car.carClass : undefined,
     make: car.brand,
     model: car.model,

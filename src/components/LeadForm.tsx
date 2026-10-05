@@ -5,19 +5,27 @@ import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "sonner";
 import { submitLead, utmFromLocation } from "@/lib/chatium-leads";
+import { GOALS, reachGoal } from "@/lib/analytics";
 
 /** Название формы: по нему заявку видно в кабинете заявок. */
 const FORM_NAME = "Заявка на консультацию";
 
 type Errors = Partial<Record<"name" | "phone" | "email", string>>;
 
-export default function LeadForm() {
+/** defaultModel — автомобиль, о котором спрашивает форма: заполняется на странице машины. */
+export default function LeadForm({ defaultModel }: { defaultModel?: string } = {}) {
   const [sending, setSending] = useState(false);
   const [note, setNote] = useState("");
-  const [model, setModel] = useState("");
+  const [model, setModel] = useState(defaultModel ?? "");
   const [personalDataConsent, setPersonalDataConsent] = useState(false);
   const [errors, setErrors] = useState<Errors>({});
   const formRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    if (!defaultModel) return;
+    setModel(defaultModel);
+    setNote((current) => (current.trim() ? current : `Меня заинтересовал автомобиль: ${defaultModel}`));
+  }, [defaultModel]);
 
   useEffect(() => {
     const setCarNote = (car?: string | null) => {
@@ -88,6 +96,7 @@ export default function LeadForm() {
     setModel("");
     setPersonalDataConsent(false);
     setErrors({});
+    reachGoal(GOALS.formSent);
     toast.success("Заявка отправлена — свяжусь с вами в течение часа");
   };
 

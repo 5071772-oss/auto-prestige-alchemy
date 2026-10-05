@@ -5,21 +5,12 @@ import type { StockCar } from "@/data/stock";
 import { carClassById } from "@/data/car-classes";
 import { catalogFilterUrl, catalogFilters, filterFromSearch } from "@/data/catalog-filters";
 import { useCatalog } from "@/lib/chatium-catalog";
+import { useSeo } from "@/lib/seo";
+import { GOALS, reachGoal } from "@/lib/analytics";
 import { Link, useSearchParams } from "react-router-dom";
 import { useHashScroll } from "@/lib/use-hash-scroll";
 import { useEffect, useState, useRef, type ReactNode } from "react";
-import { 
-  ArrowRight, Phone, Send, Crown,
-  ChevronLeft, ChevronRight, Calendar, Gauge, FileText, Landmark,
-  MessageCircle
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Phone, Send, Crown, ChevronLeft, ChevronRight, Calendar, Gauge, Landmark, MessageCircle } from "lucide-react";
 
 function Reveal({ children, delay = 0, className = "" }: { children: ReactNode; delay?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
@@ -76,231 +67,93 @@ function SectionLabel({ children }: { children: ReactNode }) {
 
 function CarCard({ car }: { car: Car }) {
   const [currentImage, setCurrentImage] = useState(0);
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const images = car.images?.length > 0 ? car.images : ["https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80"];
-  // В карточке фото небольшое, в просмотре во весь экран — крупное
-  const imagesFull = car.imagesFull?.length === images.length ? car.imagesFull : images;
 
-  const nextImage = (e?: React.MouseEvent) => {
-    e?.preventDefault();
-    e?.stopPropagation();
-    setCurrentImage((prev) => (prev + 1) % images.length);
-  };
-
-  const prevImage = (e?: React.MouseEvent) => {
-    e?.preventDefault();
-    e?.stopPropagation();
-    setCurrentImage((prev) => (prev - 1 + images.length) % images.length);
+  /** Стрелки листают фото прямо в карточке и не мешают переходу на страницу автомобиля. */
+  const step = (event: React.MouseEvent, delta: number) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setCurrentImage((prev) => (prev + delta + images.length) % images.length);
   };
 
   return (
     <Reveal className="group bg-graphite-deep border border-border overflow-hidden rounded-sm hover:border-primary/40 transition-smooth">
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <div
-          className="cursor-pointer"
-          role="button"
-          tabIndex={0}
-          onClick={() => setIsDialogOpen(true)}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              event.preventDefault();
-              setIsDialogOpen(true);
-            }
-          }}
-        >
-            <div className="relative aspect-[16/10] overflow-hidden">
-              <img 
-                src={images[currentImage]} 
-                alt={`${car.make} ${car.model}`}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
-              
-              {images.length > 1 && (
-                <>
-                  <button
-                    type="button"
-                    aria-label={`Предыдущее изображение ${car.make} ${car.model}`}
-                    onClick={(e) => { e.stopPropagation(); prevImage(e); }}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-smooth hover:bg-primary hover:text-primary-foreground"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label={`Следующее изображение ${car.make} ${car.model}`}
-                    onClick={(e) => { e.stopPropagation(); nextImage(e); }}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-smooth hover:bg-primary hover:text-primary-foreground"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
-                    {images.map((_: string, idx: number) => (
-                      <div 
-                        key={idx}
-                        className={`h-1 rounded-full transition-all duration-300 ${idx === currentImage ? "w-4 bg-primary" : "w-1 bg-white/40"}`}
-                      />
-                    ))}
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-xl font-display text-gradient-soft">{car.make} {car.model}</h3>
-                  <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground uppercase tracking-widest">
-                    <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {car.year}</span>
-                    <span className="w-1 h-1 rounded-full bg-border" />
-                    <span className="flex items-center gap-1"><Gauge className="w-3 h-3" /> {car.mileage?.toLocaleString()} км</span>
-                  </div>
-                </div>
+      <Link to={`/catalog/${car.slug ?? car.id}`} className="block focus-visible:outline-none">
+        <div className="relative aspect-[16/10] overflow-hidden">
+          <img
+            src={images[currentImage]}
+            alt={`${car.make} ${car.model}`}
+            loading="lazy"
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          {images.length > 1 && (
+            <>
+              <button
+                type="button"
+                aria-label={`Предыдущее изображение ${car.make} ${car.model}`}
+                onClick={(e) => step(e, -1)}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-smooth hover:bg-primary hover:text-primary-foreground"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                aria-label={`Следующее изображение ${car.make} ${car.model}`}
+                onClick={(e) => step(e, 1)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-8 h-8 flex items-center justify-center bg-black/20 backdrop-blur-md text-white rounded-full opacity-0 group-hover:opacity-100 transition-smooth hover:bg-primary hover:text-primary-foreground"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1">
+                {images.map((_: string, idx: number) => (
+                  <div
+                    key={idx}
+                    className={`h-1 rounded-full transition-all duration-300 ${idx === currentImage ? "w-4 bg-primary" : "w-1 bg-white/40"}`}
+                  />
+                ))}
               </div>
+            </>
+          )}
+        </div>
 
-              <div className="space-y-4 mb-6">
-                <div className="flex justify-between items-end">
-                  <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Наличные</div>
-                  <div className="text-xl font-medium text-foreground">{car.price_cash}</div>
-                </div>
-                {car.price_vat && (
-                  <div className="flex justify-between items-end border-t border-border pt-2">
-                    <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">С НДС</div>
-                    <div className="text-sm text-primary font-medium">{car.price_vat}</div>
-                  </div>
-                )}
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 mb-6 text-[10px] leading-tight text-muted-foreground uppercase tracking-wider">
-                <div className="flex items-start gap-2 p-3 bg-background/50 border border-border rounded-sm">
-                  <Landmark className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                  <div>
-                    Статус: <span className={`block mt-0.5 ${car.status?.toLowerCase().includes('заказ') ? 'text-primary italic' : 'text-foreground'}`}>{car.status || 'В наличии'}</span>
-                  </div>
-                </div>
-                <div className="flex items-center justify-center p-3 bg-primary/5 border border-primary/20 rounded-sm group-hover:bg-primary/10 transition-smooth">
-                  <span className="text-primary font-medium tracking-[0.2em]">Подробнее</span>
-                </div>
+        <div className="p-6">
+          <div className="flex justify-between items-start mb-4">
+            <div>
+              <h3 className="text-xl font-display text-gradient-soft">{car.make} {car.model}</h3>
+              <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground uppercase tracking-widest">
+                <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {car.year}</span>
+                <span className="w-1 h-1 rounded-full bg-border" />
+                <span className="flex items-center gap-1"><Gauge className="w-3 h-3" /> {car.mileage?.toLocaleString()} км</span>
               </div>
             </div>
           </div>
 
-        <DialogContent className="max-w-4xl bg-graphite-deep border-border p-0 overflow-hidden sm:rounded-sm custom-scrollbar">
-          <div className="flex flex-col md:flex-row h-full max-h-[90vh]">
-            <div className="md:w-1/2 relative bg-black">
-              <div className="h-full min-h-[300px]">
-                <img
-                  src={imagesFull[currentImage]}
-                  alt={`${car.make} ${car.model} — фотография ${currentImage + 1} из ${images.length}`}
-                  className="w-full h-full object-cover"
-                />
-                {images.length > 1 && (
-                  <>
-                    <button
-                      type="button"
-                      aria-label={`Предыдущее фото ${car.make} ${car.model}`}
-                      onClick={prevImage}
-                      className="absolute left-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-md transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                    >
-                      <ChevronLeft className="h-5 w-5" aria-hidden="true" />
-                    </button>
-                    <button
-                      type="button"
-                      aria-label={`Следующее фото ${car.make} ${car.model}`}
-                      onClick={nextImage}
-                      className="absolute right-4 top-1/2 z-10 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/45 text-white backdrop-blur-md transition-colors hover:border-primary hover:bg-primary hover:text-primary-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                    >
-                      <ChevronRight className="h-5 w-5" aria-hidden="true" />
-                    </button>
-                    <div className="absolute left-1/2 top-4 -translate-x-1/2 rounded-full bg-black/45 px-3 py-1 text-xs text-white/90 backdrop-blur-md" aria-live="polite">
-                      {currentImage + 1} / {images.length}
-                    </div>
-                  </>
-                )}
-                {images.length > 1 && (
-                  <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2 px-4 overflow-x-auto py-2 bg-black/40 backdrop-blur-md">
-                    {images.map((img: string, idx: number) => (
-                      <button 
-                        key={idx}
-                        type="button"
-                        aria-label={`Показать фото ${idx + 1} автомобиля ${car.make} ${car.model}`}
-                        aria-current={idx === currentImage ? "true" : undefined}
-                        onClick={() => setCurrentImage(idx)}
-                        className={`w-12 h-12 rounded-sm border-2 overflow-hidden shrink-0 transition-all ${idx === currentImage ? 'border-primary' : 'border-transparent opacity-50 hover:opacity-100'}`}>
-                        <img src={img} alt="" className="w-full h-full object-cover" />
-                      </button>
-                    ))}
-                  </div>
-                )}
+          <div className="space-y-4 mb-6">
+            <div className="flex justify-between items-end">
+              <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">Наличные</div>
+              <div className="text-xl font-medium text-foreground">{car.price_cash}</div>
+            </div>
+            {car.price_vat && (
+              <div className="flex justify-between items-end border-t border-border pt-2">
+                <div className="text-[10px] uppercase tracking-widest text-muted-foreground mb-1">С НДС</div>
+                <div className="text-sm text-primary font-medium">{car.price_vat}</div>
+              </div>
+            )}
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 text-[10px] leading-tight text-muted-foreground uppercase tracking-wider">
+            <div className="flex items-start gap-2 p-3 bg-background/50 border border-border rounded-sm">
+              <Landmark className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+              <div>
+                Статус: <span className={`block mt-0.5 ${car.status?.toLowerCase().includes('заказ') ? 'text-primary italic' : 'text-foreground'}`}>{car.status || 'В наличии'}</span>
               </div>
             </div>
-            
-            <div className="md:w-1/2 p-8 overflow-y-auto custom-scrollbar">
-              <DialogHeader className="text-left mb-8">
-                <div className="text-xs text-primary uppercase tracking-[0.3em] mb-2">{car.status || 'В наличии'}</div>
-                <DialogTitle className="text-3xl font-display text-gradient-soft mb-2">{car.make} {car.model}</DialogTitle>
-                <div className="flex items-center gap-4 text-sm text-muted-foreground uppercase tracking-widest">
-                  <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> {car.year} год</span>
-                  <span className="flex items-center gap-1"><Gauge className="w-4 h-4" /> {car.mileage?.toLocaleString()} км</span>
-                </div>
-              </DialogHeader>
-
-              <div className="space-y-8">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 bg-background/50 border border-border rounded-sm">
-                    <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-1">Наличные</div>
-                    <div className="text-xl font-medium text-foreground">{car.price_cash}</div>
-                  </div>
-                  {car.price_vat && (
-                    <div className="p-4 bg-background/50 border border-border rounded-sm">
-                      <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground mb-1">С НДС</div>
-                      <div className="text-xl font-medium text-primary">{car.price_vat}</div>
-                    </div>
-                  )}
-                </div>
-
-                {car.specs && (
-                  <div>
-                    <h4 className="text-[11px] uppercase tracking-[0.3em] text-primary mb-3 flex items-center gap-2">
-                      <FileText className="w-4 h-4" /> Комплектация
-                    </h4>
-                    <div className="text-sm text-foreground/90 leading-relaxed whitespace-pre-wrap bg-background/30 p-4 border border-border rounded-sm italic">
-                      {car.specs}
-                    </div>
-                  </div>
-                )}
-
-                {car.description && (
-                  <div>
-                    <h4 className="text-[11px] uppercase tracking-[0.3em] text-primary mb-3">Описание</h4>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {car.description}
-                    </p>
-                  </div>
-                )}
-
-                <Button 
-                  onClick={() => {
-                    const carInfo = `${car.make} ${car.model}`;
-                    setIsDialogOpen(false);
-                    window.history.pushState(null, '', '#contact');
-                    window.dispatchEvent(new CustomEvent('car-selected', { detail: { car: carInfo } }));
-                    const contactSection = document.getElementById('contact');
-                    if (contactSection) {
-                      setTimeout(() => {
-                        contactSection.scrollIntoView({ behavior: 'smooth' });
-                      }, 100);
-                    }
-                  }}
-                  className="w-full h-14 bg-primary hover:bg-primary-glow text-primary-foreground rounded-sm transition-smooth group/btn text-sm tracking-widest uppercase"
-                >
-                  Забронировать <ArrowRight className="ml-2 w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                </Button>
-              </div>
+            <div className="flex items-center justify-center p-3 bg-primary/5 border border-primary/20 rounded-sm group-hover:bg-primary/10 transition-smooth">
+              <span className="text-primary font-medium tracking-[0.2em]">Подробнее</span>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
+        </div>
+      </Link>
     </Reveal>
   );
 }
@@ -327,6 +180,23 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
   // Категории фильтра собираются из самих автомобилей: новая марка появляется сама
   const filters = catalogFilters(baseCars);
   const activeFilter = filterFromSearch(filters, searchParams.get("class"), activeBrand);
+
+  // Заголовок и описание страницы: у отфильтрованного каталога свой заголовок,
+  // а канонический адрес всегда ведёт на весь каталог — фильтры не должны
+  // считаться отдельными страницами с тем же содержимым.
+  useSeo({
+    title: activeFilter
+      ? `${activeFilter.label} — автомобили | Николаев Premium Auto`
+      : isCatalog
+        ? "Автомобили в наличии и под заказ — Николаев Premium Auto"
+        : isOrder
+          ? "Автомобили в поставке — Николаев Premium Auto"
+          : "Автомобили в наличии — Николаев Premium Auto",
+    description: activeFilter
+      ? `${activeFilter.label}: автомобили в наличии и в поставке с ценами и характеристиками. Подбор, покупка и импорт премиальных автомобилей под ключ.`
+      : "Автомобили премиум-класса в наличии и в поставке: цены, характеристики, фотографии. Подбор, покупка и импорт под ключ — эксперт Алексей Николаев.",
+    path: isCatalog ? "/catalog" : isOrder ? "/order" : "/stock",
+  });
 
   const chipClass = (active: boolean) =>
     `inline-flex h-11 items-center gap-2 border px-5 text-xs uppercase tracking-[0.18em] transition-smooth ${
@@ -366,7 +236,11 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
           {isCatalog && filters.length > 0 && (
             <Reveal delay={320}>
               <div className="mt-12 flex flex-wrap gap-3" role="group" aria-label="Категории автомобилей">
-                <Link to={catalogFilterUrl(null)} className={chipClass(!activeFilter)}>
+                <Link
+                  to={catalogFilterUrl(null)}
+                  className={chipClass(!activeFilter)}
+                  onClick={() => reachGoal(GOALS.filterClick, { filter: "Все" })}
+                >
                   Все
                   <span className="text-muted-foreground">{baseCars.length}</span>
                 </Link>
@@ -376,6 +250,7 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
                     to={catalogFilterUrl(filter)}
                     className={chipClass(activeFilter?.value === filter.value && activeFilter?.kind === filter.kind)}
                     aria-current={activeFilter?.value === filter.value && activeFilter?.kind === filter.kind ? "true" : undefined}
+                    onClick={() => reachGoal(GOALS.filterClick, { filter: filter.label })}
                   >
                     {filter.label}
                     <span className="text-muted-foreground">{filter.count}</span>
