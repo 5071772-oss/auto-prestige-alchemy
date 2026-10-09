@@ -128,6 +128,25 @@ function writeCache(cars: StockCar[]): void {
   }
 }
 
+/**
+ * Каталог, встроенный в страницу при сборке сайта (см. scripts/seo.mjs).
+ *
+ * Сайт — одностраничное приложение, и без этих данных первая отрисовка ждала бы
+ * ответа Chatium: посетитель видел бы пустой экран, а поисковый робот мог не успеть
+ * увидеть содержимое. Копия снимается на сборке, поэтому страница рисуется сразу;
+ * свежие данные всё равно приезжают следом и заменяют её.
+ */
+function readInjected(): StockCar[] | null {
+  try {
+    const injected = (window as unknown as { __NixxonCatalog?: { cars?: unknown } }).__NixxonCatalog;
+    const cars = injected?.cars;
+    if (!Array.isArray(cars) || cars.length === 0) return null;
+    return cars as StockCar[];
+  } catch {
+    return null;
+  }
+}
+
 export interface CatalogState {
   cars: StockCar[];
   /** Данные приехали из Chatium */
@@ -136,15 +155,18 @@ export interface CatalogState {
 }
 
 /**
- * Каталог для страницы: сначала показываем сохранённую копию или запасной
- * набор, затем подставляем свежие данные из Chatium.
+ * Каталог для страницы: сначала показываем сохранённую копию, затем копию,
+ * встроенную в страницу при сборке, затем запасной набор — и подставляем
+ * свежие данные из Chatium.
  */
 export function useCatalog(): CatalogState {
   const cached = useMemo(readCache, []);
+  const injected = useMemo(readInjected, []);
+  const initial = cached ?? injected;
   const [state, setState] = useState<CatalogState>({
-    cars: cached ?? stockCars,
-    fromChatium: Boolean(cached),
-    loading: !cached,
+    cars: initial ?? stockCars,
+    fromChatium: Boolean(initial),
+    loading: !initial,
   });
 
   useEffect(() => {

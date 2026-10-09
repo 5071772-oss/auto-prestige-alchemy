@@ -16,6 +16,11 @@
  *    Её отдают по корневому адресу, поэтому поисковик читает её без выполнения скриптов,
  *    а приложение заменяет этот блок собой, как только загрузится.
  *
+ * 4. Встраивает каталог автомобилей в страницу (`window.__NixxonCatalog`). Без этого
+ *    первая отрисовка ждала бы ответа Chatium: посетитель видел бы пустой экран,
+ *    а поисковый робот мог не успеть увидеть содержимое. Свежие данные приложение
+ *    всё равно забирает следом и заменяет встроенную копию.
+ *
  *    Так же поступить с остальными страницами нельзя: чтобы отдать `/catalog/bmw-x7-40d`
  *    готовым файлом, нужен каталог `dist/catalog/bmw-x7-40d/index.html`, а nginx на хостинге
  *    отвечает на такой запрос перенаправлением 301 на внутренний адрес с портом 8080 —
@@ -268,16 +273,62 @@ async function fetchCars() {
   }
 }
 
+/** Адрес страницы автомобиля: кириллица и пробелы в ссылке не нужны. */
+function slugify(value) {
+  return String(value ?? "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+const CAR_CLASSES = ["premium", "luxury", "exclusive"];
+
+/** Данные каталога в том виде, в каком их ждёт сайт (`StockCar` из src/data/stock.ts). */
+function toStockCar(car) {
+  return {
+    id: car.id,
+    slug: car.slug || slugify(`${car.brand} ${car.model}`),
+    ...(CAR_CLASSES.includes(car.carClass) ? { carClass: car.carClass } : {}),
+    make: car.brand,
+    model: car.model,
+    year: car.year ?? 0,
+    mileage: car.mileage ?? 0,
+    price_cash: car.priceCash,
+    ...(car.priceVat ? { price_vat: car.priceVat } : {}),
+    status: car.statusLabel,
+    specs: (car.specs ?? []).join("\n"),
+    description: car.description ?? "",
+    ...(car.descriptionFull ? { descriptionFull: car.descriptionFull } : {}),
+    images: (car.photos ?? []).map((photo) => photo.card),
+    imagesFull: (car.photos ?? []).map((photo) => photo.full),
+  };
+}
+
+/** Встроенная копия каталога: страница рисуется сразу, не дожидаясь ответа Chatium. */
+function injectedCatalog(cars) {
+  if (!cars.length) return "";
+  const data = JSON.stringify({ at: new Date().toISOString(), cars: cars.map(toStockCar) });
+  // Экранируем `<`, чтобы строка с описанием не закрыла тег script
+  return `    <script>window.__NixxonCatalog=${data.replace(/</g, "\\u003c")};</script>`;
+}
+
 /**
  * Готовый текст ставим только в главную страницу: её отдаёт корневой index.html.
  * Для остальных адресов каталог с index.html внутри ломает выдачу — nginx отвечает
  * на такой запрос перенаправлением на внутренний порт (см. комментарий в начале файла).
  */
-async function writeHomePage(template, page) {
+async function writeHomePage(template, page, cars) {
   let html = withSeo(template, page);
   const block = snapshotBlock(snapshotHtml(page.content));
   const script = page.jsonLd ? `<script type="application/ld+json">${JSON.stringify(page.jsonLd)}</script>` : "";
   html = html.replace('<div id="root"></div>', `<div id="root">${block}</div>\n    ${script}`);
+
+  // Каталог встраиваем перед кодом приложения: он подхватит его для первой отрисовки
+  const catalog = injectedCatalog(cars);
+  if (catalog) {
+    html = html.replace('<script type="module"', `${catalog}\n    <script type="module"`);
+  }
+
   await writeFile(path.join(DIST, "index.html"), html, "utf8");
 }
 
@@ -311,7 +362,7 @@ async function main() {
     ...LEGAL_PAGES.map((page) => ({ ...page, priority: "0.2" })),
   ];
 
-  await writeHomePage(template, pages[0]);
+  await writeHomePage(template, pages[0], cars);
   await writeFile(path.join(DIST, "sitemap.xml"), sitemap(pages), "utf8");
   console.log(`[seo] карта сайта и текст главной готовы: ${pages.length} адресов`);
 }
