@@ -51,7 +51,7 @@ const CATALOG_TIMEOUT_MS = 15000;
 const INJECT_LIMIT = 12;
 
 const PHONE = "+7 (916) 225-33-59";
-const TELEGRAM = "https://t.me/nixon_motors";
+const TELEGRAM = "https://t.me/Exellenz";
 
 /** Текст главной страницы — тот же, что видит посетитель. */
 const HOME = {
@@ -136,7 +136,7 @@ function snapshotBlock(content) {
           ${content}
           <p style="margin-top:40px;font-size:14px;color:#A19C91">
             Николаев | Premium auto — телефон <a href="tel:+79162253359" style="color:#D1B06B">${PHONE}</a>,
-            Telegram <a href="${TELEGRAM}" style="color:#D1B06B">@nixon_motors</a>.
+            Telegram <a href="${TELEGRAM}" style="color:#D1B06B">@Exellenz</a>.
           </p>
         </div>
       </div>
