@@ -11,6 +11,7 @@ const Stock = React.lazy(() => import("./pages/Stock.tsx"));
 const Stock2 = React.lazy(() => import("./pages/Stock2.tsx"));
 const Catalog = React.lazy(() => import("./pages/Catalog.tsx"));
 const Car = React.lazy(() => import("./pages/Car.tsx"));
+const Quiz = React.lazy(() => import("./pages/Quiz.tsx"));
 const PrivacyPolicy = React.lazy(() => import("./pages/PrivacyPolicy.tsx"));
 const AiRegulation = React.lazy(() => import("./pages/AiRegulation.tsx"));
 const PersonalDataConsent = React.lazy(() => import("./pages/PersonalDataConsent.tsx"));
@@ -37,6 +38,8 @@ const App = () => (
             <Route path="/stock" element={<Stock />} />
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/catalog/:slug" element={<Car />} />
+            {/* Квиз из 7 вопросов — первый шаг работы, обещанный на главной странице */}
+            <Route path="/podbor" element={<Quiz />} />
             <Route path="/order" element={<Stock2 />} />
             <Route path="/stock2" element={<Stock2 />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

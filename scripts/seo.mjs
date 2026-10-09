@@ -301,6 +301,11 @@ async function main() {
     { ...homePage(), priority: "1.0" },
     { ...catalogPage(cars), priority: "0.9" },
     ...cars.map((car) => ({ ...carPage(car), priority: "0.8" })),
+    {
+      path: "/podbor",
+      title: "Квиз из 7 вопросов — подбор автомобиля под вашу задачу | Николаев Premium auto",
+      priority: "0.9",
+    },
     { path: "/stock", title: "Автомобили в наличии — Николаев Premium auto", priority: "0.6" },
     { path: "/order", title: "Автомобили в поставке — Николаев Premium auto", priority: "0.6" },
     ...LEGAL_PAGES.map((page) => ({ ...page, priority: "0.2" })),
