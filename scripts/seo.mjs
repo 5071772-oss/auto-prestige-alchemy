@@ -43,6 +43,13 @@ const SITE_URL = "https://nixxon-auto.ru";
 const CATALOG_URL = "https://avnhome2012.chatium.ru/premium-auto/catalog/api/public/cars";
 const CATALOG_TIMEOUT_MS = 15000;
 
+/**
+ * Сколько машин встраивать в HTML. Каталог растёт, а вместе с ним — вес каждой страницы:
+ * одна машина это около 4 КБ. Первых машин хватает, чтобы поисковик и посетитель увидели
+ * содержимое без ожидания сети; остальное приложение забирает из Chatium обычным запросом.
+ */
+const INJECT_LIMIT = 12;
+
 const PHONE = "+7 (916) 225-33-59";
 const TELEGRAM = "https://t.me/nixon_motors";
 
@@ -307,7 +314,7 @@ function toStockCar(car) {
 /** Встроенная копия каталога: страница рисуется сразу, не дожидаясь ответа Chatium. */
 function injectedCatalog(cars) {
   if (!cars.length) return "";
-  const data = JSON.stringify({ at: new Date().toISOString(), cars: cars.map(toStockCar) });
+  const data = JSON.stringify({ at: new Date().toISOString(), cars: cars.slice(0, INJECT_LIMIT).map(toStockCar) });
   // Экранируем `<`, чтобы строка с описанием не закрыла тег script
   return `    <script>window.__NixxonCatalog=${data.replace(/</g, "\\u003c")};</script>`;
 }
@@ -352,6 +359,11 @@ async function main() {
     { ...homePage(), priority: "1.0" },
     { ...catalogPage(cars), priority: "0.9" },
     ...cars.map((car) => ({ ...carPage(car), priority: "0.8" })),
+    { path: "/premium", title: "Премиум автомобили — Audi, BMW, Mercedes-Benz | Николаев Premium auto", priority: "0.8" },
+    { path: "/luxury", title: "Лакшери автомобили — Porsche, Range Rover, AMG | Николаев Premium auto", priority: "0.8" },
+    { path: "/exclusive", title: "Эксклюзивные автомобили — Bentley, Maybach, Maserati | Николаев Premium auto", priority: "0.8" },
+    { path: "/leasing", title: "Лизинг и кредит на премиальный автомобиль | Николаев Premium auto", priority: "0.7" },
+    { path: "/support", title: "Как проходит сделка — договор, аккредитив, этапы | Николаев Premium auto", priority: "0.7" },
     {
       path: "/podbor",
       title: "Квиз из 7 вопросов — подбор автомобиля под вашу задачу | Николаев Premium auto",

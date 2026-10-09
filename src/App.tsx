@@ -12,6 +12,9 @@ const Stock2 = React.lazy(() => import("./pages/Stock2.tsx"));
 const Catalog = React.lazy(() => import("./pages/Catalog.tsx"));
 const Car = React.lazy(() => import("./pages/Car.tsx"));
 const Quiz = React.lazy(() => import("./pages/Quiz.tsx"));
+const CarClassPage = React.lazy(() => import("./pages/CarClass.tsx"));
+const Financing = React.lazy(() => import("./pages/Financing.tsx"));
+const Support = React.lazy(() => import("./pages/Support.tsx"));
 const PrivacyPolicy = React.lazy(() => import("./pages/PrivacyPolicy.tsx"));
 const AiRegulation = React.lazy(() => import("./pages/AiRegulation.tsx"));
 const PersonalDataConsent = React.lazy(() => import("./pages/PersonalDataConsent.tsx"));
@@ -40,6 +43,12 @@ const App = () => (
             <Route path="/catalog/:slug" element={<Car />} />
             {/* Квиз из 7 вопросов — первый шаг работы, обещанный на главной странице */}
             <Route path="/podbor" element={<Quiz />} />
+            {/* Страницы классов: сюда ведут объявления и реклама */}
+            <Route path="/premium" element={<CarClassPage classId="premium" />} />
+            <Route path="/luxury" element={<CarClassPage classId="luxury" />} />
+            <Route path="/exclusive" element={<CarClassPage classId="exclusive" />} />
+            <Route path="/leasing" element={<Financing />} />
+            <Route path="/support" element={<Support />} />
             <Route path="/order" element={<Stock2 />} />
             <Route path="/stock2" element={<Stock2 />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />

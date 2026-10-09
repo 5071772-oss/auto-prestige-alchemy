@@ -65,7 +65,8 @@ function SectionLabel({ children }: { children: ReactNode }) {
   );
 }
 
-function CarCard({ car }: { car: Car }) {
+/** Карточка машины: используется и в каталоге, и на страницах классов. */
+export function CarCard({ car }: { car: Car }) {
   const [currentImage, setCurrentImage] = useState(0);
   const images = car.images?.length > 0 ? car.images : ["https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80"];
 

@@ -9,6 +9,15 @@ const navigation: [string, string][] = [
   ["/#process", "Процесс"],
 ];
 
+/** Отдельные страницы: классы машин, финансирование, ход сделки. */
+const sections: [string, string][] = [
+  ["/premium", "Премиум"],
+  ["/luxury", "Лакшери"],
+  ["/exclusive", "Эксклюзив"],
+  ["/leasing", "Лизинг и кредит"],
+  ["/support", "Как проходит сделка"],
+];
+
 const legal = [
   ["/privacy-policy", "Политика обработки персональных данных"],
   ["/ai-regulation", "Регламент использования нейросетей и ИИ"],
@@ -19,7 +28,7 @@ const legal = [
 export function SiteFooter() {
   return (
     <footer className="border-t border-border bg-background py-16">
-      <div className="container grid gap-12 md:grid-cols-3">
+      <div className="container grid gap-12 md:grid-cols-2 lg:grid-cols-4">
         <div>
           <div className="font-display text-2xl text-gradient-soft">Николаев Алексей</div>
           <p className="mt-3 max-w-xs text-sm leading-relaxed text-muted-foreground">Личный эксперт по премиальным автомобилям. Подбор, импорт и сопровождение сделок с 2003 года.</p>
@@ -28,6 +37,12 @@ export function SiteFooter() {
           <div className="text-xs uppercase tracking-[0.3em] text-primary">Навигация</div>
           <nav aria-label="Навигация по сайту" className="mt-5 flex flex-col gap-3 text-sm text-muted-foreground">
             {navigation.map(([href, label]) => <a key={href} href={href} className="transition-smooth hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{label}</a>)}
+          </nav>
+        </div>
+        <div>
+          <div className="text-xs uppercase tracking-[0.3em] text-primary">Разделы</div>
+          <nav aria-label="Разделы каталога" className="mt-5 flex flex-col gap-3 text-sm text-muted-foreground">
+            {sections.map(([href, label]) => <a key={href} href={href} className="transition-smooth hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{label}</a>)}
           </nav>
         </div>
         <div>
