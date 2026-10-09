@@ -203,9 +203,11 @@ export default function Quiz() {
               </div>
             ) : (
               <div>
-                <div className="flex items-center justify-between text-xs uppercase tracking-[0.3em] text-muted-foreground">
-                  <span>{contactStep ? "Последний шаг" : `Вопрос ${step + 1} из ${total}`}</span>
-                  <span className="text-primary">Николаев | Premium auto</span>
+                <div className="flex items-center justify-between gap-4 text-xs uppercase tracking-[0.3em] text-muted-foreground">
+                  <span className="whitespace-nowrap">
+                    {contactStep ? "Последний шаг" : `Вопрос ${step + 1} из ${total}`}
+                  </span>
+                  <span className="hidden sm:inline text-primary">Николаев | Premium auto</span>
                 </div>
                 <div className="mt-4 h-px w-full bg-border">
                   <div
