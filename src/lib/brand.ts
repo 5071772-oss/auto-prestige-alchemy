@@ -11,9 +11,15 @@ export const PHONE = "+79162253359";
 /** Тот же телефон так, как его видит человек. */
 export const PHONE_FORMATTED = "+7 (916) 225-33-59";
 
-/** Личный Telegram эксперта по этому проекту. */
-export const TELEGRAM_HANDLE = "@nixon_motors";
-export const TELEGRAM_URL = "https://t.me/nixon_motors";
+/**
+ * Личный Telegram эксперта — аккаунт, в который можно написать.
+ *
+ * Раньше здесь стоял @nixon_motors, но это канал, а не чат: человек нажимал
+ * «написать в Telegram» и попадал в ленту, где писать нельзя. Теперь ссылка ведёт
+ * в личный аккаунт. Канал @nixon_motors остаётся личным блогом проекта.
+ */
+export const TELEGRAM_HANDLE = "@Exellenz";
+export const TELEGRAM_URL = "https://t.me/Exellenz";
 
 /** Max: личный профиль эксперта. */
 export const MESSENGER_MAX_URL =
