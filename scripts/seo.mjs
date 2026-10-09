@@ -12,18 +12,22 @@
  * 2. Пишет `dist/sitemap.xml` со всеми страницами, включая страницы автомобилей:
  *    статический файл в public/ не мог их перечислить, потому что машины живут
  *    в каталоге и меняются без пересборки сайта.
- * 3. Кладёт рядом с каркасом статическую версию страницы: `dist/catalog/bmw-x7-40d/index.html`
- *    с настоящим текстом — заголовком, описанием, ценой, характеристиками и разметкой
- *    schema.org. Такую страницу поисковик читает без выполнения скриптов.
- *    Nginx на хостинге сначала ищет файл, потом папку, и только потом отдаёт каркас,
- *    поэтому статическая версия выигрывает у общего фолбэка, а живой сайт (SPA)
- *    подхватывает управление, как только загрузится.
+ * 3. Кладёт настоящий текст и разметку schema.org в главную страницу (`dist/index.html`).
+ *    Её отдают по корневому адресу, поэтому поисковик читает её без выполнения скриптов,
+ *    а приложение заменяет этот блок собой, как только загрузится.
+ *
+ *    Так же поступить с остальными страницами нельзя: чтобы отдать `/catalog/bmw-x7-40d`
+ *    готовым файлом, нужен каталог `dist/catalog/bmw-x7-40d/index.html`, а nginx на хостинге
+ *    отвечает на такой запрос перенаправлением 301 на внутренний адрес с портом 8080 —
+ *    страница ломается. Вложенные страницы остаются одностраничным приложением: поисковик
+ *    получает их через обход по счётчику Метрики и отрисовку скриптов.
+ *    Полноценное решение — отдача готового HTML с сервера, это отдельная работа на хостинге.
  *
  * Скрипт не должен ломать сборку: любая ошибка — предупреждение в лог, выход с кодом 0
  * и сайт без SEO-слоя, а не упавший деплой.
  */
 
-import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -264,18 +268,17 @@ async function fetchCars() {
   }
 }
 
-async function writePage(template, page) {
+/**
+ * Готовый текст ставим только в главную страницу: её отдаёт корневой index.html.
+ * Для остальных адресов каталог с index.html внутри ломает выдачу — nginx отвечает
+ * на такой запрос перенаправлением на внутренний порт (см. комментарий в начале файла).
+ */
+async function writeHomePage(template, page) {
   let html = withSeo(template, page);
-  if (page.content) {
-    const block = snapshotBlock(snapshotHtml(page.content));
-    const script = page.jsonLd
-      ? `<script type="application/ld+json">${JSON.stringify(page.jsonLd)}</script>`
-      : "";
-    html = html.replace('<div id="root"></div>', `<div id="root">${block}</div>\n    ${script}`);
-  }
-  const target = page.path === "/" ? path.join(DIST, "index.html") : path.join(DIST, page.path, "index.html");
-  await mkdir(path.dirname(target), { recursive: true });
-  await writeFile(target, html, "utf8");
+  const block = snapshotBlock(snapshotHtml(page.content));
+  const script = page.jsonLd ? `<script type="application/ld+json">${JSON.stringify(page.jsonLd)}</script>` : "";
+  html = html.replace('<div id="root"></div>', `<div id="root">${block}</div>\n    ${script}`);
+  await writeFile(path.join(DIST, "index.html"), html, "utf8");
 }
 
 function sitemap(pages) {
@@ -303,11 +306,9 @@ async function main() {
     ...LEGAL_PAGES.map((page) => ({ ...page, priority: "0.2" })),
   ];
 
-  for (const page of pages) {
-    if (page.content) await writePage(template, page);
-  }
+  await writeHomePage(template, pages[0]);
   await writeFile(path.join(DIST, "sitemap.xml"), sitemap(pages), "utf8");
-  console.log(`[seo] карта сайта и статические страницы готовы: ${pages.length} адресов`);
+  console.log(`[seo] карта сайта и текст главной готовы: ${pages.length} адресов`);
 }
 
 main().catch((error) => {
