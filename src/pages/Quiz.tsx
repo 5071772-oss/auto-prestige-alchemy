@@ -110,12 +110,15 @@ export default function Quiz() {
 
   const choose = (value: string) => {
     if (!question) return;
+    // Первый ответ — начало работы: по этой цели видно, сколько людей дошло до дела
+    if (step === 0) reachGoal(GOALS.quizStart);
     setAnswers((current) => ({ ...current, [question.id]: value }));
     setStep((current) => current + 1);
   };
 
   const submitFree = () => {
     if (!question) return;
+    if (step === 0) reachGoal(GOALS.quizStart);
     setAnswers((current) => ({ ...current, [question.id]: draft.trim() }));
     setDraft("");
     setStep((current) => current + 1);
@@ -152,7 +155,10 @@ export default function Quiz() {
       return;
     }
 
+    // formSent — общая конверсия по сайту, quizSent — та же заявка, но с пометкой «из квиза»:
+    // по ней видно, какой канал довёл человека до конца
     reachGoal(GOALS.formSent);
+    reachGoal(GOALS.quizSent);
     setDone(true);
   };
 

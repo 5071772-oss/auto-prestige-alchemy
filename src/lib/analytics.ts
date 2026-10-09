@@ -25,6 +25,10 @@ export const GOALS = {
   readMore: "read_more",
   /** Выбрана категория в фильтре каталога */
   filterClick: "filter_click",
+  /** Ответили на первый вопрос квиза: человек начал работу, а не просто зашёл */
+  quizStart: "quiz_start",
+  /** Заявка отправлена из квиза: видно, что канал довёл человека до конца */
+  quizSent: "quiz_sent",
 } as const;
 
 export type GoalName = (typeof GOALS)[keyof typeof GOALS];
