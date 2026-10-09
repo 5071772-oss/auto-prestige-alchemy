@@ -379,9 +379,9 @@ export default function StockPage({ mode = "stock" }: { mode?: "stock" | "order"
               <a href="/#services" className="hover:text-primary transition-smooth">Услуги</a>
             </div>
   <div className="text-sm text-muted-foreground flex flex-wrap gap-x-8 gap-y-2 justify-end">
-  <a href="/privacy-policy" className="text-[8px] hover:text-primary transition-smooth">Политика обработки персональных данных</a>
-  <a href="/ai-regulation" className="text-[8px] hover:text-primary transition-smooth">Регламент использования нейросетей и ИИ</a>
-  <a href="/cookies" className="text-[8px] hover:text-primary transition-smooth">Политика использования cookies</a>
+  <a href="/privacy-policy" className="text-[11px] hover:text-primary transition-smooth">Политика обработки персональных данных</a>
+  <a href="/ai-regulation" className="text-[11px] hover:text-primary transition-smooth">Регламент использования нейросетей и ИИ</a>
+  <a href="/cookies" className="text-[11px] hover:text-primary transition-smooth">Политика использования cookies</a>
   <span>© {new Date().getFullYear()} Все права защищены</span>
   </div>
 

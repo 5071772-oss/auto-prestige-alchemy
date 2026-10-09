@@ -291,7 +291,7 @@ export default function Car() {
                     aria-expanded={expanded}
                     aria-controls="full-description"
                     onClick={toggleDescription}
-                    className="mt-6 inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-primary transition-smooth hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    className="mt-3 inline-flex items-center gap-2 py-3 text-xs uppercase tracking-[0.2em] text-primary transition-smooth hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                   >
                     {expanded ? "Свернуть" : "Читать дальше"}
                     <ChevronDown

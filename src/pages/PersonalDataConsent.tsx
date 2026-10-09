@@ -53,9 +53,9 @@ export default function PersonalDataConsent() {
         <div className="container flex flex-wrap justify-between gap-4 text-xs text-muted-foreground">
           <span>© {new Date().getFullYear()} Николаев Алексей. Все права защищены.</span>
           <div className="flex flex-wrap gap-6 uppercase tracking-[0.3em]">
-            <Link to="/privacy-policy" className="text-[8px] hover:text-primary transition-smooth">Политика обработки персональных данных</Link>
-            <Link to="/consent" className="text-[8px] hover:text-primary transition-smooth">Согласие на обработку персональных данных</Link>
-            <Link to="/ai-regulation" className="text-[8px] hover:text-primary transition-smooth">Регламент использования нейросетей и ИИ</Link>
+            <Link to="/privacy-policy" className="text-[11px] hover:text-primary transition-smooth">Политика обработки персональных данных</Link>
+            <Link to="/consent" className="text-[11px] hover:text-primary transition-smooth">Согласие на обработку персональных данных</Link>
+            <Link to="/ai-regulation" className="text-[11px] hover:text-primary transition-smooth">Регламент использования нейросетей и ИИ</Link>
           </div>
         </div>
       </footer>
